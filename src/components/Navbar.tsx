@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import { FiHome, FiSearch, FiBookmark, FiHeart, FiUser, FiMenu, FiX } from 'react-icons/fi';
-import { Player } from '@lottiefiles/react-lottie-player';
+import LottieLogo from './LottieLogo';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -21,12 +21,7 @@ export default function Navbar() {
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
               <div className="w-10 h-10 mr-2">
-                <Player
-                  autoplay
-                  loop
-                  src="/logo.lottie"
-                  style={{ width: '100%', height: '100%' }}
-                />
+                <LottieLogo />
               </div>
               <span className="text-xl font-bold">tv.io</span>
             </Link>

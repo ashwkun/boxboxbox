@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { FiGithub, FiTwitter, FiInstagram } from 'react-icons/fi';
-import { Player } from '@lottiefiles/react-lottie-player';
+import LottieLogo from './LottieLogo';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -14,12 +14,7 @@ export default function Footer() {
           <div className="flex items-center mb-6 md:mb-0">
             <Link href="/" className="flex items-center">
               <div className="w-8 h-8 mr-2">
-                <Player
-                  autoplay
-                  loop
-                  src="/logo.lottie"
-                  style={{ width: '100%', height: '100%' }}
-                />
+                <LottieLogo />
               </div>
               <span className="text-xl font-bold text-white">tv.io</span>
             </Link>
