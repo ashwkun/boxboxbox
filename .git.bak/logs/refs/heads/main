@@ -1,0 +1,6 @@
+0000000000000000000000000000000000000000 943ff39193dfe959ace52e77c7bc5e7760b89e5e Aswin C <aswinanand9020@gmail.com> 1741380671 +0530	commit (initial): Initial commit from Create Next App
+943ff39193dfe959ace52e77c7bc5e7760b89e5e ed469e3f42a56adb59988a9c8fccb077c85e92b6 Aswin C <aswinanand9020@gmail.com> 1741381458 +0530	commit: Initial commit: tv.io movie app MVP
+ed469e3f42a56adb59988a9c8fccb077c85e92b6 e9b0f72a028c9e9ec2beed5c65a24d57f84f3701 Aswin C <aswinanand9020@gmail.com> 1741382593 +0530	commit: Refactor app for static deployment on Firebase free plan
+e9b0f72a028c9e9ec2beed5c65a24d57f84f3701 b53fc2aba326aee977a506464411c980b94b6712 Aswin C <aswinanand9020@gmail.com> 1741382820 +0530	commit: Fix import issues and update .gitignore
+b53fc2aba326aee977a506464411c980b94b6712 ceb1075315bf055103072c46b55a3276426252ad Aswin C <aswinanand9020@gmail.com> 1741383045 +0530	commit: Fix PWA icon issues, authentication context errors, and Firebase routing for dynamic pages
+ceb1075315bf055103072c46b55a3276426252ad 1b75c14864cb6145615432ce846a417c43db7fd2 Aswin C <aswinanand9020@gmail.com> 1741383188 +0530	commit: Update .gitignore to exclude large files
