@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
 import UserProfile from './UserProfile';
 import NotificationBell from './NotificationBell';
+import SearchBar from './SearchBar';
 
 const Navbar: React.FC = () => {
   const location = useLocation();
@@ -24,7 +25,6 @@ const Navbar: React.FC = () => {
     { label: 'Home', path: '/' },
     { label: 'Movies', path: '/movies' },
     { label: 'TV Shows', path: '/tvshows' },
-    { label: 'Search', path: '/search' },
     ...(currentUser ? [
       { label: 'Watchlist', path: '/watchlist' },
       { label: 'Ratings', path: '/ratings' },
@@ -61,6 +61,11 @@ const Navbar: React.FC = () => {
                 {item.label}
               </Link>
             ))}
+            
+            {/* Search Bar */}
+            <div className="w-48 lg:w-64">
+              <SearchBar compact={true} />
+            </div>
           </div>
 
           {/* User Profile / Auth Buttons */}

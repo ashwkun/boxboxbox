@@ -62,7 +62,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
         )}
       </div>
       
-      <div className="p-3">
+      <div className="p-3 h-16">
         <h3 className="font-medium text-sm line-clamp-2">{title}</h3>
         {year && <span className="text-gray-500 text-xs">{year}</span>}
       </div>
