@@ -6,45 +6,11 @@ import ProtectedRoute from './components/ProtectedRoute';
 import UserProfile from './components/UserProfile';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
+import Home from './pages/Home';
+import Movies from './pages/Movies';
+import TVShows from './pages/TVShows';
 
-// Placeholder components for pages not yet implemented
-const Home = () => (
-  <div className="page-container">
-    <h1>Welcome to TV.io</h1>
-    <p>Your personal movie and TV show tracking platform</p>
-    <div className="coming-soon-container">
-      <h2>Coming Soon</h2>
-      <ul className="feature-list">
-        <li>Browse trending movies and TV shows</li>
-        <li>Search for specific titles</li>
-        <li>View detailed information about movies and TV shows</li>
-        <li>Track your watchlist</li>
-        <li>Get personalized recommendations</li>
-      </ul>
-    </div>
-  </div>
-);
-
-const Movies = () => (
-  <div className="page-container">
-    <h1>Movies</h1>
-    <div className="coming-soon-container">
-      <p>This page will display popular and trending movies from TMDB API.</p>
-      <p>Check back soon for the completed feature!</p>
-    </div>
-  </div>
-);
-
-const TVShows = () => (
-  <div className="page-container">
-    <h1>TV Shows</h1>
-    <div className="coming-soon-container">
-      <p>This page will display popular and trending TV shows from TMDB API.</p>
-      <p>Check back soon for the completed feature!</p>
-    </div>
-  </div>
-);
-
+// Placeholder for Watchlist component (will be implemented in Phase 6)
 const Watchlist = () => (
   <div className="page-container">
     <h1>My Watchlist</h1>

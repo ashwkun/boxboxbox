@@ -179,5 +179,6 @@ a {
   }
 }
 
-/* Import Component Styles */
-@import './auth.scss'; 
+/* Import Component Styles - Use @use instead of @import to avoid deprecation warnings */
+@use './auth.scss';
+@use './browse.scss'; 
