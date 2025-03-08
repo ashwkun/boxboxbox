@@ -24,21 +24,24 @@ export default function TextLogo({
       height: '24px',
       iconSize: '16px',
       dotOffsetY: -10,
-      dotOffsetX: 7,
+      dotOffsetX: 5,
+      dotSize: '0.25em',
     },
     medium: {
       fontSize: 'text-2xl',
       height: '30px',
       iconSize: '20px',
       dotOffsetY: -12,
-      dotOffsetX: 8,
+      dotOffsetX: 6,
+      dotSize: '0.3em',
     },
     large: {
       fontSize: 'text-3xl',
       height: '36px',
       iconSize: '24px',
       dotOffsetY: -15,
-      dotOffsetX: 10,
+      dotOffsetX: 7,
+      dotSize: '0.35em',
     },
   }[size];
   
@@ -72,20 +75,23 @@ export default function TextLogo({
         <span className="gradient-text">tv</span>
       </div>
       
-      {/* Animated dot that becomes the dot above "i" */}
-      <span 
-        className="dot-animation inline-block relative"
+      {/* Animated dot - using a div instead of a character */}
+      <div 
+        className="dot-animation"
         aria-hidden="true"
         style={{
-          height: '0.25em',
-          width: '0.25em',
+          height: dimensions.dotSize,
+          width: dimensions.dotSize,
           marginLeft: '0.05em',
-          marginRight: '0.05em'
+          marginRight: '0.05em',
+          display: 'inline-block',
+          position: 'relative',
         }}
-      >.</span>
+      ></div>
       
       {/* "io" with custom styling */}
       <div className="io-text relative">
+        {/* Use a proper dotless i character */}
         <span className="no-dot-i relative inline-block">ı</span>
         <span className="inline-block">o</span>
         
@@ -141,6 +147,7 @@ export default function TextLogo({
           animation: bounce-dot 4.5s infinite;
           background-color: #e50914;
           border-radius: 50%;
+          box-shadow: 0 0 2px rgba(229, 9, 20, 0.8);
         }
         
         /* Animation for pulsing scale */
