@@ -136,6 +136,23 @@ export const migrateExistingUsers = async () => {
   console.log(`Migration completed. Updated ${operationsCount} users.`);
 };
 
+// Set up admin user
+export const setupAdminUser = async (userId: string): Promise<boolean> => {
+  if (!userId) return false;
+  
+  try {
+    const adminRef = doc(firestore, 'admins', userId);
+    await setDoc(adminRef, {
+      createdAt: new Date(),
+      role: 'admin'
+    });
+    return true;
+  } catch (error) {
+    console.error('Error setting up admin:', error);
+    return false;
+  }
+};
+
 // Check if user is admin
 export const isUserAdmin = async (userId: string): Promise<boolean> => {
   if (!userId) return false;
