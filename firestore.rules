@@ -25,6 +25,11 @@ service cloud.firestore {
       match /watchlist/{itemId} {
         allow read, write: if isOwner(userId);
       }
+
+      // Watchlist collection
+      match /watchlists/{userId}/items/{itemId} {
+        allow read, write: if isOwner(userId);
+      }
       
       // Ratings
       match /ratings/{ratingId} {

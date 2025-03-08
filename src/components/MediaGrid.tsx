@@ -7,6 +7,17 @@ interface MediaGridProps {
 }
 
 const MediaGrid: React.FC<MediaGridProps> = ({ title, children }) => {
+  // Filter out null or undefined children (items without posters)
+  const validChildren = React.Children.toArray(children).filter(Boolean);
+
+  if (validChildren.length === 0) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-gray-500">No items to display</p>
+      </div>
+    );
+  }
+
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -30,7 +41,7 @@ const MediaGrid: React.FC<MediaGridProps> = ({ title, children }) => {
         initial="hidden"
         animate="show"
       >
-        {children}
+        {validChildren}
       </motion.div>
     </div>
   );

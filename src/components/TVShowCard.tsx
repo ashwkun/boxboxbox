@@ -19,6 +19,9 @@ const TVShowCard: React.FC<TVShowCardProps> = ({
   voteAverage,
   onClick
 }) => {
+  // Don't render if there's no poster
+  if (!posterPath) return null;
+
   // Get year from first air date if available
   const year = firstAirDate ? new Date(firstAirDate).getFullYear() : null;
   
@@ -26,7 +29,7 @@ const TVShowCard: React.FC<TVShowCardProps> = ({
   const rating = voteAverage ? voteAverage.toFixed(1) : null;
   
   // Get poster image with optimized size for cards (w300 instead of original)
-  const posterUrl = posterPath ? getImageUrl(posterPath, 'w300') : null;
+  const posterUrl = getImageUrl(posterPath, 'w300');
   
   // Determine the rating color class
   const getRatingColorClass = (rating: number) => {
@@ -44,19 +47,13 @@ const TVShowCard: React.FC<TVShowCardProps> = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <div className="relative aspect-poster overflow-hidden">
-        {posterUrl ? (
-          <img 
-            src={posterUrl} 
-            alt={`${name} poster`}
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-            loading="lazy"
-          />
-        ) : (
-          <div className="w-full h-full bg-gray-600 flex items-center justify-center text-white text-2xl font-bold">
-            {name[0]}
-          </div>
-        )}
+      <div className="relative aspect-[2/3] overflow-hidden rounded-lg">
+        <img 
+          src={posterUrl} 
+          alt={`${name} poster`}
+          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          loading="lazy"
+        />
         
         {rating && (
           <div className={`absolute top-2 right-2 w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white ${getRatingColorClass(Number(rating))} shadow-md`}>
