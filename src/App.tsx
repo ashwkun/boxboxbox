@@ -14,6 +14,7 @@ import Search from './pages/Search';
 import MovieDetails from './pages/MovieDetails';
 import TVShowDetails from './pages/TVShowDetails';
 import Watchlist from './pages/Watchlist';
+import Ratings from './pages/Ratings';
 
 const NotFound = () => (
   <div className="container-page flex flex-col items-center justify-center min-h-[60vh]">
@@ -98,6 +99,9 @@ const App: React.FC = () => {
                 <Route path="/watchlist" element={<Watchlist />} />
                 <Route path="/profile" element={<Profile />} />
               </Route>
+              
+              {/* New routes */}
+              <Route path="/ratings" element={<Ratings />} />
               
               {/* 404 route */}
               <Route path="*" element={<NotFound />} />

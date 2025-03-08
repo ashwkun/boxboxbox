@@ -15,6 +15,10 @@ import RelatedContent from '../components/RelatedContent';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ErrorMessage from '../components/ErrorMessage';
 import WatchlistButton from '../components/WatchlistButton';
+import MoodRating from '../components/MoodRating';
+import { useAuth } from '../contexts/AuthContext';
+import { getRating, rateMedia } from '../services/ratings';
+import { MoodRating as MoodRatingType } from '../types/rating';
 
 interface MovieDetailsData {
   id: number;
@@ -63,9 +67,12 @@ interface MovieDetailsData {
 const MovieDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
   const [movie, setMovie] = useState<MovieDetailsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [userRating, setUserRating] = useState<{ mood: MoodRatingType; wouldRewatch: boolean } | null>(null);
+  const [ratingLoading, setRatingLoading] = useState(false);
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -89,6 +96,48 @@ const MovieDetails: React.FC = () => {
 
     fetchMovieDetails();
   }, [id, navigate]);
+
+  // Fetch user's rating
+  useEffect(() => {
+    const fetchUserRating = async () => {
+      if (!currentUser || !id) return;
+
+      try {
+        const rating = await getRating(currentUser.uid, parseInt(id, 10), 'movie');
+        if (rating) {
+          setUserRating({
+            mood: rating.mood,
+            wouldRewatch: rating.wouldRewatch
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching user rating:', error);
+      }
+    };
+
+    fetchUserRating();
+  }, [currentUser, id]);
+
+  const handleRate = async (mood: MoodRatingType, wouldRewatch: boolean) => {
+    if (!currentUser || !movie || !id) return;
+
+    try {
+      setRatingLoading(true);
+      await rateMedia(
+        currentUser.uid,
+        movie.id,
+        'movie',
+        movie.title,
+        mood,
+        wouldRewatch
+      );
+      setUserRating({ mood, wouldRewatch });
+    } catch (error) {
+      console.error('Error saving rating:', error);
+    } finally {
+      setRatingLoading(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -232,6 +281,29 @@ const MovieDetails: React.FC = () => {
                     <p className="text-gray-700">{movie.overview}</p>
                   </div>
                 )}
+
+                {/* Rating Section */}
+                <div className="mb-6">
+                  <h3 className="text-lg font-semibold mb-4">Your Rating</h3>
+                  {currentUser ? (
+                    <MoodRating
+                      initialMood={userRating?.mood}
+                      initialWouldRewatch={userRating?.wouldRewatch}
+                      onRate={handleRate}
+                      disabled={ratingLoading}
+                    />
+                  ) : (
+                    <div className="text-center py-4 bg-gray-50 rounded-lg">
+                      <p className="text-gray-600 mb-2">Sign in to rate this movie</p>
+                      <button
+                        onClick={() => navigate('/login')}
+                        className="btn btn-primary"
+                      >
+                        Sign In
+                      </button>
+                    </div>
+                  )}
+                </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {director && (

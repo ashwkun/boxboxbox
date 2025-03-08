@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import RecommendationSettings from '../components/RecommendationSettings';
 
 const Profile: React.FC = () => {
   const { currentUser, logout } = useAuth();
+  const [activeTab, setActiveTab] = useState<'profile' | 'recommendations'>('profile');
   
   // Redirect if user is not logged in
   if (!currentUser) {
@@ -80,73 +82,120 @@ const Profile: React.FC = () => {
         </div>
         
         {/* Settings Panels */}
-        <div className="lg:col-span-2 grid grid-cols-1 gap-6">
-          {/* Account Settings */}
-          <motion.div 
-            className="bg-white rounded-lg shadow-md p-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.1 }}
-          >
-            <h3 className="text-lg font-semibold text-gray-800 mb-4 border-b pb-2">Account Settings</h3>
-            <p className="text-gray-500 italic">Coming soon: Account management options</p>
-          </motion.div>
+        <div className="lg:col-span-2">
+          {/* Tabs */}
+          <div className="bg-white rounded-lg shadow-md overflow-hidden mb-6">
+            <div className="flex border-b">
+              <button
+                className={`flex-1 py-3 px-4 font-medium ${
+                  activeTab === 'profile' 
+                    ? 'text-primary border-b-2 border-primary' 
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
+                onClick={() => setActiveTab('profile')}
+              >
+                Profile Information
+              </button>
+              <button
+                className={`flex-1 py-3 px-4 font-medium ${
+                  activeTab === 'recommendations' 
+                    ? 'text-primary border-b-2 border-primary' 
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
+                onClick={() => setActiveTab('recommendations')}
+              >
+                Recommendations
+              </button>
+            </div>
+          </div>
           
-          {/* Preferences */}
-          <motion.div 
-            className="bg-white rounded-lg shadow-md p-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.2 }}
-          >
-            <h3 className="text-lg font-semibold text-gray-800 mb-4 border-b pb-2">Preferences</h3>
-            <p className="text-gray-500 italic mb-4">Coming soon: Set your favorite genres and other preferences</p>
-            
-            <div className="opacity-50 pointer-events-none">
-              <div className="mb-4">
-                <label className="block text-gray-700 mb-2">Favorite Genres</label>
-                <div className="flex flex-wrap gap-2">
-                  <span className="bg-gray-200 px-3 py-1 rounded-full text-sm">Action</span>
-                  <span className="bg-gray-200 px-3 py-1 rounded-full text-sm">Comedy</span>
-                  <span className="bg-gray-200 px-3 py-1 rounded-full text-sm">Drama</span>
-                  <span className="bg-gray-200 px-3 py-1 rounded-full text-sm">Sci-Fi</span>
-                </div>
-              </div>
+          {/* Profile Tab Content */}
+          {activeTab === 'profile' && (
+            <motion.div 
+              className="space-y-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4 }}
+            >
+              {/* Account Settings */}
+              <motion.div 
+                className="bg-white rounded-lg shadow-md p-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.1 }}
+              >
+                <h3 className="text-lg font-semibold text-gray-800 mb-4 border-b pb-2">Account Settings</h3>
+                <p className="text-gray-500 italic">Coming soon: Account management options</p>
+              </motion.div>
               
-              <div className="mb-4">
-                <label className="block text-gray-700 mb-2">Email Notifications</label>
-                <div className="flex items-center">
-                  <input type="checkbox" className="h-4 w-4 text-primary rounded" disabled />
-                  <span className="ml-2 text-gray-700">Receive recommendations</span>
+              {/* Preferences */}
+              <motion.div 
+                className="bg-white rounded-lg shadow-md p-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.2 }}
+              >
+                <h3 className="text-lg font-semibold text-gray-800 mb-4 border-b pb-2">Preferences</h3>
+                <p className="text-gray-500 italic mb-4">Coming soon: Set your favorite genres and other preferences</p>
+                
+                <div className="opacity-50 pointer-events-none">
+                  <div className="mb-4">
+                    <label className="block text-gray-700 mb-2">Favorite Genres</label>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="bg-gray-200 px-3 py-1 rounded-full text-sm">Action</span>
+                      <span className="bg-gray-200 px-3 py-1 rounded-full text-sm">Comedy</span>
+                      <span className="bg-gray-200 px-3 py-1 rounded-full text-sm">Drama</span>
+                      <span className="bg-gray-200 px-3 py-1 rounded-full text-sm">Sci-Fi</span>
+                    </div>
+                  </div>
+                  
+                  <div className="mb-4">
+                    <label className="block text-gray-700 mb-2">Email Notifications</label>
+                    <div className="flex items-center">
+                      <input type="checkbox" className="h-4 w-4 text-primary rounded" disabled />
+                      <span className="ml-2 text-gray-700">Receive recommendations</span>
+                    </div>
+                    <div className="flex items-center mt-2">
+                      <input type="checkbox" className="h-4 w-4 text-primary rounded" disabled />
+                      <span className="ml-2 text-gray-700">New releases for watched shows</span>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex items-center mt-2">
-                  <input type="checkbox" className="h-4 w-4 text-primary rounded" disabled />
-                  <span className="ml-2 text-gray-700">New releases for watched shows</span>
+              </motion.div>
+              
+              {/* Connected Services */}
+              <motion.div 
+                className="bg-white rounded-lg shadow-md p-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.3 }}
+              >
+                <h3 className="text-lg font-semibold text-gray-800 mb-4 border-b pb-2">Connected Services</h3>
+                <div className="flex items-center justify-between p-3 border border-gray-200 rounded-md">
+                  <div className="flex items-center">
+                    <div className="bg-blue-100 p-2 rounded-md">
+                      <svg className="h-6 w-6 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z" />
+                      </svg>
+                    </div>
+                    <span className="ml-3 font-medium text-gray-700">Google</span>
+                  </div>
+                  <span className="text-green-500 text-sm font-medium">Connected</span>
                 </div>
-              </div>
-            </div>
-          </motion.div>
+              </motion.div>
+            </motion.div>
+          )}
           
-          {/* Connected Services */}
-          <motion.div 
-            className="bg-white rounded-lg shadow-md p-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.3 }}
-          >
-            <h3 className="text-lg font-semibold text-gray-800 mb-4 border-b pb-2">Connected Services</h3>
-            <div className="flex items-center justify-between p-3 border border-gray-200 rounded-md">
-              <div className="flex items-center">
-                <div className="bg-blue-100 p-2 rounded-md">
-                  <svg className="h-6 w-6 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z" />
-                  </svg>
-                </div>
-                <span className="ml-3 font-medium text-gray-700">Google</span>
-              </div>
-              <span className="text-green-500 text-sm font-medium">Connected</span>
-            </div>
-          </motion.div>
+          {/* Recommendation Settings Tab Content */}
+          {activeTab === 'recommendations' && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4 }}
+            >
+              <RecommendationSettings />
+            </motion.div>
+          )}
         </div>
       </div>
     </div>

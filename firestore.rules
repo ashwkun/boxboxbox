@@ -2,24 +2,45 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    // User profile data - can only be read/written by the owner
-    match /users/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
     }
     
-    // Watchlist items - can only be read/written by the owner
-    match /watchlists/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // User profiles
+    match /users/{userId} {
+      allow read: if isSignedIn();
+      allow write: if isOwner(userId);
       
-      // Nested watchlist items
-      match /items/{itemId} {
-        allow read, write: if request.auth != null && request.auth.uid == userId;
+      // User preferences
+      match /preferences/{document=**} {
+        allow read, write: if isOwner(userId);
+      }
+      
+      // Watchlist items
+      match /watchlist/{itemId} {
+        allow read, write: if isOwner(userId);
+      }
+      
+      // Ratings
+      match /ratings/{ratingId} {
+        allow read: if isSignedIn();
+        allow write: if isOwner(userId);
+      }
+
+      // Recommendations
+      match /recommendations/{document=**} {
+        allow read, write: if isOwner(userId);
       }
     }
-    
-    // Protected from unauthorized access
+
+    // Allow read access to public collections
     match /{document=**} {
-      allow read, write: if false;
+      allow read: if isSignedIn();
     }
   }
 }
