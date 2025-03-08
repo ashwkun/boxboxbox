@@ -60,9 +60,7 @@ const Movies: React.FC = () => {
   );
   
   const handleMovieClick = (movieId: number) => {
-    // For now, we'll log to console. In Phase 5, we'll implement a movie details page
-    console.log(`Navigate to movie ${movieId}`);
-    // navigate(`/movie/${movieId}`);
+    navigate(`/movie/${movieId}`);
   };
   
   const handleGenreClick = (genreId: number) => {

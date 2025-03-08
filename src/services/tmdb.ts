@@ -100,4 +100,49 @@ export const clearCache = () => {
   });
 };
 
+// Format runtime to hours and minutes
+export const formatRuntime = (minutes: number | null): string => {
+  if (!minutes) return 'N/A';
+  
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+  
+  if (hours === 0) {
+    return `${remainingMinutes}m`;
+  }
+  
+  return `${hours}h ${remainingMinutes > 0 ? `${remainingMinutes}m` : ''}`;
+};
+
+// Format date to readable format
+export const formatDate = (dateString: string | null): string => {
+  if (!dateString) return 'N/A';
+  
+  const options: Intl.DateTimeFormatOptions = { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  };
+  
+  return new Date(dateString).toLocaleDateString('en-US', options);
+};
+
+// Format currency amount
+export const formatCurrency = (amount: number | null): string => {
+  if (!amount) return 'N/A';
+  
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 0
+  }).format(amount);
+};
+
+// Get production countries as a string
+export const formatCountries = (countries: Array<{ iso_3166_1: string, name: string }> | null): string => {
+  if (!countries || countries.length === 0) return 'N/A';
+  
+  return countries.map(country => country.name).join(', ');
+};
+
 export default tmdbApi; 

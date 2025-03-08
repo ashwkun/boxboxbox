@@ -60,9 +60,7 @@ const TVShows: React.FC = () => {
   );
   
   const handleTVShowClick = (tvShowId: number) => {
-    // For now, we'll log to console. In Phase 5, we'll implement a TV show details page
-    console.log(`Navigate to TV show ${tvShowId}`);
-    // navigate(`/tv/${tvShowId}`);
+    navigate(`/tv/${tvShowId}`);
   };
   
   const handleGenreClick = (genreId: number) => {

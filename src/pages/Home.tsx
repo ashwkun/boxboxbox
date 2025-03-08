@@ -48,13 +48,11 @@ const Home: React.FC = () => {
   } = useMediaData(() => getTrendingTVShows('day'));
   
   const handleMovieClick = (movieId: number) => {
-    console.log(`Navigate to movie ${movieId}`);
-    // navigate(`/movie/${movieId}`); // Implement in Phase 5
+    navigate(`/movie/${movieId}`);
   };
   
   const handleTVShowClick = (tvShowId: number) => {
-    console.log(`Navigate to TV show ${tvShowId}`);
-    // navigate(`/tv/${tvShowId}`); // Implement in Phase 5
+    navigate(`/tv/${tvShowId}`);
   };
   
   // Extract data from API responses

@@ -11,6 +11,8 @@ import Home from './pages/Home';
 import Movies from './pages/Movies';
 import TVShows from './pages/TVShows';
 import Search from './pages/Search';
+import MovieDetails from './pages/MovieDetails';
+import TVShowDetails from './pages/TVShowDetails';
 
 // Placeholder for Watchlist component (will be implemented in Phase 6)
 const Watchlist = () => (
@@ -102,6 +104,10 @@ const App: React.FC = () => {
               <Route path="/tvshows" element={<TVShows />} />
               <Route path="/search" element={<Search />} />
               <Route path="/login" element={<Login />} />
+              
+              {/* Detail pages */}
+              <Route path="/movie/:id" element={<MovieDetails />} />
+              <Route path="/tv/:id" element={<TVShowDetails />} />
               
               {/* Protected routes */}
               <Route element={<ProtectedRoute />}>

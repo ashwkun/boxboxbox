@@ -127,13 +127,21 @@ const Search: React.FC = () => {
   
   // Handle item click
   const handleItemClick = (id: number, mediaType: string) => {
-    if (mediaType === 'movie') {
-      navigate(`/movie/${id}`);
-    } else if (mediaType === 'tv') {
-      navigate(`/tv/${id}`);
-    }
+    navigate(`/${mediaType}/${id}`);
   };
   
+  // Save searches to localStorage for suggestions
+  useEffect(() => {
+    if (query && query.trim() !== '') {
+      const recentSearches = JSON.parse(localStorage.getItem('recentSearches') || '[]');
+      // Only add if it's not already there
+      if (!recentSearches.includes(query)) {
+        const newSearches = [query, ...recentSearches].slice(0, 10); // Keep only 10 most recent
+        localStorage.setItem('recentSearches', JSON.stringify(newSearches));
+      }
+    }
+  }, [query]);
+
   // If we have search history, use it for suggestions
   const recentSearches = JSON.parse(localStorage.getItem('recentSearches') || '[]');
   
