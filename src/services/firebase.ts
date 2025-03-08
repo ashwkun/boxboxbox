@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, User } from 'firebase/auth';
-import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
+import { getFirestore, doc, setDoc, getDoc, collection, getDocs, writeBatch } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
 // Firebase configuration from the README-CREDENTIALS.md file
@@ -65,6 +65,7 @@ export const createUserProfileDocument = async (user: User) => {
     try {
       await setDoc(userRef, {
         displayName,
+        displayNameLower: displayName?.toLowerCase() || '',
         email,
         photoURL,
         uid,
@@ -83,4 +84,24 @@ export const createUserProfileDocument = async (user: User) => {
   return userRef;
 };
 
-export const getCurrentUser = () => auth.currentUser; 
+export const getCurrentUser = () => auth.currentUser;
+
+// Migrate existing users to add displayNameLower field
+export const migrateExistingUsers = async () => {
+  const usersRef = collection(firestore, 'users');
+  const snapshot = await getDocs(usersRef);
+  
+  const batch = writeBatch(firestore);
+  
+  snapshot.docs.forEach(doc => {
+    const data = doc.data();
+    if (data.displayName && !data.displayNameLower) {
+      const userRef = doc.ref;
+      batch.update(userRef, {
+        displayNameLower: data.displayName.toLowerCase()
+      });
+    }
+  });
+  
+  await batch.commit();
+}; 
