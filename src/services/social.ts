@@ -61,12 +61,15 @@ export interface Notification {
 // Enable social features for a user
 export const enableSocialFeatures = async (userId: string, displayName: string, photoURL: string | null): Promise<void> => {
   if (!userId) throw new Error('User must be logged in');
+  if (!displayName) throw new Error('Display name is required');
 
+  const sanitizedDisplayName = displayName.trim();
+  
   try {
     const publicUserRef = doc(db, 'public_users', userId);
     await setDoc(publicUserRef, {
-      displayName,
-      displayNameLower: displayName.toLowerCase(),
+      displayName: sanitizedDisplayName,
+      displayNameLower: sanitizedDisplayName.toLowerCase(),
       photoURL,
       joinedAt: serverTimestamp()
     });
