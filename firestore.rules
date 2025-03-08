@@ -19,10 +19,13 @@ service cloud.firestore {
     // Public users collection
     match /public_users/{userId} {
       allow read: if isSignedIn();
-      allow write: if isOwner(userId);
+      // Only allow users to write their own document and validate the data
+      allow write: if isOwner(userId) && 
+        request.resource.data.keys().hasOnly(['displayName', 'displayNameLower', 'photoURL', 'joinedAt']) &&
+        request.resource.data.displayNameLower == request.resource.data.displayName.lower();
     }
 
-    // User profiles
+    // User profiles (private data)
     match /users/{userId} {
       allow read: if isSignedIn();
       allow write: if isOwner(userId);
