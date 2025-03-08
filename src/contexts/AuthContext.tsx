@@ -1,63 +1,93 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { User } from 'firebase/auth';
-import { auth, signInWithGoogle, logoutUser } from '../services/firebase';
+import React, { createContext, useState, useContext, useEffect } from 'react';
+import { 
+  getAuth, 
+  onAuthStateChanged, 
+  signInWithEmailAndPassword, 
+  createUserWithEmailAndPassword,
+  signOut,
+  updateProfile,
+  User
+} from 'firebase/auth';
+import { app } from '../firebase';
 
 interface AuthContextType {
   currentUser: User | null;
   loading: boolean;
-  login: () => Promise<any>;
-  logout: () => Promise<any>;
+  login: (email: string, password: string) => Promise<any>;
+  signup: (email: string, password: string) => Promise<any>;
+  logout: () => Promise<void>;
+  updateUserProfile: (profileData: { displayName?: string | null; photoURL?: string | null }) => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+// Create context with default values
+const AuthContext = createContext<AuthContextType>({
+  currentUser: null,
+  loading: true,
+  login: async () => ({}),
+  signup: async () => ({}),
+  logout: async () => {},
+  updateUserProfile: async () => {}
+});
 
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
-};
+// Hook to use auth context
+export const useAuth = () => useContext(AuthContext);
 
+// Provider component
 interface AuthProviderProps {
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const auth = getAuth(app);
 
+  // Authentication state listener
   useEffect(() => {
-    // Listen for auth state changes
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
       setLoading(false);
     });
 
-    // Cleanup subscription on unmount
     return unsubscribe;
-  }, []);
+  }, [auth]);
 
-  const login = async () => {
-    return signInWithGoogle();
+  // Login function
+  const login = async (email: string, password: string) => {
+    return signInWithEmailAndPassword(auth, email, password);
   };
 
+  // Signup function
+  const signup = async (email: string, password: string) => {
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
+
+  // Logout function
   const logout = async () => {
-    return logoutUser();
+    return signOut(auth);
   };
 
+  // Update profile function
+  const updateUserProfile = async (profileData: { displayName?: string | null; photoURL?: string | null }) => {
+    if (!auth.currentUser) throw new Error('No user logged in');
+    return updateProfile(auth.currentUser, profileData);
+  };
+
+  // Context value
   const value = {
     currentUser,
     loading,
     login,
-    logout
+    signup,
+    logout,
+    updateUserProfile
   };
 
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      {children}
     </AuthContext.Provider>
   );
 };
 
-export default AuthContext; 
+export default AuthProvider; 

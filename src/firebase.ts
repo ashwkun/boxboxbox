@@ -1,28 +1,29 @@
-import { initializeApp, getApps } from 'firebase/app';
-import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDQgM4P5jlYDEPrQ-75dml-K6MnW4SFRi8",
+  apiKey: "AIzaSyAiqIVKcOV8JDAoFuLPqRkTI-zkRhsea3g",
   authDomain: "tviodb.firebaseapp.com",
   projectId: "tviodb",
-  storageBucket: "tviodb.appspot.com",
-  messagingSenderId: "1015568709414",
-  appId: "1:1015568709414:web:c8c9f4d4e0e56d9d9a1b8e"
+  storageBucket: "tviodb.firebasestorage.app",
+  messagingSenderId: "808986648679",
+  appId: "1:808986648679:web:29ce4ea122d500cd0f74c2",
+  measurementId: "G-DV0YMJEJRT"
 };
 
-// Initialize Firebase - only if not already initialized
+// Initialize Firebase
 let app;
-if (!getApps().length) {
+
+try {
   app = initializeApp(firebaseConfig);
-} else {
-  app = getApps()[0]; // If already initialized, use the existing app
+} catch (error) {
+  console.error("Firebase initialization error:", error);
+  // Try re-initializing with a name to avoid multiple instances
+  app = initializeApp(firebaseConfig, "tviodb");
 }
 
-// Initialize Firebase services
-export const auth = getAuth(app);
+export { app };
 export const db = getFirestore(app);
-export const googleProvider = new GoogleAuthProvider();
-
-export default app; 
+export const auth = getAuth(app); 

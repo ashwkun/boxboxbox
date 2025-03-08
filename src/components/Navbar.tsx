@@ -27,7 +27,9 @@ const Navbar: React.FC = () => {
     { label: 'Search', path: '/search' },
     ...(currentUser ? [
       { label: 'Watchlist', path: '/watchlist' },
-      { label: 'Ratings', path: '/ratings' }
+      { label: 'Ratings', path: '/ratings' },
+      { label: 'Activity', path: '/activity' },
+      { label: 'People', path: '/people' }
     ] : [])
   ];
 
