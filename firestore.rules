@@ -11,19 +11,26 @@ service cloud.firestore {
       return isSignedIn() && request.auth.uid == userId;
     }
 
+    function isAdmin() {
+      return isSignedIn() && 
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
     // User profiles
     match /users/{userId} {
       allow read: if isSignedIn();
-      allow write: if isOwner(userId);
-      // Allow updating displayNameLower field if the user is signed in
-      allow update: if isSignedIn() && 
-        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['displayNameLower']) &&
-        request.resource.data.displayNameLower == request.resource.data.displayName.lower();
+      allow create: if isOwner(userId);
+      allow update: if isOwner(userId) || isAdmin();
       
       // User preferences
       match /preferences/{document=**} {
         allow read, write: if isOwner(userId);
       }
+    }
+
+    // Admin collection
+    match /admins/{adminId} {
+      allow read: if isSignedIn();
     }
 
     // Watchlist items

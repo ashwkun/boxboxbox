@@ -101,17 +101,45 @@ export const migrateExistingUsers = async () => {
   const usersRef = collection(firestore, 'users');
   const snapshot = await getDocs(usersRef);
   
-  const batch = writeBatch(firestore);
+  // Process users in batches of 500 (Firestore batch limit)
+  const batchSize = 500;
+  const batches: Promise<void>[] = [];
+  let currentBatch = writeBatch(firestore);
+  let operationsCount = 0;
   
-  snapshot.docs.forEach(doc => {
+  for (const doc of snapshot.docs) {
     const data = doc.data();
-    if (data.displayName && !data.displayNameLower) {
-      const userRef = doc.ref;
-      batch.update(userRef, {
-        displayNameLower: data.displayName.toLowerCase()
+    if (data.displayName && (!data.displayNameLower || data.displayNameLower !== data.displayName.toLowerCase())) {
+      if (operationsCount >= batchSize) {
+        // Commit current batch and start a new one
+        batches.push(currentBatch.commit());
+        currentBatch = writeBatch(firestore);
+        operationsCount = 0;
+      }
+      
+      currentBatch.update(doc.ref, {
+        displayNameLower: data.displayName.toLowerCase(),
+        updatedAt: new Date()
       });
+      operationsCount++;
     }
-  });
+  }
   
-  await batch.commit();
+  // Commit the last batch if it has any operations
+  if (operationsCount > 0) {
+    batches.push(currentBatch.commit());
+  }
+  
+  // Wait for all batches to complete
+  await Promise.all(batches);
+  
+  console.log(`Migration completed. Updated ${operationsCount} users.`);
+};
+
+// Check if user is admin
+export const isUserAdmin = async (userId: string): Promise<boolean> => {
+  if (!userId) return false;
+  const adminRef = doc(firestore, 'admins', userId);
+  const adminDoc = await getDoc(adminRef);
+  return adminDoc.exists();
 }; 

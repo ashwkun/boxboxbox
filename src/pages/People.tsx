@@ -13,6 +13,7 @@ import {
 } from '../services/social';
 import LoadingSpinner from '../components/LoadingSpinner';
 import SearchBar from '../components/SearchBar';
+import AdminPanel from '../components/AdminPanel';
 
 const People: React.FC = () => {
   const { currentUser } = useAuth();
@@ -163,6 +164,7 @@ const People: React.FC = () => {
 
   return (
     <div className="container-page">
+      <AdminPanel />
       <div className="bg-gradient-to-r from-primary to-secondary text-white p-8 rounded-lg mb-8">
         <h1 className="text-3xl font-bold mb-4">People</h1>
         <p className="text-white/90 mb-6">Connect with other movie and TV show enthusiasts</p>
