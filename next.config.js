@@ -1,19 +1,19 @@
-import { NextConfig } from 'next';
-import withPWA from 'next-pwa';
+/** @type {import('next').NextConfig} */
 
-const pwaConfig = withPWA({
+const withPWA = require('next-pwa')({
   dest: 'public',
   disable: process.env.NODE_ENV === 'development',
   register: true,
 });
 
-const nextConfig: NextConfig = {
+const nextConfig = {
   output: 'export', // Enable static exports
   images: {
     unoptimized: true, // Required for static export
     domains: ['image.tmdb.org'],
   },
-  // Disable browsing-topics policy
+  // Disable browsing-topics policy - Note: headers don't work with static export
+  // but we'll keep this for reference
   headers: async () => {
     return [
       {
@@ -43,4 +43,4 @@ const nextConfig: NextConfig = {
   }
 };
 
-export default pwaConfig(nextConfig as any);
+module.exports = withPWA(nextConfig); 
