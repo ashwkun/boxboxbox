@@ -139,11 +139,11 @@ export const getFollowing = async (userId: string): Promise<UserProfile[]> => {
   const querySnapshot = await getDocs(followingRef);
   
   const following = await Promise.all(
-    querySnapshot.docs.map(async doc => {
-      const userDoc = await getDoc(doc(db, 'users', doc.id));
+    querySnapshot.docs.map(async docSnap => {
+      const userDoc = await getDoc(doc(db, 'users', docSnap.id));
       if (!userDoc.exists()) return null;
       const data = userDoc.data();
-      return data ? { uid: doc.id, ...data } as UserProfile : null;
+      return data ? { uid: docSnap.id, ...data } as UserProfile : null;
     })
   );
   
@@ -258,18 +258,17 @@ export const shareList = async (
 };
 
 // Search users
-export const searchUsers = async (searchTerm: string, currentUserId: string, limit = 10): Promise<UserProfile[]> => {
+export const searchUsers = async (searchTerm: string, currentUserId: string, maxLimit = 10): Promise<UserProfile[]> => {
   const usersRef = collection(db, 'users');
   
   // Create a case-insensitive search term
   const searchTermLower = searchTerm.toLowerCase();
-  const searchTermUpper = searchTerm.toUpperCase();
   
   const q = query(
     usersRef,
     where('displayNameLower', '>=', searchTermLower),
     where('displayNameLower', '<=', searchTermLower + '\uf8ff'),
-    limit(limit)
+    limit(maxLimit)
   );
   
   const querySnapshot = await getDocs(q);
@@ -292,7 +291,7 @@ export const searchUsers = async (searchTerm: string, currentUserId: string, lim
 };
 
 // Get suggested users based on common interests
-export const getSuggestedUsers = async (userId: string, limit = 10): Promise<UserProfile[]> => {
+export const getSuggestedUsers = async (userId: string, maxLimit = 10): Promise<UserProfile[]> => {
   // Get current user's watched/rated items
   const userItemsRef = collection(db, 'users', userId, 'items');
   const userItemsSnap = await getDocs(userItemsRef);
@@ -300,7 +299,8 @@ export const getSuggestedUsers = async (userId: string, limit = 10): Promise<Use
 
   // Get users who have watched similar items
   const usersRef = collection(db, 'users');
-  const q = query(usersRef, limit(50)); // Get a larger pool of users first
+  const maxUsers = 50; // Get a larger pool of users first
+  const q = query(usersRef, limit(maxUsers));
   const usersSnap = await getDocs(q);
 
   const userProfiles: Array<UserProfile & { commonItems: number }> = [];
@@ -334,5 +334,5 @@ export const getSuggestedUsers = async (userId: string, limit = 10): Promise<Use
   // Sort by number of common items and return top results
   return userProfiles
     .sort((a, b) => b.commonItems - a.commonItems)
-    .slice(0, limit);
+    .slice(0, maxLimit);
 }; 
