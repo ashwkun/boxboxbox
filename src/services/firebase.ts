@@ -57,28 +57,38 @@ export const createUserProfileDocument = async (user: User) => {
   const userRef = doc(firestore, `users/${user.uid}`);
   const snapshot = await getDoc(userRef);
   
-  // If user doesn't exist in Firestore, create a new document
-  if (!snapshot.exists()) {
-    const { displayName, email, photoURL, uid } = user;
-    const createdAt = new Date();
-    
-    try {
+  const { displayName, email, photoURL, uid } = user;
+  const now = new Date();
+  
+  try {
+    if (!snapshot.exists()) {
+      // Create new user document
       await setDoc(userRef, {
         displayName,
         displayNameLower: displayName?.toLowerCase() || '',
         email,
         photoURL,
         uid,
-        createdAt,
+        createdAt: now,
         watchlist: [],
         watched: [],
         preferences: {
           favoriteGenres: []
         }
       });
-    } catch (error) {
-      console.error('Error creating user document:', error);
+    } else {
+      // Update existing user's displayNameLower if needed
+      const data = snapshot.data();
+      if (data.displayName && (!data.displayNameLower || data.displayNameLower !== data.displayName.toLowerCase())) {
+        await setDoc(userRef, {
+          ...data,
+          displayNameLower: data.displayName.toLowerCase(),
+          updatedAt: now
+        }, { merge: true });
+      }
     }
+  } catch (error) {
+    console.error('Error creating/updating user document:', error);
   }
   
   return userRef;
