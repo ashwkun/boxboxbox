@@ -28,7 +28,6 @@ const Navbar: React.FC = () => {
     ...(currentUser ? [
       { label: 'Watchlist', path: '/watchlist' },
       { label: 'Ratings', path: '/ratings' },
-      { label: 'Activity', path: '/activity' },
       { label: 'People', path: '/people' }
     ] : [])
   ];
@@ -64,7 +63,11 @@ const Navbar: React.FC = () => {
             
             {/* Search Bar */}
             <div className="w-48 lg:w-64">
-              <SearchBar compact={true} />
+              <SearchBar 
+                compact={true} 
+                onSearch={() => {}}
+                placeholder="Search..."
+              />
             </div>
           </div>
 
