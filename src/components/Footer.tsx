@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { FiGithub, FiTwitter, FiInstagram } from 'react-icons/fi';
-import LottieLogo from './LottieLogo';
+import TextLogo from './TextLogo';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -13,10 +13,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center mb-8">
           <div className="flex items-center mb-6 md:mb-0">
             <Link href="/" className="flex items-center">
-              <div className="w-8 h-8 mr-2">
-                <LottieLogo />
-              </div>
-              <span className="text-xl font-bold text-white">tv.io</span>
+              <TextLogo size="medium" className="text-primary" />
             </Link>
           </div>
           
