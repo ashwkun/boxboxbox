@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import MediaGrid from '../components/MediaGrid';
 import MovieCard from '../components/MovieCard';
 import TVShowCard from '../components/TVShowCard';
@@ -59,15 +60,42 @@ const Home: React.FC = () => {
   const trendingMovies = trendingMoviesData?.results?.slice(0, 10) || [];
   const trendingTVShows = trendingTVShowsData?.results?.slice(0, 10) || [];
   
+  // Animation variants for staggered animations
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+  
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.5 }
+    }
+  };
+  
   return (
-    <div className="page-container home-page">
-      <div className="home-hero">
-        <h1>Welcome to tv.io</h1>
-        <p>Discover movies and TV shows, track what you've watched, and get personalized recommendations.</p>
-      </div>
+    <div className="container-page">
+      <motion.div 
+        className="bg-gradient-to-r from-primary to-secondary text-white p-8 md:p-12 rounded-lg mb-12 text-center"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <h1 className="text-3xl md:text-4xl font-bold mb-4">Welcome to tv.io</h1>
+        <p className="text-xl md:text-2xl text-white/90 max-w-2xl mx-auto">
+          Discover movies and TV shows, track what you've watched, and get personalized recommendations.
+        </p>
+      </motion.div>
       
       {/* Trending Movies Section */}
-      <section className="home-section">
+      <section className="mb-12">
         {moviesLoading ? (
           <LoadingSpinner />
         ) : moviesError ? (
@@ -93,7 +121,7 @@ const Home: React.FC = () => {
       </section>
       
       {/* Trending TV Shows Section */}
-      <section className="home-section">
+      <section className="mb-12">
         {tvShowsLoading ? (
           <LoadingSpinner />
         ) : tvShowsError ? (
@@ -119,34 +147,64 @@ const Home: React.FC = () => {
       </section>
       
       {/* Feature Highlights */}
-      <section className="feature-highlights">
-        <h2>Features</h2>
-        <div className="features-grid">
-          <div className="feature-card">
-            <div className="feature-icon">🎬</div>
-            <h3>Browse</h3>
-            <p>Discover trending and popular movies and TV shows.</p>
-          </div>
-          <div className="feature-card">
-            <div className="feature-icon">🔍</div>
-            <h3>Search</h3>
-            <p>Find your favorite movies and TV shows.</p>
-            <span className="coming-soon-badge">Coming Soon</span>
-          </div>
-          <div className="feature-card">
-            <div className="feature-icon">📋</div>
-            <h3>Track</h3>
-            <p>Keep track of what you've watched and want to watch.</p>
-            <span className="coming-soon-badge">Coming Soon</span>
-          </div>
-          <div className="feature-card">
-            <div className="feature-icon">👍</div>
-            <h3>Rate & Review</h3>
-            <p>Share your thoughts and ratings with others.</p>
-            <span className="coming-soon-badge">Coming Soon</span>
-          </div>
+      <motion.section 
+        className="mt-16 mb-8"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <h2 className="text-2xl font-bold text-center mb-10 text-gray-800">Features</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <motion.div 
+            className="bg-white rounded-lg shadow-md p-6 text-center relative overflow-hidden group"
+            variants={itemVariants}
+            whileHover={{ y: -5, transition: { duration: 0.2 } }}
+          >
+            <div className="text-5xl mb-4 text-primary">🎬</div>
+            <h3 className="text-lg font-semibold mb-2">Browse</h3>
+            <p className="text-gray-600">Discover trending and popular movies and TV shows.</p>
+          </motion.div>
+          
+          <motion.div 
+            className="bg-white rounded-lg shadow-md p-6 text-center relative overflow-hidden group"
+            variants={itemVariants}
+            whileHover={{ y: -5, transition: { duration: 0.2 } }}
+          >
+            <div className="absolute top-2 right-2">
+              <span className="bg-accent text-white text-xs px-2 py-1 rounded-full">Coming Soon</span>
+            </div>
+            <div className="text-5xl mb-4 text-primary">🔍</div>
+            <h3 className="text-lg font-semibold mb-2">Search</h3>
+            <p className="text-gray-600">Find your favorite movies and TV shows.</p>
+          </motion.div>
+          
+          <motion.div 
+            className="bg-white rounded-lg shadow-md p-6 text-center relative overflow-hidden group"
+            variants={itemVariants}
+            whileHover={{ y: -5, transition: { duration: 0.2 } }}
+          >
+            <div className="absolute top-2 right-2">
+              <span className="bg-accent text-white text-xs px-2 py-1 rounded-full">Coming Soon</span>
+            </div>
+            <div className="text-5xl mb-4 text-primary">📋</div>
+            <h3 className="text-lg font-semibold mb-2">Track</h3>
+            <p className="text-gray-600">Keep track of what you've watched and want to watch.</p>
+          </motion.div>
+          
+          <motion.div 
+            className="bg-white rounded-lg shadow-md p-6 text-center relative overflow-hidden group"
+            variants={itemVariants}
+            whileHover={{ y: -5, transition: { duration: 0.2 } }}
+          >
+            <div className="absolute top-2 right-2">
+              <span className="bg-accent text-white text-xs px-2 py-1 rounded-full">Coming Soon</span>
+            </div>
+            <div className="text-5xl mb-4 text-primary">👍</div>
+            <h3 className="text-lg font-semibold mb-2">Rate & Review</h3>
+            <p className="text-gray-600">Share your thoughts and ratings with others.</p>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
     </div>
   );
 };

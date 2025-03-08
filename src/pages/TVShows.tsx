@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import MediaGrid from '../components/MediaGrid';
 import TVShowCard from '../components/TVShowCard';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -80,22 +81,31 @@ const TVShows: React.FC = () => {
     : null;
 
   return (
-    <div className="page-container tvshows-page">
-      <h1>TV Shows</h1>
+    <div className="container-page">
+      <div className="bg-gradient-to-r from-secondary to-primary text-white p-8 rounded-lg mb-8">
+        <h1 className="text-3xl font-bold mb-2">Explore TV Shows</h1>
+        <p className="text-white/90">Discover binge-worthy series from around the world.</p>
+      </div>
       
       {/* Genres Filter */}
       {!genresLoading && !genresError && (
-        <div className="genres-filter">
-          <h2>Genres</h2>
-          <div className="genre-buttons">
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold mb-4">Genres</h2>
+          <div className="flex flex-wrap gap-2">
             {genres.map((genre: Genre) => (
-              <button 
+              <motion.button 
                 key={genre.id}
-                className={`genre-button ${selectedGenre === genre.id ? 'active' : ''}`}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                  selectedGenre === genre.id 
+                    ? 'bg-secondary text-white' 
+                    : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'
+                }`}
                 onClick={() => handleGenreClick(genre.id)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 {genre.name}
-              </button>
+              </motion.button>
             ))}
           </div>
         </div>
@@ -126,7 +136,9 @@ const TVShows: React.FC = () => {
               ))}
             </MediaGrid>
           ) : (
-            <p>No TV shows found for this genre.</p>
+            <div className="bg-white p-6 rounded-lg shadow-md text-center">
+              <p>No TV shows found for this genre.</p>
+            </div>
           )}
         </>
       )}

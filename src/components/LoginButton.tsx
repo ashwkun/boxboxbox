@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
 
 const LoginButton: React.FC = () => {
@@ -13,11 +14,13 @@ const LoginButton: React.FC = () => {
   };
   
   return (
-    <button 
-      className="login-button" 
+    <motion.button 
+      className="flex items-center justify-center gap-3 w-full md:w-auto bg-white border border-gray-300 rounded-md px-6 py-3 text-gray-700 font-medium shadow-sm hover:shadow-md transition-all duration-200"
       onClick={handleLogin}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
     >
-      <svg className="login-icon" viewBox="0 0 24 24" width="24" height="24">
+      <svg className="w-5 h-5" viewBox="0 0 24 24">
         <g transform="matrix(1, 0, 0, 1, 27.009001, -39.238998)">
           <path fill="#4285F4" d="M -3.264 51.509 C -3.264 50.719 -3.334 49.969 -3.454 49.239 L -14.754 49.239 L -14.754 53.749 L -8.284 53.749 C -8.574 55.229 -9.424 56.479 -10.684 57.329 L -10.684 60.329 L -6.824 60.329 C -4.564 58.239 -3.264 55.159 -3.264 51.509 Z"/>
           <path fill="#34A853" d="M -14.754 63.239 C -11.514 63.239 -8.804 62.159 -6.824 60.329 L -10.684 57.329 C -11.764 58.049 -13.134 58.489 -14.754 58.489 C -17.884 58.489 -20.534 56.379 -21.484 53.529 L -25.464 53.529 L -25.464 56.619 C -23.494 60.539 -19.444 63.239 -14.754 63.239 Z"/>
@@ -26,7 +29,7 @@ const LoginButton: React.FC = () => {
         </g>
       </svg>
       Sign in with Google
-    </button>
+    </motion.button>
   );
 };
 
