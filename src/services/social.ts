@@ -255,4 +255,84 @@ export const shareList = async (
     sharedListId: listId,
     sharedListTitle: listTitle
   });
+};
+
+// Search users
+export const searchUsers = async (searchTerm: string, currentUserId: string, limit = 10): Promise<UserProfile[]> => {
+  const usersRef = collection(db, 'users');
+  
+  // Create a case-insensitive search term
+  const searchTermLower = searchTerm.toLowerCase();
+  const searchTermUpper = searchTerm.toUpperCase();
+  
+  const q = query(
+    usersRef,
+    where('displayNameLower', '>=', searchTermLower),
+    where('displayNameLower', '<=', searchTermLower + '\uf8ff'),
+    limit(limit)
+  );
+  
+  const querySnapshot = await getDocs(q);
+  
+  // Filter out the current user and transform the data
+  return querySnapshot.docs
+    .map(doc => {
+      const data = doc.data();
+      return {
+        uid: doc.id,
+        displayName: data.displayName,
+        photoURL: data.photoURL,
+        bio: data.bio,
+        joinedAt: data.joinedAt.toDate(),
+        followersCount: data.followersCount || 0,
+        followingCount: data.followingCount || 0
+      } as UserProfile;
+    })
+    .filter(user => user.uid !== currentUserId);
+};
+
+// Get suggested users based on common interests
+export const getSuggestedUsers = async (userId: string, limit = 10): Promise<UserProfile[]> => {
+  // Get current user's watched/rated items
+  const userItemsRef = collection(db, 'users', userId, 'items');
+  const userItemsSnap = await getDocs(userItemsRef);
+  const userItems = userItemsSnap.docs.map(doc => doc.id);
+
+  // Get users who have watched similar items
+  const usersRef = collection(db, 'users');
+  const q = query(usersRef, limit(50)); // Get a larger pool of users first
+  const usersSnap = await getDocs(q);
+
+  const userProfiles: Array<UserProfile & { commonItems: number }> = [];
+
+  // Check each user's items for commonality
+  for (const userDoc of usersSnap.docs) {
+    if (userDoc.id === userId) continue; // Skip current user
+
+    const userItemsRef = collection(db, 'users', userDoc.id, 'items');
+    const theirItemsSnap = await getDocs(userItemsRef);
+    const theirItems = theirItemsSnap.docs.map(doc => doc.id);
+
+    // Count common items
+    const commonItems = theirItems.filter(item => userItems.includes(item)).length;
+
+    if (commonItems > 0) {
+      const data = userDoc.data();
+      userProfiles.push({
+        uid: userDoc.id,
+        displayName: data.displayName,
+        photoURL: data.photoURL,
+        bio: data.bio,
+        joinedAt: data.joinedAt.toDate(),
+        followersCount: data.followersCount || 0,
+        followingCount: data.followingCount || 0,
+        commonItems
+      });
+    }
+  }
+
+  // Sort by number of common items and return top results
+  return userProfiles
+    .sort((a, b) => b.commonItems - a.commonItems)
+    .slice(0, limit);
 }; 

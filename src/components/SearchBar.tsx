@@ -6,12 +6,14 @@ interface SearchBarProps {
   className?: string;
   placeholder?: string;
   compact?: boolean;
+  onSearch: (query: string) => void;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ 
   className = '', 
   placeholder = 'Search movies, TV shows...', 
-  compact = false 
+  compact = false,
+  onSearch
 }) => {
   const [query, setQuery] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -49,12 +51,12 @@ const SearchBar: React.FC<SearchBarProps> = ({
   };
   
   // Handle search submission
-  const handleSearch = (e?: React.FormEvent) => {
+  const handleSubmit = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     
     if (query.trim()) {
       addToRecentSearches(query.trim());
-      navigate(`/search?q=${encodeURIComponent(query.trim())}`);
+      onSearch(query.trim());
       setShowSuggestions(false);
     }
   };
@@ -63,7 +65,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   const handleSuggestionClick = (suggestion: string) => {
     setQuery(suggestion);
     addToRecentSearches(suggestion);
-    navigate(`/search?q=${encodeURIComponent(suggestion)}`);
+    onSearch(suggestion);
     setShowSuggestions(false);
   };
   
@@ -83,7 +85,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   
   return (
     <div className={`relative ${className}`} ref={containerRef}>
-      <form onSubmit={handleSearch} className="flex items-center">
+      <form onSubmit={handleSubmit} className="flex items-center">
         <div className="relative flex items-center w-full">
           <input
             ref={inputRef}
