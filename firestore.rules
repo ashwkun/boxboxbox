@@ -56,13 +56,15 @@ service cloud.firestore {
     // Following
     match /users/{userId}/following/{followedId} {
       allow read: if isSignedIn();
-      allow write: if isOwner(userId);
+      // Allow user to manage their own following list
+      allow write: if isSignedIn() && request.auth.uid == userId;
     }
 
     // Followers
     match /users/{userId}/followers/{followerId} {
       allow read: if isSignedIn();
-      allow write: if isOwner(userId);
+      // Allow the follower to add/remove themselves from someone's followers list
+      allow write: if isSignedIn() && request.auth.uid == followerId;
     }
 
     // Activity Feed
