@@ -30,9 +30,9 @@ const MovieCard: React.FC<MovieCardProps> = ({
   
   // Determine the rating color class
   const getRatingColorClass = (rating: number) => {
-    if (rating >= 7) return 'bg-success';
-    if (rating >= 5) return 'bg-warning';
-    return 'bg-error';
+    if (rating >= 7) return 'bg-green-500';
+    if (rating >= 5) return 'bg-yellow-500';
+    return 'bg-red-500';
   };
   
   return (
@@ -59,7 +59,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
         )}
         
         {rating && (
-          <div className={`absolute top-2 right-2 w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white ${getRatingColorClass(Number(rating))} bg-opacity-90`}>
+          <div className={`absolute top-2 right-2 w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white ${getRatingColorClass(Number(rating))} shadow-md`}>
             {rating}
           </div>
         )}
@@ -67,7 +67,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
       
       <div className="p-3">
         <h3 className="font-medium text-sm line-clamp-2">{title}</h3>
-        {year && <span className="text-text-light text-xs">{year}</span>}
+        {year && <span className="text-gray-500 text-xs">{year}</span>}
       </div>
     </motion.div>
   );
