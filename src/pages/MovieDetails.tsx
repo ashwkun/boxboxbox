@@ -128,12 +128,14 @@ const MovieDetails: React.FC = () => {
         movie.id,
         'movie',
         movie.title,
+        movie.poster_path,
         mood,
         wouldRewatch
       );
       setUserRating({ mood, wouldRewatch });
     } catch (error) {
-      console.error('Error saving rating:', error);
+      console.error('Error rating movie:', error);
+      setError('Failed to save your rating. Please try again.');
     } finally {
       setRatingLoading(false);
     }

@@ -17,6 +17,7 @@ interface RatingData {
   mediaId: number;
   mediaType: 'movie' | 'tv';
   title: string;
+  posterPath: string | null;
   mood: MoodRating;
   wouldRewatch: boolean;
   createdAt: Timestamp;
@@ -29,6 +30,7 @@ export const rateMedia = async (
   mediaId: number,
   mediaType: 'movie' | 'tv',
   title: string,
+  posterPath: string | null,
   mood: MoodRating,
   wouldRewatch: boolean
 ): Promise<void> => {
@@ -43,6 +45,7 @@ export const rateMedia = async (
       mediaId,
       mediaType,
       title,
+      posterPath,
       mood,
       wouldRewatch,
       updatedAt: now,
@@ -91,6 +94,7 @@ export const getUserRatings = async (
   id: number;
   type: 'movie' | 'tv';
   title: string;
+  posterPath: string | null;
   rating: Rating;
 }[]> => {
   if (!userId) return [];
@@ -115,6 +119,7 @@ export const getUserRatings = async (
         id: data.mediaId,
         type: data.mediaType,
         title: data.title,
+        posterPath: data.posterPath,
         rating: {
           mood: data.mood,
           wouldRewatch: data.wouldRewatch,

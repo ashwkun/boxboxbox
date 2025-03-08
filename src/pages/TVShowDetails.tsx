@@ -137,12 +137,14 @@ const TVShowDetails: React.FC = () => {
         tvShow.id,
         'tv',
         tvShow.name,
+        tvShow.poster_path,
         mood,
         wouldRewatch
       );
       setUserRating({ mood, wouldRewatch });
     } catch (error) {
-      console.error('Error saving rating:', error);
+      console.error('Error rating TV show:', error);
+      setError('Failed to save your rating. Please try again.');
     } finally {
       setRatingLoading(false);
     }
