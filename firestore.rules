@@ -36,6 +36,42 @@ service cloud.firestore {
       match /recommendations/{document=**} {
         allow read, write: if isOwner(userId);
       }
+
+      // Following
+      match /following/{followedId} {
+        allow read: if isSignedIn();
+        allow write: if isOwner(userId);
+      }
+
+      // Followers
+      match /followers/{followerId} {
+        allow read: if isSignedIn();
+        allow write: if isOwner(userId);
+      }
+
+      // Activity Feed
+      match /activity/{activityId} {
+        allow read: if isSignedIn();
+        allow write: if isOwner(userId);
+      }
+
+      // Notifications
+      match /notifications/{notificationId} {
+        allow read, write: if isOwner(userId);
+      }
+
+      // Shared Lists
+      match /shared/{listId} {
+        allow read: if isSignedIn();
+        allow write: if isOwner(userId);
+      }
+    }
+
+    // Public activity feed
+    match /activity/{activityId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && request.auth.uid == request.resource.data.userId;
+      allow update, delete: if isSignedIn() && request.auth.uid == resource.data.userId;
     }
 
     // Allow read access to public collections

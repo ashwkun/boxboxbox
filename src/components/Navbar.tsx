@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
 import UserProfile from './UserProfile';
+import NotificationBell from './NotificationBell';
 
 const Navbar: React.FC = () => {
   const location = useLocation();
@@ -61,7 +62,8 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* User Profile / Auth Buttons */}
-          <div className="flex items-center">
+          <div className="flex items-center space-x-4">
+            {currentUser && <NotificationBell />}
             <UserProfile />
           </div>
         </div>

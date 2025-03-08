@@ -44,9 +44,9 @@ const apiRequestWithCache = async (url: string, params = {}) => {
   }
 };
 
-// Helper function to get complete image URL with optimal sizing
-export const getImageUrl = (path: string, size = 'original') => {
-  if (!path) return null;
+// Get image URL with size
+export const getImageUrl = (path: string | null | undefined, size: string = 'original'): string | undefined => {
+  if (!path) return undefined;
   return `https://image.tmdb.org/t/p/${size}${path}`;
 };
 
