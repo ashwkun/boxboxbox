@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { getImageUrl } from '../services/tmdb';
 
 interface MovieCardProps {
@@ -27,33 +28,48 @@ const MovieCard: React.FC<MovieCardProps> = ({
   // Get poster image with optimized size for cards (w300 instead of original)
   const posterUrl = posterPath ? getImageUrl(posterPath, 'w300') : null;
   
+  // Determine the rating color class
+  const getRatingColorClass = (rating: number) => {
+    if (rating >= 7) return 'bg-success';
+    if (rating >= 5) return 'bg-warning';
+    return 'bg-error';
+  };
+  
   return (
-    <div className="movie-card" onClick={onClick}>
-      <div className="movie-card-poster">
+    <motion.div 
+      className="card card-hover group"
+      onClick={onClick}
+      whileHover={{ y: -5 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <div className="relative aspect-poster overflow-hidden">
         {posterUrl ? (
           <img 
             src={posterUrl} 
             alt={`${title} poster`}
-            loading="lazy" // Optimize by lazy loading images
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            loading="lazy"
           />
         ) : (
-          <div className="movie-card-no-poster">
-            <span>{title[0]}</span>
+          <div className="w-full h-full bg-gray-600 flex items-center justify-center text-white text-2xl font-bold">
+            {title[0]}
           </div>
         )}
         
         {rating && (
-          <div className={`movie-card-rating ${Number(rating) >= 7 ? 'high' : Number(rating) >= 5 ? 'medium' : 'low'}`}>
+          <div className={`absolute top-2 right-2 w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white ${getRatingColorClass(Number(rating))} bg-opacity-90`}>
             {rating}
           </div>
         )}
       </div>
       
-      <div className="movie-card-info">
-        <h3 className="movie-card-title">{title}</h3>
-        {year && <span className="movie-card-year">{year}</span>}
+      <div className="p-3">
+        <h3 className="font-medium text-sm line-clamp-2">{title}</h3>
+        {year && <span className="text-text-light text-xs">{year}</span>}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
