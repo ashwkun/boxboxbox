@@ -6,6 +6,7 @@ import MovieCard from '../components/MovieCard';
 import TVShowCard from '../components/TVShowCard';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ErrorMessage from '../components/ErrorMessage';
+import SearchBar from '../components/SearchBar';
 import useMediaData from '../hooks/useMediaData';
 import { getTrendingMovies, getTrendingTVShows } from '../services/tmdb';
 
@@ -83,15 +84,20 @@ const Home: React.FC = () => {
   return (
     <div className="container-page">
       <motion.div 
-        className="bg-gradient-to-r from-primary to-secondary text-white p-8 md:p-12 rounded-lg mb-12 text-center"
+        className="bg-gradient-to-r from-primary to-secondary text-white p-8 md:p-12 rounded-lg mb-8 text-center"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
         <h1 className="text-3xl md:text-4xl font-bold mb-4">Welcome to tv.io</h1>
-        <p className="text-xl md:text-2xl text-white/90 max-w-2xl mx-auto">
+        <p className="text-xl md:text-2xl text-white/90 max-w-2xl mx-auto mb-8">
           Discover movies and TV shows, track what you've watched, and get personalized recommendations.
         </p>
+        
+        {/* Prominent Search Bar */}
+        <div className="max-w-2xl mx-auto">
+          <SearchBar placeholder="Search for a movie or TV show..." />
+        </div>
       </motion.div>
       
       {/* Trending Movies Section */}
@@ -170,9 +176,6 @@ const Home: React.FC = () => {
             variants={itemVariants}
             whileHover={{ y: -5, transition: { duration: 0.2 } }}
           >
-            <div className="absolute top-2 right-2">
-              <span className="bg-accent text-white text-xs px-2 py-1 rounded-full">Coming Soon</span>
-            </div>
             <div className="text-5xl mb-4 text-primary">🔍</div>
             <h3 className="text-lg font-semibold mb-2">Search</h3>
             <p className="text-gray-600">Find your favorite movies and TV shows.</p>
