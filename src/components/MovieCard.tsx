@@ -62,9 +62,9 @@ const MovieCard: React.FC<MovieCardProps> = ({
         )}
       </div>
       
-      <div className="p-3 h-16">
-        <h3 className="font-medium text-sm line-clamp-2">{title}</h3>
-        {year && <span className="text-gray-500 text-xs">{year}</span>}
+      <div className="p-3 min-h-[4.5rem] flex flex-col justify-between">
+        <h3 className="font-medium text-sm mb-1 line-clamp-2 hover:line-clamp-none" title={title}>{title}</h3>
+        {year && <span className="text-gray-500 text-xs mt-auto">{year}</span>}
       </div>
     </motion.div>
   );
