@@ -17,32 +17,11 @@ export default function TextLogo({
 }: TextLogoProps) {
   const [isClient, setIsClient] = useState(false);
   
-  // Set dimensions based on size prop
-  const dimensions = {
-    small: {
-      fontSize: 'text-xl',
-      height: '24px',
-      iconSize: '16px',
-      dotOffsetY: -10,
-      dotOffsetX: 5,
-      dotSize: '0.25em',
-    },
-    medium: {
-      fontSize: 'text-2xl',
-      height: '30px',
-      iconSize: '20px',
-      dotOffsetY: -12,
-      dotOffsetX: 6,
-      dotSize: '0.3em',
-    },
-    large: {
-      fontSize: 'text-3xl',
-      height: '36px',
-      iconSize: '24px',
-      dotOffsetY: -15,
-      dotOffsetX: 7,
-      dotSize: '0.35em',
-    },
+  // Set size based on prop
+  const fontSize = {
+    small: 'text-lg',
+    medium: 'text-xl',
+    large: 'text-2xl'
   }[size];
   
   // Only enable animations after client-side hydration
@@ -50,216 +29,46 @@ export default function TextLogo({
     setIsClient(true);
   }, []);
   
-  // If animations are disabled or we're server-side rendering, use the simple version
+  // Basic simple version without any animations
   if (!animated || !isClient) {
     return (
       <span 
-        className={`font-poppins font-bold text-white ${dimensions.fontSize} ${className} flex items-center`}
+        className={`font-bold ${fontSize} ${className}`}
         style={style}
       >
-        <span className="text-primary">tv</span><span className="text-white">.io</span>
+        <span className="text-red-600">tv.io</span>
       </span>
     );
   }
   
+  // Simple animated version with minimal styling
   return (
-    <div 
-      className={`logo-container font-poppins font-bold ${dimensions.fontSize} ${className} relative flex items-center`}
-      style={{
-        ...style,
-        height: dimensions.height,
-      }}
+    <span 
+      className={`font-bold ${fontSize} ${className} inline-flex items-center`}
+      style={style}
     >
-      {/* Play button icon that morphs into "tv" */}
-      <div className="play-icon relative inline-flex items-center justify-center">
-        <span className="gradient-text">tv</span>
-      </div>
+      <span className="text-red-600">tv</span>
+      <span className="dot-animation inline-block w-1 h-1 mx-0.5 bg-red-600 rounded-full"></span>
+      <span className="io-text">io</span>
       
-      {/* Animated dot - using a div instead of a character */}
-      <div 
-        className="dot-animation"
-        aria-hidden="true"
-        style={{
-          height: dimensions.dotSize,
-          width: dimensions.dotSize,
-          marginLeft: '0.05em',
-          marginRight: '0.05em',
-          display: 'inline-block',
-          position: 'relative',
-        }}
-      ></div>
-      
-      {/* "io" with custom styling */}
-      <div className="io-text relative">
-        {/* Use a proper dotless i character */}
-        <span className="no-dot-i relative inline-block">ı</span>
-        <span className="inline-block">o</span>
-        
-        {/* Pulse effect around the logo */}
-        <div className="pulse-effect"></div>
-      </div>
-      
-      {/* CSS Animations and Styling */}
       <style jsx>{`
-        /* Gradient text effect */
-        .gradient-text {
-          background: linear-gradient(135deg, #e50914 0%, #ff9d26 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          text-fill-color: transparent;
+        .dot-animation {
+          animation: simple-bounce 3s infinite;
         }
         
-        /* Position i without a dot */
-        .no-dot-i {
-          display: inline-block;
-        }
-        
-        /* Container for io text */
         .io-text {
-          display: inline-block;
-          animation: close-space 4.5s infinite;
           position: relative;
         }
         
-        /* Animation for the play-icon */
-        .play-icon {
-          animation: pulse-scale 4.5s infinite;
-        }
-        
-        /* Animation for the pulsing effect */
-        .pulse-effect {
-          position: absolute;
-          top: -20%;
-          left: -30%;
-          width: 160%;
-          height: 140%;
-          background: radial-gradient(circle, rgba(229, 9, 20, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
-          border-radius: 50%;
-          z-index: -1;
-          opacity: 0;
-          animation: pulse 4.5s infinite;
-          pointer-events: none;
-        }
-        
-        /* Animation for the bouncing dot */
-        .dot-animation {
-          animation: bounce-dot 4.5s infinite;
-          background-color: #e50914;
-          border-radius: 50%;
-          box-shadow: 0 0 2px rgba(229, 9, 20, 0.8);
-        }
-        
-        /* Animation for pulsing scale */
-        @keyframes pulse-scale {
+        @keyframes simple-bounce {
           0%, 100% {
-            transform: scale(1);
+            transform: translateY(0);
           }
-          75% {
-            transform: scale(1.05);
-          }
-          85% {
-            transform: scale(1);
-          }
-        }
-        
-        /* Animation for the pulse effect */
-        @keyframes pulse {
-          0%, 50%, 100% {
-            opacity: 0;
-            transform: scale(0.8);
-          }
-          75% {
-            opacity: 0.6;
-            transform: scale(1);
-          }
-          85% {
-            opacity: 0;
-            transform: scale(1.2);
-          }
-        }
-        
-        /* Animation for closing the space between tv and io */
-        @keyframes close-space {
-          0%, 40% {
-            margin-left: 2px;
-            transform: translateX(0);
-          }
-          /* Start closing space */
-          60% {
-            margin-left: 0;
-            transform: translateX(-2px);
-          }
-          /* Space fully closed */
-          70%, 80% {
-            margin-left: 0;
-            transform: translateX(-4px);
-          }
-          /* Return to original spacing */
-          90%, 100% {
-            margin-left: 2px;
-            transform: translateX(0);
-          }
-        }
-        
-        /* Animation for the dot to move above the i */
-        @keyframes bounce-dot {
-          0%, 100% {
-            transform: translateY(0) translateX(0);
-            opacity: 1;
-            background-color: #e50914;
-          }
-          10% {
-            transform: translateY(-5px) translateX(0);
-            opacity: 1;
-          }
-          20% {
-            transform: translateY(0) translateX(0);
-            opacity: 1;
-          }
-          30% {
-            transform: translateY(-3px) translateX(0);
-            opacity: 1;
-          }
-          40% {
-            transform: translateY(0) translateX(0);
-            opacity: 1;
-          }
-          /* Start moving toward position above "i" */
-          55% {
-            transform: translateY(${dimensions.dotOffsetY / 2}px) translateX(${dimensions.dotOffsetX / 2}px);
-            opacity: 0.7;
-            background-color: #e50914;
-          }
-          /* Move to position above "i" */
-          65% {
-            transform: translateY(${dimensions.dotOffsetY}px) translateX(${dimensions.dotOffsetX}px);
-            opacity: 1;
-            background-color: #ff9d26;
-          }
-          /* Stay above "i" while spacing closes */
-          75% {
-            transform: translateY(${dimensions.dotOffsetY}px) translateX(${dimensions.dotOffsetX}px);
-            opacity: 1;
-            background-color: #ff9d26;
-          }
-          /* Hold in final position with color pulse */
-          80% {
-            transform: translateY(${dimensions.dotOffsetY}px) translateX(${dimensions.dotOffsetX}px);
-            opacity: 1;
-            background-color: #e50914;
-          }
-          /* Return to original position */
-          85% {
-            transform: translateY(0) translateX(0);
-            opacity: 0;
-          }
-          90% {
-            transform: translateY(0) translateX(0);
-            opacity: 1;
+          50% {
+            transform: translateY(-5px);
           }
         }
       `}</style>
-    </div>
+    </span>
   );
 } 
