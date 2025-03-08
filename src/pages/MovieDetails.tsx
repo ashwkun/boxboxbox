@@ -14,6 +14,7 @@ import VideoSection from '../components/VideoSection';
 import RelatedContent from '../components/RelatedContent';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ErrorMessage from '../components/ErrorMessage';
+import WatchlistButton from '../components/WatchlistButton';
 
 interface MovieDetailsData {
   id: number;
@@ -136,7 +137,7 @@ const MovieDetails: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="rounded-lg shadow-md overflow-hidden"
+                className="rounded-lg shadow-md overflow-hidden relative"
               >
                 {movie.poster_path ? (
                   <img
@@ -149,6 +150,17 @@ const MovieDetails: React.FC = () => {
                     <span className="text-gray-400 text-2xl">{movie.title[0]}</span>
                   </div>
                 )}
+                
+                {/* Watchlist button */}
+                <div className="absolute top-2 right-2">
+                  <WatchlistButton 
+                    mediaId={movie.id}
+                    mediaType="movie"
+                    title={movie.title}
+                    posterPath={movie.poster_path}
+                    size="medium"
+                  />
+                </div>
               </motion.div>
             </div>
 
@@ -159,7 +171,19 @@ const MovieDetails: React.FC = () => {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                <h1 className="text-3xl font-bold mb-2">{movie.title}</h1>
+                <div className="flex justify-between items-start">
+                  <h1 className="text-3xl font-bold mb-2">{movie.title}</h1>
+                  <div className="hidden md:block">
+                    <WatchlistButton 
+                      mediaId={movie.id}
+                      mediaType="movie"
+                      title={movie.title}
+                      posterPath={movie.poster_path}
+                      size="large"
+                    />
+                  </div>
+                </div>
+                
                 {movie.tagline && (
                   <p className="text-gray-500 italic mb-4">{movie.tagline}</p>
                 )}

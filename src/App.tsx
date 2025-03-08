@@ -13,23 +13,7 @@ import TVShows from './pages/TVShows';
 import Search from './pages/Search';
 import MovieDetails from './pages/MovieDetails';
 import TVShowDetails from './pages/TVShowDetails';
-
-// Placeholder for Watchlist component (will be implemented in Phase 6)
-const Watchlist = () => (
-  <div className="container-page">
-    <h1 className="text-2xl font-semibold text-primary mb-4">My Watchlist</h1>
-    <div className="card p-8 mt-6">
-      <p className="mb-4">Your watchlist will appear here once Phase 6 is implemented.</p>
-      <p className="mb-2">You'll be able to:</p>
-      <ul className="list-disc list-inside space-y-2 ml-4">
-        <li>Add movies and TV shows to your watchlist</li>
-        <li>Mark items as watched</li>
-        <li>Filter and sort your watchlist</li>
-        <li>Get recommendations based on your watchlist</li>
-      </ul>
-    </div>
-  </div>
-);
+import Watchlist from './pages/Watchlist';
 
 const NotFound = () => (
   <div className="container-page flex flex-col items-center justify-center min-h-[60vh]">

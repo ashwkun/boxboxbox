@@ -12,6 +12,7 @@ import VideoSection from '../components/VideoSection';
 import RelatedContent from '../components/RelatedContent';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ErrorMessage from '../components/ErrorMessage';
+import WatchlistButton from '../components/WatchlistButton';
 
 interface TVShowDetailsData {
   id: number;
@@ -153,7 +154,7 @@ const TVShowDetails: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="rounded-lg shadow-md overflow-hidden"
+                className="rounded-lg shadow-md overflow-hidden relative"
               >
                 {tvShow.poster_path ? (
                   <img
@@ -166,6 +167,17 @@ const TVShowDetails: React.FC = () => {
                     <span className="text-gray-400 text-2xl">{tvShow.name[0]}</span>
                   </div>
                 )}
+                
+                {/* Watchlist button */}
+                <div className="absolute top-2 right-2">
+                  <WatchlistButton 
+                    mediaId={tvShow.id}
+                    mediaType="tv"
+                    title={tvShow.name}
+                    posterPath={tvShow.poster_path}
+                    size="medium"
+                  />
+                </div>
               </motion.div>
             </div>
 
@@ -176,7 +188,19 @@ const TVShowDetails: React.FC = () => {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                <h1 className="text-3xl font-bold mb-2">{tvShow.name}</h1>
+                <div className="flex justify-between items-start">
+                  <h1 className="text-3xl font-bold mb-2">{tvShow.name}</h1>
+                  <div className="hidden md:block">
+                    <WatchlistButton 
+                      mediaId={tvShow.id}
+                      mediaType="tv"
+                      title={tvShow.name}
+                      posterPath={tvShow.poster_path}
+                      size="large"
+                    />
+                  </div>
+                </div>
+                
                 {tvShow.tagline && (
                   <p className="text-gray-500 italic mb-4">{tvShow.tagline}</p>
                 )}
