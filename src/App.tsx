@@ -40,7 +40,7 @@ const App: React.FC = () => {
     <AuthProvider>
       <div className="app">
         <header className="app-header">
-          <div className="logo">TV.io</div>
+          <div className="logo">tv.io</div>
           <nav className="main-nav">
             <ul>
               <li><Link to="/">Home</Link></li>
@@ -73,7 +73,7 @@ const App: React.FC = () => {
         </main>
         
         <footer className="app-footer">
-          <p>&copy; {new Date().getFullYear()} TV.io - All rights reserved</p>
+          <p>&copy; {new Date().getFullYear()} tv.io - All rights reserved</p>
         </footer>
       </div>
     </AuthProvider>

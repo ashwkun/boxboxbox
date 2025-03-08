@@ -62,7 +62,7 @@ const Home: React.FC = () => {
   return (
     <div className="page-container home-page">
       <div className="home-hero">
-        <h1>Welcome to TV.io</h1>
+        <h1>Welcome to tv.io</h1>
         <p>Discover movies and TV shows, track what you've watched, and get personalized recommendations.</p>
       </div>
       

@@ -14,7 +14,7 @@ const Login: React.FC = () => {
   return (
     <div className="page-container login-page">
       <div className="login-card">
-        <h1>Welcome to TV.io</h1>
+        <h1>Welcome to tv.io</h1>
         <p className="login-description">
           Track your favorite movies and TV shows, get personalized recommendations, and more.
         </p>
