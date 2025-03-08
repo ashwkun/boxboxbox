@@ -1,3 +1,7 @@
+/* Import Component Styles */
+@import './auth.scss';
+@import './browse.scss';
+
 /* Base Styles */
 :root {
   --primary-color: #1E88E5;
@@ -177,8 +181,4 @@ a {
       }
     }
   }
-}
-
-/* Import Component Styles - Use @use instead of @import to avoid deprecation warnings */
-@use './auth.scss';
-@use './browse.scss'; 
+} 
