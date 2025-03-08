@@ -9,7 +9,9 @@ import {
   unfollowUser, 
   searchUsers,
   getSuggestedUsers,
-  UserProfile 
+  UserProfile,
+  enableSocialFeatures,
+  hasSocialFeatures
 } from '../services/social';
 import LoadingSpinner from '../components/LoadingSpinner';
 import SearchBar from '../components/SearchBar';
@@ -24,10 +26,21 @@ const People: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [searching, setSearching] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [hasSocial, setHasSocial] = useState(false);
+  const [enablingSocial, setEnablingSocial] = useState(false);
+
+  useEffect(() => {
+    const checkSocialFeatures = async () => {
+      if (!currentUser) return;
+      const enabled = await hasSocialFeatures(currentUser.uid);
+      setHasSocial(enabled);
+    };
+    checkSocialFeatures();
+  }, [currentUser]);
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!currentUser) return;
+      if (!currentUser || !hasSocial) return;
 
       try {
         setLoading(true);
@@ -49,10 +62,29 @@ const People: React.FC = () => {
     };
 
     fetchData();
-  }, [currentUser]);
+  }, [currentUser, hasSocial]);
+
+  const handleEnableSocial = async () => {
+    if (!currentUser) return;
+
+    try {
+      setEnablingSocial(true);
+      await enableSocialFeatures(
+        currentUser.uid,
+        currentUser.displayName || 'Anonymous User',
+        currentUser.photoURL
+      );
+      setHasSocial(true);
+    } catch (error) {
+      console.error('Error enabling social features:', error);
+      setError('Failed to enable social features');
+    } finally {
+      setEnablingSocial(false);
+    }
+  };
 
   const handleSearch = async (query: string) => {
-    if (!currentUser || !query.trim()) {
+    if (!currentUser || !query.trim() || !hasSocial) {
       setSearchResults([]);
       return;
     }
@@ -142,6 +174,27 @@ const People: React.FC = () => {
 
   if (!currentUser) {
     return <Navigate to="/login" />;
+  }
+
+  if (!hasSocial) {
+    return (
+      <div className="container-page">
+        <div className="bg-white rounded-lg shadow-md p-8 text-center">
+          <h1 className="text-2xl font-bold mb-4">Enable Social Features</h1>
+          <p className="text-gray-600 mb-6">
+            Connect with other movie and TV show enthusiasts by enabling social features.
+            This will make your profile visible to other users.
+          </p>
+          <button
+            onClick={handleEnableSocial}
+            disabled={enablingSocial}
+            className="btn btn-primary"
+          >
+            {enablingSocial ? 'Enabling...' : 'Enable Social Features'}
+          </button>
+        </div>
+      </div>
+    );
   }
 
   if (loading) {

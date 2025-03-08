@@ -58,49 +58,88 @@ export interface Notification {
   sharedListTitle?: string;
 }
 
+// Enable social features for a user
+export const enableSocialFeatures = async (userId: string, displayName: string, photoURL: string | null): Promise<void> => {
+  if (!userId) throw new Error('User must be logged in');
+
+  try {
+    const publicUserRef = doc(db, 'public_users', userId);
+    await setDoc(publicUserRef, {
+      displayName,
+      displayNameLower: displayName.toLowerCase(),
+      photoURL,
+      joinedAt: serverTimestamp()
+    });
+  } catch (error) {
+    console.error('Error enabling social features:', error);
+    throw error;
+  }
+};
+
+// Check if user has enabled social features
+export const hasSocialFeatures = async (userId: string): Promise<boolean> => {
+  if (!userId) return false;
+  const publicUserRef = doc(db, 'public_users', userId);
+  const docSnap = await getDoc(publicUserRef);
+  return docSnap.exists();
+};
+
+// Search users
+export const searchUsers = async (searchTerm: string, currentUserId: string, maxLimit = 10): Promise<UserProfile[]> => {
+  const usersRef = collection(db, 'public_users');
+  
+  // Create a case-insensitive search term
+  const searchTermLower = searchTerm.toLowerCase();
+  
+  const q = query(
+    usersRef,
+    where('displayNameLower', '>=', searchTermLower),
+    where('displayNameLower', '<=', searchTermLower + '\uf8ff'),
+    limit(maxLimit)
+  );
+  
+  const querySnapshot = await getDocs(q);
+  
+  // Filter out the current user and transform the data
+  return querySnapshot.docs
+    .map(doc => {
+      const data = doc.data();
+      return {
+        uid: doc.id,
+        displayName: data.displayName,
+        photoURL: data.photoURL,
+        joinedAt: data.joinedAt.toDate()
+      } as UserProfile;
+    })
+    .filter(user => user.uid !== currentUserId);
+};
+
 // Follow a user
 export const followUser = async (userId: string, targetUserId: string): Promise<void> => {
   if (userId === targetUserId) throw new Error('Cannot follow yourself');
 
   const followingRef = doc(db, 'users', userId, 'following', targetUserId);
   const followerRef = doc(db, 'users', targetUserId, 'followers', userId);
-  const userDoc = await getDoc(doc(db, 'users', userId));
+  const publicUserDoc = await getDoc(doc(db, 'public_users', userId));
   
-  if (!userDoc.exists()) throw new Error('User not found');
+  if (!publicUserDoc.exists()) throw new Error('User not found');
   
-  const userData = userDoc.data();
+  const userData = publicUserDoc.data();
   
-  // Create following document
-  await setDoc(followingRef, {
-    userId: targetUserId,
-    createdAt: serverTimestamp()
-  });
-  
-  // Create follower document
-  await setDoc(followerRef, {
-    userId,
-    displayName: userData?.displayName,
-    photoURL: userData?.photoURL,
-    createdAt: serverTimestamp()
-  });
-  
-  // Create activity
-  await createActivity({
-    userId,
-    userDisplayName: userData?.displayName || '',
-    userPhotoURL: userData?.photoURL || null,
-    type: 'follow',
-    targetUserId,
-    targetUserDisplayName: (await getDoc(doc(db, 'users', targetUserId))).data()?.displayName || ''
-  });
-  
-  // Create notification
-  await createNotification(targetUserId, {
-    type: 'follow',
-    fromUserId: userId,
-    fromUserDisplayName: userData?.displayName || '',
-    fromUserPhotoURL: userData?.photoURL || null
-  });
+  await Promise.all([
+    // Create following document
+    setDoc(followingRef, {
+      userId: targetUserId,
+      createdAt: serverTimestamp()
+    }),
+    // Create follower document
+    setDoc(followerRef, {
+      userId,
+      displayName: userData.displayName,
+      photoURL: userData.photoURL,
+      createdAt: serverTimestamp()
+    })
+  ]);
 };
 
 // Unfollow a user
@@ -108,8 +147,10 @@ export const unfollowUser = async (userId: string, targetUserId: string): Promis
   const followingRef = doc(db, 'users', userId, 'following', targetUserId);
   const followerRef = doc(db, 'users', targetUserId, 'followers', userId);
   
-  await deleteDoc(followingRef);
-  await deleteDoc(followerRef);
+  await Promise.all([
+    deleteDoc(followingRef),
+    deleteDoc(followerRef)
+  ]);
 };
 
 // Check if following
@@ -128,7 +169,9 @@ export const getFollowers = async (userId: string): Promise<UserProfile[]> => {
     const data = doc.data();
     return {
       uid: doc.id,
-      ...data
+      displayName: data.displayName,
+      photoURL: data.photoURL,
+      joinedAt: data.createdAt.toDate()
     } as UserProfile;
   });
 };
@@ -140,10 +183,15 @@ export const getFollowing = async (userId: string): Promise<UserProfile[]> => {
   
   const following = await Promise.all(
     querySnapshot.docs.map(async docSnap => {
-      const userDoc = await getDoc(doc(db, 'users', docSnap.id));
-      if (!userDoc.exists()) return null;
-      const data = userDoc.data();
-      return data ? { uid: docSnap.id, ...data } as UserProfile : null;
+      const publicUserDoc = await getDoc(doc(db, 'public_users', docSnap.id));
+      if (!publicUserDoc.exists()) return null;
+      const data = publicUserDoc.data();
+      return {
+        uid: docSnap.id,
+        displayName: data.displayName,
+        photoURL: data.photoURL,
+        joinedAt: data.joinedAt.toDate()
+      } as UserProfile;
     })
   );
   
@@ -255,39 +303,6 @@ export const shareList = async (
     sharedListId: listId,
     sharedListTitle: listTitle
   });
-};
-
-// Search users
-export const searchUsers = async (searchTerm: string, currentUserId: string, maxLimit = 10): Promise<UserProfile[]> => {
-  const usersRef = collection(db, 'users');
-  
-  // Create a case-insensitive search term
-  const searchTermLower = searchTerm.toLowerCase();
-  
-  const q = query(
-    usersRef,
-    where('displayNameLower', '>=', searchTermLower),
-    where('displayNameLower', '<=', searchTermLower + '\uf8ff'),
-    limit(maxLimit)
-  );
-  
-  const querySnapshot = await getDocs(q);
-  
-  // Filter out the current user and transform the data
-  return querySnapshot.docs
-    .map(doc => {
-      const data = doc.data();
-      return {
-        uid: doc.id,
-        displayName: data.displayName,
-        photoURL: data.photoURL,
-        bio: data.bio,
-        joinedAt: data.joinedAt.toDate(),
-        followersCount: data.followersCount || 0,
-        followingCount: data.followingCount || 0
-      } as UserProfile;
-    })
-    .filter(user => user.uid !== currentUserId);
 };
 
 // Get suggested users based on common interests
