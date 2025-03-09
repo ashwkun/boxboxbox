@@ -12,8 +12,6 @@ import MovieDetails from '../pages/MovieDetails';
 import TVShowDetails from '../pages/TVShowDetails';
 import Watchlist from '../pages/Watchlist';
 import Ratings from '../pages/Ratings';
-import Activity from '../pages/Activity';
-import People from '../pages/People';
 import Profile from '../pages/Profile';
 import Login from '../pages/Login';
 
@@ -55,28 +53,6 @@ const AppRoutes: React.FC = () => {
           <Layout>
             <RequireAuth>
               <Ratings />
-            </RequireAuth>
-          </Layout>
-        } 
-      />
-      
-      <Route 
-        path="/activity" 
-        element={
-          <Layout>
-            <RequireAuth>
-              <Activity />
-            </RequireAuth>
-          </Layout>
-        } 
-      />
-      
-      <Route 
-        path="/people" 
-        element={
-          <Layout>
-            <RequireAuth>
-              <People />
             </RequireAuth>
           </Layout>
         } 

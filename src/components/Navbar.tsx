@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
 import UserProfile from './UserProfile';
-import NotificationBell from './NotificationBell';
+// import NotificationBell from './NotificationBell'; // Removed social feature
 import SearchBar from './SearchBar';
 
 const Navbar: React.FC = () => {
@@ -27,8 +27,8 @@ const Navbar: React.FC = () => {
     { label: 'TV Shows', path: '/tvshows' },
     ...(currentUser ? [
       { label: 'Watchlist', path: '/watchlist' },
-      { label: 'Ratings', path: '/ratings' },
-      { label: 'People', path: '/people' }
+      { label: 'Ratings', path: '/ratings' }
+      // { label: 'People', path: '/people' } // Removed social feature
     ] : [])
   ];
 
@@ -73,7 +73,7 @@ const Navbar: React.FC = () => {
 
           {/* User Profile / Auth Buttons */}
           <div className="flex items-center space-x-4">
-            {currentUser && <NotificationBell />}
+            {/* {currentUser && <NotificationBell />} */}
             <UserProfile />
           </div>
         </div>
