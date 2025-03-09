@@ -353,4 +353,66 @@ export const getSuggestedUsers = async (userId: string, maxLimit = 10): Promise<
   return userProfiles
     .sort((a, b) => b.commonItems - a.commonItems)
     .slice(0, maxLimit);
+};
+
+export const getFollowingActivityFeed = async (userId: string, itemLimit = 10): Promise<Activity[]> => {
+  try {
+    // Get list of users that the current user follows
+    const following = await getFollowing(userId);
+    
+    if (following.length === 0) {
+      return [];
+    }
+    
+    // Get user IDs of people being followed
+    const followingIds = following.map(user => user.uid);
+    
+    // If there are too many followingIds for a single query (Firestore limit is 10)
+    if (followingIds.length > 10) {
+      // Query with first 10 followingIds
+      const firstBatch = followingIds.slice(0, 10);
+      
+      const activitiesRef = collection(db, 'activity');
+      const q = query(
+        activitiesRef,
+        where('userId', 'in', firstBatch),
+        orderBy('createdAt', 'desc'),
+        limit(itemLimit * 2)
+      );
+      
+      const snapshot = await getDocs(q);
+      const activities = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+        createdAt: doc.data().createdAt?.toDate() || new Date(),
+      })) as Activity[];
+      
+      return activities.sort((a, b) => 
+        b.createdAt.getTime() - a.createdAt.getTime()
+      ).slice(0, itemLimit);
+    } else {
+      // Standard query when following ≤ 10 users
+      const activitiesRef = collection(db, 'activity');
+      const q = query(
+        activitiesRef,
+        where('userId', 'in', followingIds),
+        orderBy('createdAt', 'desc'),
+        limit(itemLimit)
+      );
+      
+      const snapshot = await getDocs(q);
+      
+      return snapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          ...data,
+          createdAt: data.createdAt?.toDate() || new Date(),
+        } as Activity;
+      });
+    }
+  } catch (error) {
+    console.error('Error getting following activity feed:', error);
+    return [];
+  }
 }; 

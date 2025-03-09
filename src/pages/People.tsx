@@ -13,6 +13,7 @@ import {
   enableSocialFeatures,
   hasSocialFeatures,
   getActivityFeed,
+  getFollowingActivityFeed,
   Activity
 } from '../services/social';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -27,6 +28,7 @@ const People: React.FC = () => {
   const [searchResults, setSearchResults] = useState<UserProfile[]>([]);
   const [suggestions, setSuggestions] = useState<UserProfile[]>([]);
   const [activities, setActivities] = useState<Activity[]>([]);
+  const [followingActivities, setFollowingActivities] = useState<Activity[]>([]);
   const [loading, setLoading] = useState(true);
   const [searching, setSearching] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -49,16 +51,18 @@ const People: React.FC = () => {
       try {
         setLoading(true);
         setError(null);
-        const [followersData, followingData, suggestedUsers, activityData] = await Promise.all([
+        const [followersData, followingData, suggestedUsers, activityData, followingActivityData] = await Promise.all([
           getFollowers(currentUser.uid),
           getFollowing(currentUser.uid),
           getSuggestedUsers(currentUser.uid),
-          getActivityFeed(currentUser.uid)
+          getActivityFeed(currentUser.uid),
+          getFollowingActivityFeed(currentUser.uid, 10)
         ]);
         setFollowers(followersData);
         setFollowing(followingData);
         setSuggestions(suggestedUsers);
         setActivities(activityData);
+        setFollowingActivities(followingActivityData);
       } catch (error) {
         console.error('Error fetching social data:', error);
         setError('Failed to load social data');
@@ -312,6 +316,16 @@ const People: React.FC = () => {
           compact
         />
       </div>
+
+      {/* Following Users' Activity Feed */}
+      {followingActivities.length > 0 && (
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold mb-4">Recent Activity From People You Follow</h2>
+          <div className="space-y-4">
+            {followingActivities.map(activity => renderActivityCard(activity))}
+          </div>
+        </div>
+      )}
 
       {/* Activity Feed */}
       {activities.length > 0 && (
