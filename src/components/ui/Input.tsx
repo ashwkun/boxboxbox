@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef } from 'react';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -10,6 +10,8 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   className?: string;
   variant?: 'outlined' | 'filled';
   inputSize?: 'sm' | 'md' | 'lg';
+  multiline?: boolean;
+  rows?: number;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(({
@@ -22,111 +24,98 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
   className = '',
   variant = 'outlined',
   inputSize = 'md',
-  type = 'text',
+  multiline = false,
+  rows = 4,
   disabled = false,
   required = false,
-  ...props
+  id,
+  ...restProps
 }, ref) => {
-  const [focused, setFocused] = useState(false);
+  // Generate random ID if not provided
+  const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`;
   
-  // Determine input container classes
-  let containerClasses = 'relative flex flex-col';
-  if (fullWidth) {
-    containerClasses += ' w-full';
-  }
-  if (className) {
-    containerClasses += ` ${className}`;
-  }
+  // Determine size classes
+  const sizeClasses = {
+    sm: 'py-1 px-3 text-sm',
+    md: 'py-2 px-4 text-base',
+    lg: 'py-3 px-4 text-lg',
+  };
   
-  // Determine input wrapper classes
-  let wrapperClasses = 'relative flex items-center';
+  // Determine variant classes
+  const variantClasses = {
+    outlined: 'bg-white border border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary',
+    filled: 'bg-gray-100 border border-transparent focus:bg-white focus:border-primary focus:ring-1 focus:ring-primary',
+  };
   
-  // Determine input classes
-  let inputClasses = 'w-full transition-all duration-normal focus:outline-none focus:ring-0';
+  // Base input classes
+  const baseInputClasses = `
+    block
+    w-full
+    rounded-md
+    ${sizeClasses[inputSize]}
+    ${variantClasses[variant]}
+    ${disabled ? 'opacity-60 cursor-not-allowed bg-gray-100' : 'hover:border-gray-400'}
+    ${error ? 'border-error focus:border-error focus:ring-error' : ''}
+    ${fullWidth ? 'w-full' : ''}
+    transition-colors duration-200
+    focus:outline-none
+  `;
   
-  if (disabled) {
-    inputClasses += ' cursor-not-allowed opacity-60';
-  }
+  // Adjust padding for icons
+  const inputPaddingClasses = `
+    ${leftIcon ? 'pl-10' : ''}
+    ${rightIcon ? 'pr-10' : ''}
+  `;
   
-  // Size classes
-  if (inputSize === 'sm') {
-    inputClasses += ' text-sm py-1.5 px-3';
-  } else if (inputSize === 'md') {
-    inputClasses += ' text-base py-2 px-4';
-  } else if (inputSize === 'lg') {
-    inputClasses += ' text-lg py-2.5 px-5';
-  }
-  
-  // Variant classes
-  if (variant === 'outlined') {
-    wrapperClasses += ' bg-white border rounded-md';
-    
-    if (error) {
-      wrapperClasses += ' border-error';
-      if (focused) {
-        wrapperClasses += ' ring-2 ring-error/30';
-      }
-    } else if (focused) {
-      wrapperClasses += ' border-primary ring-2 ring-primary/30';
-    } else {
-      wrapperClasses += ' border-gray-300 hover:border-gray-400';
-    }
-  } else if (variant === 'filled') {
-    wrapperClasses += ' bg-gray-100 border border-transparent rounded-md';
-    
-    if (error) {
-      wrapperClasses += ' bg-error/10';
-      if (focused) {
-        wrapperClasses += ' ring-2 ring-error/30';
-      }
-    } else if (focused) {
-      wrapperClasses += ' bg-white border-primary ring-2 ring-primary/30';
-    } else {
-      wrapperClasses += ' hover:bg-gray-200';
-    }
-  }
-  
-  // Adjust padding based on icons
-  if (leftIcon) {
-    inputClasses += ' pl-10';
-  }
-  
-  if (rightIcon) {
-    inputClasses += ' pr-10';
-  }
+  // Common props for input and textarea
+  const commonProps = {
+    id: inputId,
+    className: `${baseInputClasses} ${inputPaddingClasses} ${className}`,
+    disabled,
+    required,
+    "aria-invalid": error ? "true" : "false" as "true" | "false",
+    "aria-describedby": error || helperText ? `${inputId}-description` : undefined,
+  };
   
   return (
-    <div className={containerClasses}>
+    <div className={`${fullWidth ? 'w-full' : ''}`}>
       {label && (
-        <label className="mb-1.5 text-sm font-medium text-gray-700">
+        <label 
+          htmlFor={inputId}
+          className={`block mb-1.5 text-sm font-medium ${
+            disabled ? 'text-gray-500' : 'text-gray-700'
+          }`}
+        >
           {label}
-          {required && <span className="ml-1 text-error">*</span>}
+          {required && <span className="text-error ml-1">*</span>}
         </label>
       )}
       
-      <div className={wrapperClasses}>
+      <div className="relative">
         {leftIcon && (
           <div className="absolute left-0 pl-3 flex items-center justify-center text-gray-500">
             {leftIcon}
           </div>
         )}
         
-        <input
-          ref={ref}
-          className={inputClasses}
-          type={type}
-          disabled={disabled}
-          required={required}
-          onFocus={(e) => {
-            setFocused(true);
-            props.onFocus && props.onFocus(e);
-          }}
-          onBlur={(e) => {
-            setFocused(false);
-            props.onBlur && props.onBlur(e);
-          }}
-          {...props}
-        />
+        {multiline ? (
+          <textarea
+            id={inputId}
+            className={`${baseInputClasses} ${inputPaddingClasses} ${className}`}
+            disabled={disabled}
+            required={required}
+            rows={rows}
+            aria-invalid={error ? "true" : "false"}
+            aria-describedby={error || helperText ? `${inputId}-description` : undefined}
+            {...(restProps as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
+          />
+        ) : (
+          <input
+            ref={ref}
+            {...commonProps}
+            {...restProps}
+          />
+        )}
         
         {rightIcon && (
           <div className="absolute right-0 pr-3 flex items-center justify-center text-gray-500">
@@ -136,7 +125,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
       </div>
       
       {(helperText || error) && (
-        <p className={`mt-1.5 text-sm ${error ? 'text-error' : 'text-gray-500'}`}>
+        <p className={`mt-1.5 text-sm ${error ? 'text-error' : 'text-gray-500'}`} id={`${inputId}-description`}>
           {error || helperText}
         </p>
       )}

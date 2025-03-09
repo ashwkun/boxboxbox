@@ -7,6 +7,7 @@ import Avatar from '../components/ui/Avatar';
 import Modal from '../components/ui/Modal';
 import Rating from '../components/ui/Rating';
 import Tabs from '../components/ui/Tabs';
+import MoodRating from '../components/ui/MoodRating';
 
 const DesignSystem: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
@@ -14,630 +15,509 @@ const DesignSystem: React.FC = () => {
   const [ratingValue, setRatingValue] = useState(3.5);
   
   return (
-    <div className="container-page">
-      <div className="bg-gradient-to-r from-primary to-secondary text-white p-8 rounded-lg mb-8">
-        <h1 className="text-3xl font-bold mb-2">Design System</h1>
-        <p className="opacity-90">A showcase of our components and visual styles</p>
-      </div>
-      
-      {/* Colors Section */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-6">Colors</h2>
+    <div className="container-page pb-20">
+      {/* Fun, Entertainment-Focused Header */}
+      <div className="relative overflow-hidden mb-12 rounded-xl shadow-lg">
+        {/* Background with animation */}
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 background-animate"></div>
         
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="flex flex-col">
-            <div className="h-20 bg-primary rounded-t-lg"></div>
-            <div className="h-12 bg-primary-light"></div>
-            <div className="h-12 bg-primary-lightest rounded-b-lg"></div>
-            <p className="mt-2 text-sm font-medium">Primary</p>
-          </div>
-          
-          <div className="flex flex-col">
-            <div className="h-20 bg-secondary rounded-t-lg"></div>
-            <div className="h-12 bg-secondary-light"></div>
-            <div className="h-12 bg-secondary-lightest rounded-b-lg"></div>
-            <p className="mt-2 text-sm font-medium">Secondary</p>
-          </div>
-          
-          <div className="flex flex-col">
-            <div className="h-20 bg-accent rounded-t-lg"></div>
-            <div className="h-12 bg-accent-light rounded-b-lg"></div>
-            <p className="mt-2 text-sm font-medium">Accent</p>
-          </div>
-          
-          <div className="grid grid-cols-2 gap-2">
-            <div className="flex flex-col">
-              <div className="h-16 bg-success rounded-lg"></div>
-              <p className="mt-1 text-xs font-medium">Success</p>
+        {/* Content */}
+        <div className="relative p-10 md:p-12 z-10">
+          <div className="flex flex-col md:flex-row items-center justify-between">
+            <div>
+              <h1 className="text-4xl md:text-5xl font-bold mb-3 text-white font-display">
+                tv.io Design System
+              </h1>
+              <p className="text-white text-lg md:text-xl opacity-90 font-light">
+                Making entertainment come alive with emotions & style ✨
+              </p>
             </div>
-            <div className="flex flex-col">
-              <div className="h-16 bg-error rounded-lg"></div>
-              <p className="mt-1 text-xs font-medium">Error</p>
-            </div>
-            <div className="flex flex-col">
-              <div className="h-16 bg-warning rounded-lg"></div>
-              <p className="mt-1 text-xs font-medium">Warning</p>
-            </div>
-            <div className="flex flex-col">
-              <div className="h-16 bg-info rounded-lg"></div>
-              <p className="mt-1 text-xs font-medium">Info</p>
+            
+            <div className="mt-6 md:mt-0 flex gap-2">
+              {["😍", "😊", "😐", "😕", "😫"].map((emoji, i) => (
+                <span 
+                  key={i} 
+                  className="text-3xl animate-bounce" 
+                  style={{ animationDelay: `${i * 0.1}s` }}
+                >
+                  {emoji}
+                </span>
+              ))}
             </div>
           </div>
         </div>
+      </div>
+      
+      {/* Emotion-Based Rating Section (Featured) */}
+      <section className="mb-16 bg-gradient-to-r from-gray-50 to-gray-100 p-8 rounded-xl shadow-sm">
+        <div className="text-center mb-8">
+          <span className="text-sm font-semibold text-primary uppercase tracking-wider">Featured Component</span>
+          <h2 className="text-3xl font-bold mt-2 mb-3">Emotion Ratings</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Our rating system is built on emotions rather than stars, creating a more intuitive and engaging way for users to share how they feel about content.
+          </p>
+        </div>
         
-        <div className="mt-6 grid grid-cols-9 gap-2">
-          {Array.from({ length: 9 }).map((_, i) => (
-            <div key={i} className="flex flex-col">
-              <div className={`h-12 bg-gray-${(i + 1) * 100} rounded-lg`}></div>
-              <p className="mt-1 text-xs font-medium">Gray {(i + 1) * 100}</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <Card hoverable className="p-4">
+            <Card.Body>
+              <Card.Title>Basic Mood Rating</Card.Title>
+              <div className="flex justify-center py-6">
+                <MoodRating showLabels showDescription />
+              </div>
+            </Card.Body>
+          </Card>
+          
+          <Card hoverable className="p-4">
+            <Card.Body>
+              <Card.Title>With "Would Rewatch" Option</Card.Title>
+              <div className="flex justify-center py-6">
+                <MoodRating showLabels withRewatch />
+              </div>
+            </Card.Body>
+          </Card>
+          
+          <Card hoverable className="col-span-1 md:col-span-2 p-4">
+            <Card.Body>
+              <Card.Title>Size Variations</Card.Title>
+              <div className="flex flex-col items-center gap-8 py-6">
+                <div className="flex items-center gap-4">
+                  <span className="text-sm font-medium w-12">Small:</span>
+                  <MoodRating size="sm" />
+                </div>
+                <div className="flex items-center gap-4">
+                  <span className="text-sm font-medium w-12">Medium:</span>
+                  <MoodRating size="md" />
+                </div>
+                <div className="flex items-center gap-4">
+                  <span className="text-sm font-medium w-12">Large:</span>
+                  <MoodRating size="lg" />
+                </div>
+              </div>
+            </Card.Body>
+          </Card>
+        </div>
+      </section>
+      
+      {/* Colors Section */}
+      <section className="mb-12 bg-white p-8 rounded-xl shadow-sm">
+        <h2 className="text-2xl font-bold mb-6 text-center">Color Palette</h2>
+        
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="flex flex-col">
+            <div className="h-24 rounded-t-xl bg-gradient-to-r from-primary to-primary-light"></div>
+            <div className="h-12 bg-primary-light"></div>
+            <div className="h-12 bg-primary-lightest rounded-b-xl"></div>
+            <p className="mt-2 text-sm font-medium text-center">Primary</p>
+          </div>
+          
+          <div className="flex flex-col">
+            <div className="h-24 rounded-t-xl bg-gradient-to-r from-secondary to-secondary-light"></div>
+            <div className="h-12 bg-secondary-light"></div>
+            <div className="h-12 bg-secondary-lightest rounded-b-xl"></div>
+            <p className="mt-2 text-sm font-medium text-center">Secondary</p>
+          </div>
+          
+          <div className="flex flex-col">
+            <div className="h-24 rounded-t-xl bg-gradient-to-r from-accent to-accent-light"></div>
+            <div className="h-12 bg-accent-light rounded-b-xl"></div>
+            <p className="mt-2 text-sm font-medium text-center">Accent</p>
+          </div>
+          
+          <div className="grid grid-cols-2 gap-3">
+            <div className="flex flex-col">
+              <div className="h-20 bg-success rounded-xl shadow-md"></div>
+              <p className="mt-1 text-xs font-medium text-center">Success</p>
             </div>
-          ))}
+            <div className="flex flex-col">
+              <div className="h-20 bg-error rounded-xl shadow-md"></div>
+              <p className="mt-1 text-xs font-medium text-center">Error</p>
+            </div>
+            <div className="flex flex-col">
+              <div className="h-20 bg-warning rounded-xl shadow-md"></div>
+              <p className="mt-1 text-xs font-medium text-center">Warning</p>
+            </div>
+            <div className="flex flex-col">
+              <div className="h-20 bg-info rounded-xl shadow-md"></div>
+              <p className="mt-1 text-xs font-medium text-center">Info</p>
+            </div>
+          </div>
         </div>
       </section>
       
       {/* Typography Section */}
       <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-6">Typography</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">Typography</h2>
         
-        <div className="grid gap-4">
-          <div>
-            <h1 className="font-display">Heading 1 (Display Font)</h1>
-            <p className="text-sm text-gray-500 mt-1">Font: Montserrat, Size: var(--font-size-4xl)</p>
+        <Card className="p-6">
+          <div className="grid gap-6">
+            <div className="p-4 border-b border-gray-100">
+              <h1 className="font-display text-4xl">Movie Title (Display Font)</h1>
+              <p className="text-sm text-gray-500 mt-1">Font: Montserrat, Size: var(--font-size-4xl)</p>
+            </div>
+            
+            <div className="p-4 border-b border-gray-100">
+              <h2 className="text-2xl">Section Header</h2>
+              <p className="text-sm text-gray-500 mt-1">Font: Montserrat, Size: var(--font-size-2xl)</p>
+            </div>
+            
+            <div className="p-4 border-b border-gray-100">
+              <p className="text-lg">Plot Summary</p>
+              <p className="text-sm text-gray-500 mt-1">Font: Inter, Size: var(--font-size-lg)</p>
+            </div>
+            
+            <div className="p-4">
+              <p>Regular review text discussing the movie in detail, covering aspects like the cinematography, acting performances, and overall direction. The font size is comfortable for extended reading.</p>
+              <p className="text-sm text-gray-500 mt-1">Font: Inter, Size: var(--font-size-base)</p>
+            </div>
           </div>
-          
-          <div>
-            <h2>Heading 2</h2>
-            <p className="text-sm text-gray-500 mt-1">Font: Montserrat, Size: var(--font-size-3xl)</p>
-          </div>
-          
-          <div>
-            <h3>Heading 3</h3>
-            <p className="text-sm text-gray-500 mt-1">Font: Montserrat, Size: var(--font-size-2xl)</p>
-          </div>
-          
-          <div>
-            <h4>Heading 4</h4>
-            <p className="text-sm text-gray-500 mt-1">Font: Montserrat, Size: var(--font-size-xl)</p>
-          </div>
-          
-          <div>
-            <p className="text-lg">Large Paragraph Text</p>
-            <p className="text-sm text-gray-500 mt-1">Font: Inter, Size: var(--font-size-lg)</p>
-          </div>
-          
-          <div>
-            <p>Regular Paragraph Text</p>
-            <p className="text-sm text-gray-500 mt-1">Font: Inter, Size: var(--font-size-base)</p>
-          </div>
-          
-          <div>
-            <p className="text-sm">Small Text</p>
-            <p className="text-sm text-gray-500 mt-1">Font: Inter, Size: var(--font-size-sm)</p>
-          </div>
-          
-          <div>
-            <p className="text-xs">Extra Small Text</p>
-            <p className="text-sm text-gray-500 mt-1">Font: Inter, Size: var(--font-size-xs)</p>
-          </div>
-        </div>
+        </Card>
       </section>
       
-      {/* Button Section */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-6">Buttons</h2>
-        
-        <div className="space-y-6">
-          <div className="flex flex-wrap gap-4">
-            <Button variant="primary">Primary Button</Button>
-            <Button variant="secondary">Secondary Button</Button>
-            <Button variant="tertiary">Tertiary Button</Button>
-            <Button variant="accent">Accent Button</Button>
-            <Button variant="ghost">Ghost Button</Button>
-          </div>
-          
-          <div className="flex flex-wrap gap-4">
-            <Button variant="primary" size="sm">Small Button</Button>
-            <Button variant="primary">Medium Button</Button>
-            <Button variant="primary" size="lg">Large Button</Button>
-          </div>
-          
-          <div className="flex flex-wrap gap-4">
-            <Button variant="primary" isLoading>Loading Button</Button>
-            <Button variant="primary" disabled>Disabled Button</Button>
-            <Button 
-              variant="primary" 
-              leftIcon={<span className="text-lg">👍</span>}
-            >
-              With Left Icon
-            </Button>
-            <Button 
-              variant="primary" 
-              rightIcon={<span className="text-lg">→</span>}
-            >
-              With Right Icon
-            </Button>
-          </div>
-        </div>
-      </section>
-      
-      {/* Card Section */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-6">Cards</h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card>
-            <Card.Body>
-              <Card.Title>Basic Card</Card.Title>
-              <p>This is a simple card with just a title and content.</p>
-            </Card.Body>
-          </Card>
-          
-          <Card hoverable>
-            <Card.Body>
-              <Card.Title>Hoverable Card</Card.Title>
-              <p>This card has a hover effect. Try hovering over it!</p>
-            </Card.Body>
-          </Card>
-          
-          <Card bordered elevated={false}>
-            <Card.Body>
-              <Card.Title>Bordered Card</Card.Title>
-              <p>This card has a border but no elevation (shadow).</p>
-            </Card.Body>
-          </Card>
-          
-          <Card className="col-span-full md:col-span-1">
-            <Card.Image 
-              src="https://images.unsplash.com/photo-1594909122845-11baa439b7bf?w=500&auto=format&fit=crop&q=60"
-              alt="Cinematic scene"
-              aspectRatio="video"
-            />
-            <Card.Body>
-              <Card.Title>Card with Image</Card.Title>
-              <p>This card includes an image at the top.</p>
-            </Card.Body>
-          </Card>
-          
-          <Card className="col-span-full md:col-span-2">
-            <Card.Body>
-              <Card.Title>Card with Footer</Card.Title>
-              <p>This card has a body and a footer section.</p>
-            </Card.Body>
-            <Card.Footer>
-              <div className="flex justify-between">
-                <Button variant="tertiary" size="sm">Cancel</Button>
-                <Button variant="primary" size="sm">Submit</Button>
+      {/* Components Tabs */}
+      <Tabs
+        variant="pills"
+        className="mb-8"
+        items={[
+          {
+            id: 'buttons',
+            label: (
+              <div className="flex items-center gap-2">
+                <span>🎮</span>
+                <span>Buttons</span>
               </div>
-            </Card.Footer>
-          </Card>
-        </div>
-      </section>
-      
-      {/* Form Inputs Section */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-6">Form Inputs</h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Input 
-            label="Default Input" 
-            placeholder="Enter your name"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-          />
-          
-          <Input 
-            label="Input with Helper Text" 
-            placeholder="Enter your email"
-            helperText="We'll never share your email with anyone else."
-          />
-          
-          <Input 
-            label="Input with Error" 
-            placeholder="Enter password"
-            type="password"
-            error="Password must be at least 8 characters"
-          />
-          
-          <Input 
-            label="Input with Icon" 
-            placeholder="Search..."
-            leftIcon={
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
-              </svg>
-            }
-          />
-          
-          <Input
-            label="Filled Variant Input"
-            placeholder="Enter text here"
-            variant="filled"
-          />
-          
-          <Input
-            label="Required Input"
-            placeholder="This field is required"
-            required
-          />
-          
-          <Input
-            label="Disabled Input"
-            placeholder="You cannot edit this"
-            value="Disabled content"
-            disabled
-          />
-          
-          <Input
-            label="Full Width Input"
-            placeholder="This input takes full width"
-            fullWidth
-          />
-        </div>
-      </section>
-      
-      {/* Badges Section */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-6">Badges</h2>
-        
-        <div className="space-y-6">
-          <div className="flex flex-wrap gap-3">
-            <Badge variant="default">Default</Badge>
-            <Badge variant="primary">Primary</Badge>
-            <Badge variant="secondary">Secondary</Badge>
-            <Badge variant="accent">Accent</Badge>
-            <Badge variant="success">Success</Badge>
-            <Badge variant="warning">Warning</Badge>
-            <Badge variant="error">Error</Badge>
-            <Badge variant="info">Info</Badge>
-          </div>
-          
-          <div className="flex flex-wrap gap-3">
-            <Badge variant="primary" size="sm">Small</Badge>
-            <Badge variant="primary">Medium</Badge>
-            <Badge variant="primary" size="lg">Large</Badge>
-          </div>
-          
-          <div className="flex flex-wrap gap-3">
-            <Badge variant="primary" rounded>Rounded Primary</Badge>
-            <Badge variant="secondary" rounded>Rounded Secondary</Badge>
-            <Badge variant="accent" rounded>Rounded Accent</Badge>
-          </div>
-          
-          <div>
-            <p className="text-lg mb-2">Badges in context:</p>
-            <div className="flex items-center gap-3">
-              <span>Feature status:</span>
-              <Badge variant="success">Live</Badge>
-              <Badge variant="warning">Beta</Badge>
-              <Badge variant="error">Deprecated</Badge>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* Avatar Section */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-6">Avatars</h2>
-        
-        <div className="space-y-6">
-          <div>
-            <h3 className="text-lg font-medium mb-3">Sizes</h3>
-            <div className="flex items-center gap-4">
-              <Avatar size="xs" name="John Doe" />
-              <Avatar size="sm" name="John Doe" />
-              <Avatar size="md" name="John Doe" />
-              <Avatar size="lg" name="John Doe" />
-              <Avatar size="xl" name="John Doe" />
-            </div>
-          </div>
-          
-          <div>
-            <h3 className="text-lg font-medium mb-3">With Images</h3>
-            <div className="flex items-center gap-4">
-              <Avatar 
-                src="https://randomuser.me/api/portraits/women/44.jpg" 
-                alt="Jane Doe" 
-                size="md" 
-              />
-              <Avatar 
-                src="https://randomuser.me/api/portraits/men/86.jpg" 
-                alt="John Smith" 
-                size="md" 
-              />
-              <Avatar 
-                src="https://randomuser.me/api/portraits/women/63.jpg" 
-                alt="Sarah Johnson" 
-                size="md" 
-              />
-            </div>
-          </div>
-          
-          <div>
-            <h3 className="text-lg font-medium mb-3">With Status</h3>
-            <div className="flex items-center gap-4">
-              <Avatar name="Jane D" status="online" size="md" />
-              <Avatar name="John S" status="offline" size="md" />
-              <Avatar name="Sarah J" status="away" size="md" />
-              <Avatar name="Mike T" status="busy" size="md" />
-            </div>
-          </div>
-          
-          <div>
-            <h3 className="text-lg font-medium mb-3">Square Avatars</h3>
-            <div className="flex items-center gap-4">
-              <Avatar name="Jane D" square size="md" />
-              <Avatar 
-                src="https://randomuser.me/api/portraits/men/32.jpg" 
-                alt="John Smith" 
-                square 
-                size="md" 
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* Modal Section */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-6">Modals</h2>
-        
-        <div className="space-y-4">
-          <Button variant="primary" onClick={() => setIsModalOpen(true)}>
-            Open Modal
+            ),
+            content: (
+              <section className="mb-8 bg-white p-6 rounded-xl shadow-sm">
+                <div className="space-y-6">
+                  <div className="flex flex-wrap gap-4">
+                    <Button variant="primary">Watch Now</Button>
+                    <Button variant="secondary">Add to List</Button>
+                    <Button variant="tertiary">More Info</Button>
+                    <Button variant="accent">Top Pick</Button>
+                    <Button variant="ghost">Skip</Button>
+                  </div>
+                  
+                  <div className="flex flex-wrap gap-4">
+                    <Button variant="primary" size="sm">Small</Button>
+                    <Button variant="primary">Medium</Button>
+                    <Button variant="primary" size="lg">Large</Button>
+                  </div>
+                  
+                  <div className="flex flex-wrap gap-4">
+                    <Button variant="primary" isLoading>Loading</Button>
+                    <Button variant="primary" disabled>Disabled</Button>
+                    <Button 
+                      variant="primary" 
+                      leftIcon={<span>▶️</span>}
+                    >
+                      Play Trailer
+                    </Button>
+                    <Button 
+                      variant="secondary" 
+                      rightIcon={<span>➕</span>}
+                    >
+                      Watchlist
+                    </Button>
+                  </div>
+                </div>
+              </section>
+            ),
+          },
+          {
+            id: 'cards',
+            label: (
+              <div className="flex items-center gap-2">
+                <span>🎬</span>
+                <span>Cards</span>
+              </div>
+            ),
+            content: (
+              <section className="mb-8 bg-white p-6 rounded-xl shadow-sm">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <Card hoverable>
+                    <Card.Image 
+                      src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500&auto=format&fit=crop&q=60"
+                      alt="Movie scene"
+                      aspectRatio="video"
+                    />
+                    <Card.Body>
+                      <Card.Title>Movie Card</Card.Title>
+                      <p>A classic movie card with image and info.</p>
+                    </Card.Body>
+                  </Card>
+                  
+                  <Card bordered elevated={false}>
+                    <Card.Body>
+                      <Card.Title>Review Card</Card.Title>
+                      <p>"This movie was absolutely fantastic..."</p>
+                      <div className="mt-3 flex items-center">
+                        <Avatar 
+                          src="https://randomuser.me/api/portraits/women/44.jpg" 
+                          size="sm"
+                          alt="Reviewer" 
+                        />
+                        <span className="ml-2 text-sm font-medium">Jane Smith</span>
+                      </div>
+                    </Card.Body>
+                  </Card>
+                  
+                  <Card>
+                    <Card.Body>
+                      <Card.Title>Upcoming Release</Card.Title>
+                      <p>Release date: Dec 15, 2023</p>
+                      <div className="flex gap-1 mt-2">
+                        <Badge variant="warning">Coming Soon</Badge>
+                      </div>
+                    </Card.Body>
+                    <Card.Footer>
+                      <Button variant="secondary" size="sm" fullWidth>Notify Me</Button>
+                    </Card.Footer>
+                  </Card>
+                </div>
+              </section>
+            ),
+          },
+          {
+            id: 'inputs',
+            label: (
+              <div className="flex items-center gap-2">
+                <span>🔍</span>
+                <span>Inputs</span>
+              </div>
+            ),
+            content: (
+              <section className="mb-8 bg-white p-6 rounded-xl shadow-sm">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <Input 
+                    label="Search Movies & TV Shows" 
+                    placeholder="Try 'action' or 'comedy'..."
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    leftIcon={
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+                      </svg>
+                    }
+                  />
+                  
+                  <Input 
+                    label="Filter by Year" 
+                    placeholder="e.g. 2023"
+                    type="number"
+                    helperText="Enter a year to filter movies"
+                  />
+                  
+                  <Input 
+                    label="Email for Notifications" 
+                    placeholder="your@email.com"
+                    type="email"
+                    error="Please enter a valid email"
+                  />
+                  
+                  <Input
+                    label="Write a Review"
+                    placeholder="Share your thoughts..."
+                    variant="filled"
+                    multiline
+                    rows={3}
+                  />
+                </div>
+              </section>
+            ),
+          },
+          {
+            id: 'avatars',
+            label: (
+              <div className="flex items-center gap-2">
+                <span>👤</span>
+                <span>Avatars</span>
+              </div>
+            ),
+            content: (
+              <section className="mb-8 bg-white p-6 rounded-xl shadow-sm">
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-medium mb-3">Cast & Crew</h3>
+                    <div className="flex items-center gap-6">
+                      <Avatar 
+                        src="https://randomuser.me/api/portraits/women/44.jpg" 
+                        alt="Director" 
+                        size="lg" 
+                      />
+                      <Avatar 
+                        src="https://randomuser.me/api/portraits/men/86.jpg" 
+                        alt="Lead Actor" 
+                        size="lg" 
+                      />
+                      <Avatar 
+                        src="https://randomuser.me/api/portraits/women/63.jpg" 
+                        alt="Lead Actress" 
+                        size="lg" 
+                      />
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-lg font-medium mb-3">User Statuses</h3>
+                    <div className="flex items-center gap-4">
+                      <Avatar name="Jane D" status="online" />
+                      <Avatar name="John S" status="offline" />
+                      <Avatar name="Mike T" status="busy" />
+                    </div>
+                  </div>
+                </div>
+              </section>
+            ),
+          },
+          {
+            id: 'badges',
+            label: (
+              <div className="flex items-center gap-2">
+                <span>🏷️</span>
+                <span>Badges</span>
+              </div>
+            ),
+            content: (
+              <section className="mb-8 bg-white p-6 rounded-xl shadow-sm">
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-medium mb-3">Content Tags</h3>
+                    <div className="flex flex-wrap gap-2">
+                      <Badge variant="primary">Action</Badge>
+                      <Badge variant="primary">Comedy</Badge>
+                      <Badge variant="primary">Drama</Badge>
+                      <Badge variant="primary">Horror</Badge>
+                      <Badge variant="primary">Sci-Fi</Badge>
+                      <Badge variant="primary">Romance</Badge>
+                      <Badge variant="primary">Thriller</Badge>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-lg font-medium mb-3">Content Ratings</h3>
+                    <div className="flex flex-wrap gap-2">
+                      <Badge variant="info" rounded>G</Badge>
+                      <Badge variant="info" rounded>PG</Badge>
+                      <Badge variant="warning" rounded>PG-13</Badge>
+                      <Badge variant="error" rounded>R</Badge>
+                      <Badge variant="error" rounded>NC-17</Badge>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-lg font-medium mb-3">Watch Status</h3>
+                    <div className="flex flex-wrap gap-2">
+                      <Badge variant="success">Now Playing</Badge>
+                      <Badge variant="warning">Coming Soon</Badge>
+                      <Badge variant="secondary">Just Added</Badge>
+                      <Badge variant="info">Trending</Badge>
+                      <Badge variant="error">Leaving Soon</Badge>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            ),
+          },
+          {
+            id: 'modal',
+            label: (
+              <div className="flex items-center gap-2">
+                <span>📺</span>
+                <span>Modal</span>
+              </div>
+            ),
+            content: (
+              <section className="mb-8 bg-white p-6 rounded-xl shadow-sm">
+                <div className="space-y-4">
+                  <Button variant="primary" onClick={() => setIsModalOpen(true)}>
+                    Watch Trailer
+                  </Button>
+                  
+                  <Modal
+                    isOpen={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                    title="Interstellar - Official Trailer"
+                    size="lg"
+                    centered
+                  >
+                    <div className="aspect-w-16 aspect-h-9 bg-black">
+                      <iframe 
+                        width="560" 
+                        height="315" 
+                        src="https://www.youtube.com/embed/zSWdZVtXT7E" 
+                        title="YouTube video player" 
+                        frameBorder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowFullScreen
+                      ></iframe>
+                    </div>
+                    
+                    <div className="mt-4 flex justify-between">
+                      <div>
+                        <h3 className="font-medium">Interstellar (2014)</h3>
+                        <p className="text-sm text-gray-600">Director: Christopher Nolan</p>
+                      </div>
+                      
+                      <MoodRating size="sm" />
+                    </div>
+                  </Modal>
+                </div>
+              </section>
+            ),
+          },
+        ]}
+      />
+
+      {/* Call To Action */}
+      <div className="text-center bg-gradient-to-r from-primary to-secondary text-white p-10 rounded-xl shadow-lg mt-16">
+        <h2 className="text-3xl font-bold mb-3">Ready to Explore?</h2>
+        <p className="text-lg opacity-90 mb-6 max-w-xl mx-auto">
+          Discover the latest movies and TV shows using our emotion-focused interface.
+        </p>
+        <div className="flex flex-wrap justify-center gap-4">
+          <Button variant="ghost" size="lg" className="bg-white/20 hover:bg-white/30 text-white">
+            Browse Movies
           </Button>
-          
-          <Modal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-            title="Modal Title"
-            size="md"
-            footer={
-              <div className="flex justify-end space-x-2">
-                <Button variant="tertiary" onClick={() => setIsModalOpen(false)}>
-                  Cancel
-                </Button>
-                <Button variant="primary" onClick={() => setIsModalOpen(false)}>
-                  Confirm
-                </Button>
-              </div>
-            }
-          >
-            <div className="space-y-4">
-              <p>This is a modal dialog that can be used for various purposes such as displaying important information, confirmations, or collecting user input.</p>
-              
-              <Input 
-                label="Email" 
-                placeholder="Enter your email" 
-                fullWidth 
-              />
-            </div>
-          </Modal>
-          
-          <div className="mt-4 bg-gray-100 p-4 rounded-md">
-            <p className="text-sm text-gray-600">
-              The Modal component creates a portal to render at the bottom of the document body. It supports different sizes, custom headers and footers, and can be closed by clicking outside or pressing ESC.
-            </p>
-          </div>
+          <Button variant="ghost" size="lg" className="bg-white/20 hover:bg-white/30 text-white">
+            Explore TV Shows
+          </Button>
         </div>
-      </section>
+      </div>
       
-      {/* Rating Section */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-6">Ratings</h2>
+      {/* Add global styles for animations */}
+      <style>
+        {`
+        .background-animate {
+          background-size: 400%;
+          -webkit-animation: AnimateBackground 8s ease infinite;
+          -moz-animation: AnimateBackground 8s ease infinite;
+          animation: AnimateBackground 8s ease infinite;
+        }
+
+        @keyframes AnimateBackground {
+          0%, 100% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+        }
         
-        <div className="space-y-6">
-          <div>
-            <h3 className="text-lg font-medium mb-3">Interactive Rating</h3>
-            <div className="flex flex-col gap-2">
-              <Rating 
-                value={ratingValue} 
-                onChange={setRatingValue} 
-                showValue 
-              />
-              <p className="text-sm text-gray-600">
-                Click on a star to change the rating. Current value: {ratingValue}
-              </p>
-            </div>
-          </div>
-          
-          <div>
-            <h3 className="text-lg font-medium mb-3">Sizes</h3>
-            <div className="flex flex-col gap-3">
-              <Rating value={3.5} readonly size="sm" showValue />
-              <Rating value={4} readonly size="md" showValue />
-              <Rating value={4.5} readonly size="lg" showValue />
-            </div>
-          </div>
-          
-          <div>
-            <h3 className="text-lg font-medium mb-3">Precision</h3>
-            <div className="flex flex-col gap-3">
-              <div className="flex items-center gap-4">
-                <span className="w-32">Full Stars:</span>
-                <Rating value={3} readonly precision={1} />
-              </div>
-              <div className="flex items-center gap-4">
-                <span className="w-32">Half Stars:</span>
-                <Rating value={3.5} readonly precision={0.5} />
-              </div>
-            </div>
-          </div>
-          
-          <div>
-            <h3 className="text-lg font-medium mb-3">Custom Max</h3>
-            <Rating value={8} max={10} readonly showValue />
-          </div>
-        </div>
-      </section>
-      
-      {/* Tabs Section */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-6">Tabs</h2>
+        @keyframes bounce {
+          0%, 100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+        }
         
-        <div className="space-y-8">
-          <div>
-            <h3 className="text-lg font-medium mb-3">Default Tabs</h3>
-            <Tabs
-              items={[
-                {
-                  id: 'tab1',
-                  label: 'Movies',
-                  content: (
-                    <div className="bg-white p-4 rounded-md">
-                      <h4 className="font-medium mb-2">Movies Content</h4>
-                      <p>Content for the Movies tab goes here.</p>
-                    </div>
-                  ),
-                },
-                {
-                  id: 'tab2',
-                  label: 'TV Shows',
-                  content: (
-                    <div className="bg-white p-4 rounded-md">
-                      <h4 className="font-medium mb-2">TV Shows Content</h4>
-                      <p>Content for the TV Shows tab goes here.</p>
-                    </div>
-                  ),
-                },
-                {
-                  id: 'tab3',
-                  label: 'People',
-                  content: (
-                    <div className="bg-white p-4 rounded-md">
-                      <h4 className="font-medium mb-2">People Content</h4>
-                      <p>Content for the People tab goes here.</p>
-                    </div>
-                  ),
-                },
-              ]}
-            />
-          </div>
-          
-          <div>
-            <h3 className="text-lg font-medium mb-3">Pill Tabs</h3>
-            <Tabs
-              variant="pills"
-              items={[
-                {
-                  id: 'pill1',
-                  label: 'Info',
-                  content: (
-                    <div className="bg-white p-4 rounded-md">
-                      <h4 className="font-medium mb-2">Movie Information</h4>
-                      <p>Basic information about the movie goes here.</p>
-                    </div>
-                  ),
-                },
-                {
-                  id: 'pill2',
-                  label: 'Cast',
-                  content: (
-                    <div className="bg-white p-4 rounded-md">
-                      <h4 className="font-medium mb-2">Cast & Crew</h4>
-                      <p>List of actors and crew members goes here.</p>
-                    </div>
-                  ),
-                },
-                {
-                  id: 'pill3',
-                  label: 'Reviews',
-                  content: (
-                    <div className="bg-white p-4 rounded-md">
-                      <h4 className="font-medium mb-2">User Reviews</h4>
-                      <p>User reviews and ratings go here.</p>
-                    </div>
-                  ),
-                },
-              ]}
-            />
-          </div>
-          
-          <div>
-            <h3 className="text-lg font-medium mb-3">Underline Tabs</h3>
-            <Tabs
-              variant="underline"
-              items={[
-                {
-                  id: 'under1',
-                  label: 'Popular',
-                  content: (
-                    <div className="bg-white p-4 rounded-md">
-                      <h4 className="font-medium mb-2">Popular Content</h4>
-                      <p>Most popular movies and shows go here.</p>
-                    </div>
-                  ),
-                },
-                {
-                  id: 'under2',
-                  label: 'Top Rated',
-                  content: (
-                    <div className="bg-white p-4 rounded-md">
-                      <h4 className="font-medium mb-2">Top Rated Content</h4>
-                      <p>Highest rated movies and shows go here.</p>
-                    </div>
-                  ),
-                },
-                {
-                  id: 'under3',
-                  label: 'Upcoming',
-                  content: (
-                    <div className="bg-white p-4 rounded-md">
-                      <h4 className="font-medium mb-2">Upcoming Releases</h4>
-                      <p>Soon to be released movies and shows go here.</p>
-                    </div>
-                  ),
-                },
-                {
-                  id: 'under4',
-                  label: 'Disabled',
-                  disabled: true,
-                  content: <div>This content should not be accessible</div>,
-                },
-              ]}
-            />
-          </div>
-          
-          <div>
-            <h3 className="text-lg font-medium mb-3">Full Width Tabs</h3>
-            <Tabs
-              variant="enclosed"
-              fullWidth
-              items={[
-                {
-                  id: 'fw1',
-                  label: 'Account',
-                  content: (
-                    <div className="bg-white p-4 rounded-md">
-                      <h4 className="font-medium mb-2">Account Settings</h4>
-                      <p>User account settings go here.</p>
-                    </div>
-                  ),
-                },
-                {
-                  id: 'fw2',
-                  label: 'Preferences',
-                  content: (
-                    <div className="bg-white p-4 rounded-md">
-                      <h4 className="font-medium mb-2">User Preferences</h4>
-                      <p>User preferences settings go here.</p>
-                    </div>
-                  ),
-                },
-                {
-                  id: 'fw3',
-                  label: 'Notifications',
-                  content: (
-                    <div className="bg-white p-4 rounded-md">
-                      <h4 className="font-medium mb-2">Notification Settings</h4>
-                      <p>User notification settings go here.</p>
-                    </div>
-                  ),
-                },
-              ]}
-            />
-          </div>
-        </div>
-      </section>
+        .animate-bounce {
+          animation: bounce 2s infinite;
+        }
+        `}
+      </style>
     </div>
   );
 };

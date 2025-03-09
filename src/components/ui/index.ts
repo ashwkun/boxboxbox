@@ -7,5 +7,6 @@ export { default as Avatar } from './Avatar';
 export { default as Modal } from './Modal';
 export { default as Rating } from './Rating';
 export { default as Tabs } from './Tabs';
+export { default as MoodRating } from './MoodRating';
 
 // Add additional component exports here as they are created 
