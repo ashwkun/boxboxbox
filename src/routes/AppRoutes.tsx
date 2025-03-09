@@ -14,6 +14,7 @@ import Watchlist from '../pages/Watchlist';
 import Ratings from '../pages/Ratings';
 import Profile from '../pages/Profile';
 import Login from '../pages/Login';
+import DesignSystem from '../pages/DesignSystem';
 
 // NotFound component
 const NotFound = () => (
@@ -34,6 +35,7 @@ const AppRoutes: React.FC = () => {
       <Route path="/movie/:id" element={<Layout><MovieDetails /></Layout>} />
       <Route path="/tv/:id" element={<Layout><TVShowDetails /></Layout>} />
       <Route path="/login" element={<Layout><Login /></Layout>} />
+      <Route path="/design-system" element={<Layout><DesignSystem /></Layout>} />
       
       {/* Protected routes */}
       <Route 

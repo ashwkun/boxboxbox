@@ -6,6 +6,9 @@ import UserProfile from './UserProfile';
 // import NotificationBell from './NotificationBell'; // Removed social feature
 import SearchBar from './SearchBar';
 
+// Set to true to enable the Design System link in dev environments
+const isDev = process.env.NODE_ENV === 'development';
+
 const Navbar: React.FC = () => {
   const location = useLocation();
   const { currentUser } = useAuth();
@@ -29,6 +32,9 @@ const Navbar: React.FC = () => {
       { label: 'Watchlist', path: '/watchlist' },
       { label: 'Ratings', path: '/ratings' }
       // { label: 'People', path: '/people' } // Removed social feature
+    ] : []),
+    ...(isDev ? [
+      { label: 'Design System', path: '/design-system' }
     ] : [])
   ];
 
