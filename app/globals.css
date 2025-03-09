@@ -7,19 +7,40 @@
 
 @layer base {
   :root {
-    --primary-gradient-start: #FF4D8F;
-    --primary-gradient-end: #FF8D4D;
+    --primary-start: #FF4D8F;
+    --primary-end: #FF8D4D;
     --background-dark: #121212;
     --background-card: #1E1E1E;
   }
 
+  html {
+    background-color: var(--background-dark);
+    color: white;
+  }
+
   body {
-    @apply bg-[#121212] text-white;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Clash Display', sans-serif;
   }
 }
 
 @layer components {
   .gradient-text {
-    @apply bg-gradient-to-r from-[#FF4D8F] to-[#FF8D4D] text-transparent bg-clip-text;
+    @apply bg-gradient-to-r from-primary-start to-primary-end text-transparent bg-clip-text;
+  }
+
+  .card {
+    @apply bg-background-card rounded-2xl p-6;
+  }
+
+  .button-primary {
+    @apply bg-gradient-to-r from-primary-start to-primary-end px-6 py-3 rounded-xl font-display font-semibold hover:scale-105 transition-transform shadow-lg;
+  }
+
+  .button-secondary {
+    @apply border-2 border-white/20 px-6 py-3 rounded-xl font-display font-semibold hover:bg-white/10 transition-colors;
   }
 } 

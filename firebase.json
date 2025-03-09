@@ -6,16 +6,10 @@
       "**/.*",
       "**/node_modules/**"
     ],
-    "cleanUrls": true,
-    "trailingSlash": false,
     "rewrites": [
       {
-        "source": "/brandkit",
-        "destination": "/brandkit.html"
-      },
-      {
         "source": "**",
-        "destination": "/404.html"
+        "destination": "/index.html"
       }
     ]
   }
