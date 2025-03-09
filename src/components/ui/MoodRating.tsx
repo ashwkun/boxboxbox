@@ -96,7 +96,7 @@ const MoodRating: React.FC<MoodRatingProps> = ({
 
   const [selectedMood, setSelectedMood] = useState<MoodType | null>(initialMood);
   const [hoveredMood, setHoveredMood] = useState<MoodType | null>(null);
-  const [wouldRewatch, setWouldRewatch] = useState(false);
+  const [wouldRewatch, setWouldRewatch] = useState<boolean | null>(null);
   
   // Update state if props change
   useEffect(() => {
@@ -118,18 +118,17 @@ const MoodRating: React.FC<MoodRatingProps> = ({
     if (disabled) return;
     
     setSelectedMood(mood);
-    onChange?.(mood, wouldRewatch);
+    onChange?.(mood, wouldRewatch || false);
   };
 
-  // Toggle rewatch button
-  const handleRewatchToggle = () => {
+  // Set rewatch preference
+  const handleRewatchSet = (value: boolean) => {
     if (disabled) return;
     
-    const newValue = !wouldRewatch;
-    setWouldRewatch(newValue);
+    setWouldRewatch(value);
     
     if (selectedMood) {
-      onChange?.(selectedMood, newValue);
+      onChange?.(selectedMood, value);
     }
   };
 
@@ -192,25 +191,46 @@ const MoodRating: React.FC<MoodRatingProps> = ({
         </div>
       )}
 
-      {/* Would Rewatch Toggle (optional) */}
+      {/* Would Rewatch Option (optional) - Simplified Yes/No buttons */}
       {withRewatch && selectedMood && (
-        <button
-          onClick={handleRewatchToggle}
-          disabled={disabled}
-          className={`
-            mt-4 flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium
-            transition-all duration-200
-            ${wouldRewatch 
-              ? 'bg-blue-500 text-white shadow-md' 
-              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}
-            ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
-          `}
-        >
-          <span role="img" aria-hidden="true" className="text-lg">
-            {wouldRewatch ? '🔄' : '⭕'}
-          </span>
-          <span>{wouldRewatch ? 'Would watch again!' : 'Would you watch this again?'}</span>
-        </button>
+        <div className="mt-4 flex flex-col items-center">
+          <p className="text-sm font-medium mb-2">Would you watch this again?</p>
+          <div className="flex gap-3">
+            <button
+              type="button"
+              onClick={() => handleRewatchSet(true)}
+              disabled={disabled}
+              className={`
+                px-4 py-2 rounded-md text-sm font-medium
+                transition-all duration-200
+                ${wouldRewatch === true
+                  ? 'bg-green-500 text-white' 
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}
+                ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
+              `}
+            >
+              <span role="img" aria-hidden="true" className="mr-1">👍</span>
+              Yes
+            </button>
+            
+            <button
+              type="button"
+              onClick={() => handleRewatchSet(false)}
+              disabled={disabled}
+              className={`
+                px-4 py-2 rounded-md text-sm font-medium
+                transition-all duration-200
+                ${wouldRewatch === false
+                  ? 'bg-red-500 text-white' 
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}
+                ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
+              `}
+            >
+              <span role="img" aria-hidden="true" className="mr-1">👎</span>
+              No
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );
