@@ -1,115 +1,293 @@
 :root {
-  /* Primary Colors */
-  --color-primary: #1E3A8A;
-  --color-primary-light: #2563EB;
-  --color-primary-lightest: #60A5FA;
+  /* 
+   * COLOR SYSTEM - Much more vibrant and bold
+   */
   
-  --color-secondary: #9333EA;
-  --color-secondary-light: #A855F7;
-  --color-secondary-lightest: #C084FC;
+  /* Primary colors - Electric purple gradient */
+  --color-primary-50: #f0e7ff;
+  --color-primary-100: #e4d3ff;
+  --color-primary-200: #c9a7ff;
+  --color-primary-300: #ae7bff;
+  --color-primary-400: #9350ff;
+  --color-primary-500: #7825ff;
+  --color-primary-600: #6200ea;
+  --color-primary-700: #5000c9;
+  --color-primary-800: #3f00a7;
+  --color-primary-900: #2e0086;
   
-  --color-accent: #F97316;
-  --color-accent-light: #FB923C;
+  /* Secondary colors - Electric pink */
+  --color-secondary-50: #ffebf2;
+  --color-secondary-100: #ffd7e6;
+  --color-secondary-200: #ffafcd;
+  --color-secondary-300: #ff87b4;
+  --color-secondary-400: #ff5f9b;
+  --color-secondary-500: #ff3782;
+  --color-secondary-600: #f50057;
+  --color-secondary-700: #d40048;
+  --color-secondary-800: #b30039;
+  --color-secondary-900: #92002a;
   
-  /* Neutral Colors - Dark Theme (Default) */
-  --color-background: #0F172A;
-  --color-surface: #1E293B;
+  /* Accent colors - Electric teal */
+  --color-accent-50: #e0f7fa;
+  --color-accent-100: #b2ebf2;
+  --color-accent-200: #80deea;
+  --color-accent-300: #4dd0e1;
+  --color-accent-400: #26c6da;
+  --color-accent-500: #00bcd4;
+  --color-accent-600: #00acc1;
+  --color-accent-700: #0097a7;
+  --color-accent-800: #00838f;
+  --color-accent-900: #006064;
   
-  --color-gray-900: #111827;
-  --color-gray-800: #1F2937;
-  --color-gray-700: #374151;
-  --color-gray-600: #4B5563;
-  --color-gray-500: #6B7280;
-  --color-gray-400: #9CA3AF;
-  --color-gray-300: #D1D5DB;
-  --color-gray-200: #E5E7EB;
-  --color-gray-100: #F3F4F6;
+  /* Success - Lime green */
+  --color-success-50: #f1fde6;
+  --color-success-100: #ddfbbe;
+  --color-success-200: #c0f581;
+  --color-success-300: #9aef29;
+  --color-success-400: #76e300;
+  --color-success-500: #64dd17;
+  --color-success-600: #4dc711;
+  --color-success-700: #38b10a;
+  --color-success-800: #2c9b09;
+  --color-success-900: #1d7806;
   
-  /* Feedback Colors */
-  --color-success: #059669;
-  --color-warning: #FBBF24;
-  --color-error: #DC2626;
-  --color-info: #0EA5E9;
+  /* Error - Bright red */
+  --color-error-50: #ffe8e8;
+  --color-error-100: #ffc8c8;
+  --color-error-200: #ff9797;
+  --color-error-300: #ff6666;
+  --color-error-400: #ff3535;
+  --color-error-500: #ff0404;
+  --color-error-600: #ef0000;
+  --color-error-700: #dd0000;
+  --color-error-800: #cc0000;
+  --color-error-900: #bb0000;
   
-  /* Typography */
-  --font-display: 'Montserrat', sans-serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  /* Warning - Electric yellow */
+  --color-warning-50: #fffde7;
+  --color-warning-100: #fff9c4;
+  --color-warning-200: #fff59d;
+  --color-warning-300: #fff176;
+  --color-warning-400: #ffee58;
+  --color-warning-500: #ffeb3b;
+  --color-warning-600: #fdd835;
+  --color-warning-700: #fbc02d;
+  --color-warning-800: #f9a825;
+  --color-warning-900: #f57f17;
   
-  /* Font Sizes */
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
-  --font-size-3xl: 1.875rem;
-  --font-size-4xl: 2.25rem;
-  --font-size-5xl: 3rem;
+  /* Info - Bright blue */
+  --color-info-50: #e3f2fd;
+  --color-info-100: #bbdefb;
+  --color-info-200: #90caf9;
+  --color-info-300: #64b5f6;
+  --color-info-400: #42a5f5;
+  --color-info-500: #2196f3;
+  --color-info-600: #1e88e5;
+  --color-info-700: #1976d2;
+  --color-info-800: #1565c0;
+  --color-info-900: #0d47a1;
   
-  /* Font Weights */
+  /* Gray scale - More contrast */
+  --color-gray-50: #fafafa;
+  --color-gray-100: #f5f5f5;
+  --color-gray-200: #eeeeee;
+  --color-gray-300: #e0e0e0;
+  --color-gray-400: #bdbdbd;
+  --color-gray-500: #9e9e9e;
+  --color-gray-600: #757575;
+  --color-gray-700: #616161;
+  --color-gray-800: #424242;
+  --color-gray-900: #212121;
+  
+  /* Dark theme colors - Deeper blacks */
+  --color-dark-50: #525252;
+  --color-dark-100: #424242;
+  --color-dark-200: #333333;
+  --color-dark-300: #252525;
+  --color-dark-400: #181818;
+  --color-dark-500: #121212;
+  --color-dark-600: #0e0e0e;
+  --color-dark-700: #0a0a0a;
+  --color-dark-800: #050505;
+  --color-dark-900: #000000;
+  
+  /* Text colors */
+  --color-text-primary: var(--color-gray-900);
+  --color-text-secondary: var(--color-gray-700);
+  --color-text-tertiary: var(--color-gray-500);
+  --color-text-disabled: var(--color-gray-400);
+  --color-text-inverse: var(--color-gray-50);
+  --color-text-error: var(--color-error-600);
+  --color-text-success: var(--color-success-700);
+  --color-text-warning: var(--color-warning-800);
+  --color-text-info: var(--color-info-700);
+  
+  /* Background colors */
+  --color-bg-primary: var(--color-gray-50);
+  --color-bg-secondary: var(--color-gray-100);
+  --color-bg-tertiary: var(--color-gray-200);
+  --color-bg-inverse: var(--color-gray-900);
+  
+  /* Border colors */
+  --color-border-light: var(--color-gray-200);
+  --color-border-medium: var(--color-gray-300);
+  --color-border-dark: var(--color-gray-400);
+  
+  /* Gradient Maps */
+  --gradient-primary: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-primary-700) 100%);
+  --gradient-secondary: linear-gradient(135deg, var(--color-secondary-500) 0%, var(--color-secondary-700) 100%);
+  --gradient-accent: linear-gradient(135deg, var(--color-accent-500) 0%, var(--color-accent-700) 100%);
+  --gradient-success: linear-gradient(135deg, var(--color-success-500) 0%, var(--color-success-700) 100%);
+  --gradient-error: linear-gradient(135deg, var(--color-error-500) 0%, var(--color-error-700) 100%);
+  --gradient-warning: linear-gradient(135deg, var(--color-warning-500) 0%, var(--color-warning-700) 100%);
+  --gradient-info: linear-gradient(135deg, var(--color-info-500) 0%, var(--color-info-700) 100%);
+  
+  /* Funky gradients for highlights and special elements */
+  --gradient-purple-pink: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-secondary-500) 100%);
+  --gradient-pink-orange: linear-gradient(135deg, var(--color-secondary-500) 0%, var(--color-warning-500) 100%);
+  --gradient-blue-purple: linear-gradient(135deg, var(--color-info-500) 0%, var(--color-primary-500) 100%);
+  --gradient-teal-blue: linear-gradient(135deg, var(--color-accent-500) 0%, var(--color-info-500) 100%);
+  --gradient-rainbow: linear-gradient(to right, #ff5f9b, #ffeb3b, #64dd17, #00bcd4, #7825ff);
+  --gradient-neon: linear-gradient(to right, #f0fb, #fb0f, #0fff);
+  
+  /* 
+   * TYPOGRAPHY SYSTEM
+   */
+  
+  /* Font families */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Montserrat', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'SF Mono', 'Roboto Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  
+  /* Font sizes */
+  --font-size-xs: 0.75rem;   /* 12px */
+  --font-size-sm: 0.875rem;  /* 14px */
+  --font-size-base: 1rem;    /* 16px */
+  --font-size-lg: 1.125rem;  /* 18px */
+  --font-size-xl: 1.25rem;   /* 20px */
+  --font-size-2xl: 1.5rem;   /* 24px */
+  --font-size-3xl: 1.875rem; /* 30px */
+  --font-size-4xl: 2.25rem;  /* 36px */
+  --font-size-5xl: 3rem;     /* 48px */
+  --font-size-6xl: 3.75rem;  /* 60px */
+  
+  /* Font weights */
+  --font-weight-thin: 100;
+  --font-weight-extralight: 200;
   --font-weight-light: 300;
-  --font-weight-regular: 400;
+  --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  --font-weight-black: 900;
   
-  /* Spacing */
-  --spacing-1: 0.25rem;
-  --spacing-2: 0.5rem;
-  --spacing-3: 0.75rem;
-  --spacing-4: 1rem;
-  --spacing-5: 1.25rem;
-  --spacing-6: 1.5rem;
-  --spacing-8: 2rem;
-  --spacing-10: 2.5rem;
-  --spacing-12: 3rem;
-  --spacing-16: 4rem;
-  --spacing-20: 5rem;
+  /* Line heights */
+  --line-height-none: 1;
+  --line-height-tight: 1.25;
+  --line-height-snug: 1.375;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+  --line-height-loose: 2;
   
-  /* Border Radius */
-  --radius-sm: 0.25rem;
-  --radius-md: 0.375rem;
-  --radius-lg: 0.5rem;
-  --radius-xl: 0.75rem;
-  --radius-2xl: 1rem;
+  /* Letter spacing */
+  --letter-spacing-tighter: -0.05em;
+  --letter-spacing-tight: -0.025em;
+  --letter-spacing-normal: 0em;
+  --letter-spacing-wide: 0.025em;
+  --letter-spacing-wider: 0.05em;
+  --letter-spacing-widest: 0.1em;
+  
+  /* 
+   * SPACING SYSTEM
+   */
+  
+  --spacing-0: 0;
+  --spacing-1: 0.25rem;    /* 4px */
+  --spacing-2: 0.5rem;     /* 8px */
+  --spacing-3: 0.75rem;    /* 12px */
+  --spacing-4: 1rem;       /* 16px */
+  --spacing-5: 1.25rem;    /* 20px */
+  --spacing-6: 1.5rem;     /* 24px */
+  --spacing-8: 2rem;       /* 32px */
+  --spacing-10: 2.5rem;    /* 40px */
+  --spacing-12: 3rem;      /* 48px */
+  --spacing-16: 4rem;      /* 64px */
+  --spacing-20: 5rem;      /* 80px */
+  --spacing-24: 6rem;      /* 96px */
+  --spacing-32: 8rem;      /* 128px */
+  --spacing-40: 10rem;     /* 160px */
+  --spacing-48: 12rem;     /* 192px */
+  --spacing-56: 14rem;     /* 224px */
+  --spacing-64: 16rem;     /* 256px */
+  
+  /* 
+   * BORDER RADIUS
+   */
+  
+  --radius-none: 0;
+  --radius-sm: 0.125rem;   /* 2px */
+  --radius-md: 0.375rem;   /* 6px */
+  --radius-lg: 0.5rem;     /* 8px */
+  --radius-xl: 0.75rem;    /* 12px */
+  --radius-2xl: 1rem;      /* 16px */
+  --radius-3xl: 1.5rem;    /* 24px */
   --radius-full: 9999px;
   
-  /* Shadows */
+  /* 
+   * SHADOWS
+   */
+  
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
   
-  /* Z-Index */
-  --z-index-dropdown: 1000;
-  --z-index-sticky: 1020;
-  --z-index-fixed: 1030;
-  --z-index-modal-backdrop: 1040;
-  --z-index-modal: 1050;
-  --z-index-popover: 1060;
-  --z-index-tooltip: 1070;
+  /* Colorful shadows for glowing effects */
+  --shadow-primary: 0 0 15px rgba(120, 37, 255, 0.5);
+  --shadow-secondary: 0 0 15px rgba(255, 55, 130, 0.5);
+  --shadow-accent: 0 0 15px rgba(0, 188, 212, 0.5);
+  --shadow-success: 0 0 15px rgba(100, 221, 23, 0.5);
+  --shadow-error: 0 0 15px rgba(255, 4, 4, 0.5);
+  --shadow-warning: 0 0 15px rgba(255, 235, 59, 0.5);
   
-  /* Animation */
+  /* 
+   * TRANSITIONS
+   */
+  
   --transition-fast: 150ms;
-  --transition-normal: 250ms;
-  --transition-slow: 350ms;
-  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-in: cubic-bezier(0.4, 0, 1, 1);
-  --ease-out: cubic-bezier(0, 0, 0.2, 1);
-  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 300ms;
+  --transition-slow: 500ms;
+  --transition-very-slow: 1000ms;
   
-  /* Layout */
-  --container-max-width: 1280px;
-  --header-height: 64px;
-  --footer-height: 64px;
+  /* Animated border gradients */
+  --border-gradient-rainbow: linear-gradient(
+    90deg,
+    var(--color-primary-500),
+    var(--color-secondary-500),
+    var(--color-accent-500),
+    var(--color-success-500),
+    var(--color-warning-500)
+  );
   
-  /* Media Queries */
-  --breakpoint-sm: 640px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 1024px;
-  --breakpoint-xl: 1280px;
-  --breakpoint-2xl: 1536px;
+  /* Z-index layers */
+  --z-index-behind: -1;
+  --z-index-default: 1;
+  --z-index-dropdown: 10;
+  --z-index-sticky: 20;
+  --z-index-fixed: 30;
+  --z-index-modal-backdrop: 40;
+  --z-index-modal: 50;
+  --z-index-popover: 60;
+  --z-index-tooltip: 70;
+  
+  /* Blend modes for overlays */
+  --blend-mode-overlay: overlay;
+  --blend-mode-multiply: multiply;
+  --blend-mode-screen: screen;
+  --blend-mode-color-dodge: color-dodge;
 }
 
 /* Light Theme Variables */

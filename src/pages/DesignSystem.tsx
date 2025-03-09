@@ -13,13 +13,33 @@ const DesignSystem: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ratingValue, setRatingValue] = useState(3.5);
+  const [selectedMood, setSelectedMood] = useState<string | null>(null);
   
   return (
     <div className="container-page pb-20">
-      {/* Fun, Entertainment-Focused Header */}
-      <div className="relative overflow-hidden mb-12 rounded-xl shadow-lg">
-        {/* Background with animation */}
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 background-animate"></div>
+      {/* Electric, Entertainment-Focused Header */}
+      <div className="relative overflow-hidden mb-12 rounded-xl shadow-xl">
+        {/* Vibrant background with animation */}
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 background-animate"></div>
+        
+        {/* Floating particles effect */}
+        <div className="absolute inset-0 overflow-hidden opacity-30">
+          {Array.from({ length: 20 }).map((_, i) => (
+            <div 
+              key={i}
+              className="absolute rounded-full bg-white"
+              style={{
+                width: `${Math.random() * 10 + 5}px`,
+                height: `${Math.random() * 10 + 5}px`,
+                top: `${Math.random() * 100}%`,
+                left: `${Math.random() * 100}%`,
+                opacity: Math.random() * 0.5 + 0.5,
+                animation: `float ${Math.random() * 10 + 10}s linear infinite`,
+                animationDelay: `${Math.random() * 10}s`
+              }}
+            />
+          ))}
+        </div>
         
         {/* Content */}
         <div className="relative p-10 md:p-12 z-10">
@@ -33,12 +53,15 @@ const DesignSystem: React.FC = () => {
               </p>
             </div>
             
-            <div className="mt-6 md:mt-0 flex gap-2">
+            <div className="mt-6 md:mt-0 flex gap-3">
               {["😍", "😊", "😐", "😕", "😫"].map((emoji, i) => (
                 <span 
                   key={i} 
-                  className="text-3xl animate-bounce" 
-                  style={{ animationDelay: `${i * 0.1}s` }}
+                  className="text-4xl animate-bounce" 
+                  style={{ 
+                    animationDelay: `${i * 0.15}s`,
+                    filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.7))'
+                  }}
                 >
                   {emoji}
                 </span>
@@ -49,37 +72,47 @@ const DesignSystem: React.FC = () => {
       </div>
       
       {/* Emotion-Based Rating Section (Featured) */}
-      <section className="mb-16 bg-gradient-to-r from-gray-50 to-gray-100 p-8 rounded-xl shadow-sm">
+      <section className="mb-16 bg-gradient-to-r from-gray-50 to-gray-100 p-8 rounded-xl shadow-lg transform hover:scale-[1.01] transition-transform duration-300">
         <div className="text-center mb-8">
-          <span className="text-sm font-semibold text-primary uppercase tracking-wider">Featured Component</span>
-          <h2 className="text-3xl font-bold mt-2 mb-3">Emotion Ratings</h2>
+          <span className="px-3 py-1 text-sm font-semibold text-white bg-gradient-to-r from-primary-500 to-secondary-500 uppercase tracking-wider rounded-full">Featured Component</span>
+          <h2 className="text-3xl font-bold mt-3 mb-3 bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">Emotion Ratings</h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
             Our rating system is built on emotions rather than stars, creating a more intuitive and engaging way for users to share how they feel about content.
           </p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <Card hoverable className="p-4">
+          <Card hoverable className="p-4 transition-all duration-300 hover:shadow-primary">
             <Card.Body>
-              <Card.Title>Basic Mood Rating</Card.Title>
+              <Card.Title className="text-primary-600">Basic Mood Rating</Card.Title>
               <div className="flex justify-center py-6">
-                <MoodRating showLabels showDescription />
+                <MoodRating 
+                  showLabels 
+                  showDescription
+                  value={selectedMood as any}
+                  onChange={(mood) => setSelectedMood(mood)}
+                />
               </div>
             </Card.Body>
           </Card>
           
-          <Card hoverable className="p-4">
+          <Card hoverable className="p-4 transition-all duration-300 hover:shadow-secondary">
             <Card.Body>
-              <Card.Title>With "Would Rewatch" Option</Card.Title>
+              <Card.Title className="text-secondary-600">With "Would Rewatch" Option</Card.Title>
               <div className="flex justify-center py-6">
-                <MoodRating showLabels withRewatch />
+                <MoodRating 
+                  showLabels 
+                  withRewatch
+                  value={selectedMood as any}
+                  onChange={(mood) => setSelectedMood(mood)} 
+                />
               </div>
             </Card.Body>
           </Card>
           
-          <Card hoverable className="col-span-1 md:col-span-2 p-4">
+          <Card hoverable className="col-span-1 md:col-span-2 p-4 transition-all duration-300 hover:shadow-accent">
             <Card.Body>
-              <Card.Title>Size Variations</Card.Title>
+              <Card.Title className="text-accent-600">Size Variations</Card.Title>
               <div className="flex flex-col items-center gap-8 py-6">
                 <div className="flex items-center gap-4">
                   <span className="text-sm font-medium w-12">Small:</span>
@@ -100,73 +133,67 @@ const DesignSystem: React.FC = () => {
       </section>
       
       {/* Colors Section */}
-      <section className="mb-12 bg-white p-8 rounded-xl shadow-sm">
-        <h2 className="text-2xl font-bold mb-6 text-center">Color Palette</h2>
+      <section className="mb-12 bg-white p-8 rounded-xl shadow-lg transform hover:scale-[1.01] transition-transform duration-300">
+        <h2 className="text-2xl font-bold mb-6 text-center bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent">Vibrant Color Palette</h2>
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          <div className="flex flex-col">
-            <div className="h-24 rounded-t-xl bg-gradient-to-r from-primary to-primary-light"></div>
-            <div className="h-12 bg-primary-light"></div>
-            <div className="h-12 bg-primary-lightest rounded-b-xl"></div>
-            <p className="mt-2 text-sm font-medium text-center">Primary</p>
+          <div className="flex flex-col transform transition-transform hover:scale-105">
+            <div className="h-24 rounded-t-xl bg-gradient-to-r from-primary-400 to-primary-600 shadow-lg"></div>
+            <div className="h-12 bg-primary-300 flex items-center justify-center text-primary-900 font-semibold">Primary</div>
+            <div className="h-12 bg-primary-100 rounded-b-xl"></div>
           </div>
           
-          <div className="flex flex-col">
-            <div className="h-24 rounded-t-xl bg-gradient-to-r from-secondary to-secondary-light"></div>
-            <div className="h-12 bg-secondary-light"></div>
-            <div className="h-12 bg-secondary-lightest rounded-b-xl"></div>
-            <p className="mt-2 text-sm font-medium text-center">Secondary</p>
+          <div className="flex flex-col transform transition-transform hover:scale-105">
+            <div className="h-24 rounded-t-xl bg-gradient-to-r from-secondary-400 to-secondary-600 shadow-lg"></div>
+            <div className="h-12 bg-secondary-300 flex items-center justify-center text-secondary-900 font-semibold">Secondary</div>
+            <div className="h-12 bg-secondary-100 rounded-b-xl"></div>
           </div>
           
-          <div className="flex flex-col">
-            <div className="h-24 rounded-t-xl bg-gradient-to-r from-accent to-accent-light"></div>
-            <div className="h-12 bg-accent-light rounded-b-xl"></div>
-            <p className="mt-2 text-sm font-medium text-center">Accent</p>
+          <div className="flex flex-col transform transition-transform hover:scale-105">
+            <div className="h-24 rounded-t-xl bg-gradient-to-r from-accent-400 to-accent-600 shadow-lg"></div>
+            <div className="h-12 bg-accent-300 flex items-center justify-center text-accent-900 font-semibold">Accent</div>
+            <div className="h-12 bg-accent-100 rounded-b-xl"></div>
           </div>
           
           <div className="grid grid-cols-2 gap-3">
-            <div className="flex flex-col">
-              <div className="h-20 bg-success rounded-xl shadow-md"></div>
-              <p className="mt-1 text-xs font-medium text-center">Success</p>
+            <div className="flex flex-col transform transition-transform hover:scale-105">
+              <div className="h-20 bg-success-500 rounded-xl shadow-md flex items-center justify-center text-white font-semibold">Success</div>
             </div>
-            <div className="flex flex-col">
-              <div className="h-20 bg-error rounded-xl shadow-md"></div>
-              <p className="mt-1 text-xs font-medium text-center">Error</p>
+            <div className="flex flex-col transform transition-transform hover:scale-105">
+              <div className="h-20 bg-error-500 rounded-xl shadow-md flex items-center justify-center text-white font-semibold">Error</div>
             </div>
-            <div className="flex flex-col">
-              <div className="h-20 bg-warning rounded-xl shadow-md"></div>
-              <p className="mt-1 text-xs font-medium text-center">Warning</p>
+            <div className="flex flex-col transform transition-transform hover:scale-105">
+              <div className="h-20 bg-warning-500 rounded-xl shadow-md flex items-center justify-center text-white font-semibold">Warning</div>
             </div>
-            <div className="flex flex-col">
-              <div className="h-20 bg-info rounded-xl shadow-md"></div>
-              <p className="mt-1 text-xs font-medium text-center">Info</p>
+            <div className="flex flex-col transform transition-transform hover:scale-105">
+              <div className="h-20 bg-info-500 rounded-xl shadow-md flex items-center justify-center text-white font-semibold">Info</div>
             </div>
           </div>
         </div>
       </section>
       
       {/* Typography Section */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-bold mb-6 text-center">Typography</h2>
+      <section className="mb-12 transform hover:scale-[1.01] transition-transform duration-300">
+        <h2 className="text-2xl font-bold mb-6 text-center bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent">Typography</h2>
         
-        <Card className="p-6">
+        <Card className="p-6 shadow-lg">
           <div className="grid gap-6">
-            <div className="p-4 border-b border-gray-100">
-              <h1 className="font-display text-4xl">Movie Title (Display Font)</h1>
+            <div className="p-6 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg">
+              <h1 className="font-display text-4xl bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent">Movie Title (Display Font)</h1>
               <p className="text-sm text-gray-500 mt-1">Font: Montserrat, Size: var(--font-size-4xl)</p>
             </div>
             
-            <div className="p-4 border-b border-gray-100">
-              <h2 className="text-2xl">Section Header</h2>
+            <div className="p-6 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg">
+              <h2 className="text-2xl text-secondary-700">Section Header</h2>
               <p className="text-sm text-gray-500 mt-1">Font: Montserrat, Size: var(--font-size-2xl)</p>
             </div>
             
-            <div className="p-4 border-b border-gray-100">
-              <p className="text-lg">Plot Summary</p>
+            <div className="p-6 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg">
+              <p className="text-lg text-primary-700">Plot Summary</p>
               <p className="text-sm text-gray-500 mt-1">Font: Inter, Size: var(--font-size-lg)</p>
             </div>
             
-            <div className="p-4">
+            <div className="p-6 bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg">
               <p>Regular review text discussing the movie in detail, covering aspects like the cinematography, acting performances, and overall direction. The font size is comfortable for extended reading.</p>
               <p className="text-sm text-gray-500 mt-1">Font: Inter, Size: var(--font-size-base)</p>
             </div>
@@ -188,7 +215,7 @@ const DesignSystem: React.FC = () => {
               </div>
             ),
             content: (
-              <section className="mb-8 bg-white p-6 rounded-xl shadow-sm">
+              <section className="mb-8 bg-white p-6 rounded-xl shadow-lg">
                 <div className="space-y-6">
                   <div className="flex flex-wrap gap-4">
                     <Button variant="primary">Watch Now</Button>
@@ -209,13 +236,13 @@ const DesignSystem: React.FC = () => {
                     <Button variant="primary" disabled>Disabled</Button>
                     <Button 
                       variant="primary" 
-                      leftIcon={<span>▶️</span>}
+                      leftIcon={<span className="text-xl">▶️</span>}
                     >
                       Play Trailer
                     </Button>
                     <Button 
                       variant="secondary" 
-                      rightIcon={<span>➕</span>}
+                      rightIcon={<span className="text-xl">➕</span>}
                     >
                       Watchlist
                     </Button>
@@ -233,9 +260,9 @@ const DesignSystem: React.FC = () => {
               </div>
             ),
             content: (
-              <section className="mb-8 bg-white p-6 rounded-xl shadow-sm">
+              <section className="mb-8 bg-white p-6 rounded-xl shadow-lg">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <Card hoverable>
+                  <Card hoverable className="transform transition-all duration-300 hover:scale-105">
                     <Card.Image 
                       src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500&auto=format&fit=crop&q=60"
                       alt="Movie scene"
@@ -247,7 +274,7 @@ const DesignSystem: React.FC = () => {
                     </Card.Body>
                   </Card>
                   
-                  <Card bordered elevated={false}>
+                  <Card bordered elevated={false} className="transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
                     <Card.Body>
                       <Card.Title>Review Card</Card.Title>
                       <p>"This movie was absolutely fantastic..."</p>
@@ -262,7 +289,7 @@ const DesignSystem: React.FC = () => {
                     </Card.Body>
                   </Card>
                   
-                  <Card>
+                  <Card className="transform transition-all duration-300 hover:scale-105">
                     <Card.Body>
                       <Card.Title>Upcoming Release</Card.Title>
                       <p>Release date: Dec 15, 2023</p>
@@ -287,7 +314,7 @@ const DesignSystem: React.FC = () => {
               </div>
             ),
             content: (
-              <section className="mb-8 bg-white p-6 rounded-xl shadow-sm">
+              <section className="mb-8 bg-white p-6 rounded-xl shadow-lg">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <Input 
                     label="Search Movies & TV Shows" 
@@ -335,7 +362,7 @@ const DesignSystem: React.FC = () => {
               </div>
             ),
             content: (
-              <section className="mb-8 bg-white p-6 rounded-xl shadow-sm">
+              <section className="mb-8 bg-white p-6 rounded-xl shadow-lg">
                 <div className="space-y-6">
                   <div>
                     <h3 className="text-lg font-medium mb-3">Cast & Crew</h3>
@@ -379,7 +406,7 @@ const DesignSystem: React.FC = () => {
               </div>
             ),
             content: (
-              <section className="mb-8 bg-white p-6 rounded-xl shadow-sm">
+              <section className="mb-8 bg-white p-6 rounded-xl shadow-lg">
                 <div className="space-y-6">
                   <div>
                     <h3 className="text-lg font-medium mb-3">Content Tags</h3>
@@ -428,9 +455,14 @@ const DesignSystem: React.FC = () => {
               </div>
             ),
             content: (
-              <section className="mb-8 bg-white p-6 rounded-xl shadow-sm">
+              <section className="mb-8 bg-white p-6 rounded-xl shadow-lg">
                 <div className="space-y-4">
-                  <Button variant="primary" onClick={() => setIsModalOpen(true)}>
+                  <Button 
+                    variant="primary" 
+                    leftIcon={<span className="text-xl">▶️</span>}
+                    onClick={() => setIsModalOpen(true)}
+                    className="animate-pulse-subtle"
+                  >
                     Watch Trailer
                   </Button>
                   
@@ -438,13 +470,15 @@ const DesignSystem: React.FC = () => {
                     isOpen={isModalOpen}
                     onClose={() => setIsModalOpen(false)}
                     title="Interstellar - Official Trailer"
-                    size="lg"
+                    size="full"
                     centered
+                    hasVideo
+                    neon
                   >
-                    <div className="aspect-w-16 aspect-h-9 bg-black">
+                    <div className="aspect-w-16 aspect-h-9 bg-black w-full">
                       <iframe 
-                        width="560" 
-                        height="315" 
+                        width="100%" 
+                        height="100%" 
                         src="https://www.youtube.com/embed/zSWdZVtXT7E" 
                         title="YouTube video player" 
                         frameBorder="0" 
@@ -453,13 +487,15 @@ const DesignSystem: React.FC = () => {
                       ></iframe>
                     </div>
                     
-                    <div className="mt-4 flex justify-between">
+                    <div className="mt-4 p-4 flex flex-col sm:flex-row justify-between items-center bg-gray-900 text-white">
                       <div>
-                        <h3 className="font-medium">Interstellar (2014)</h3>
-                        <p className="text-sm text-gray-600">Director: Christopher Nolan</p>
+                        <h3 className="font-medium text-xl">Interstellar (2014)</h3>
+                        <p className="text-sm text-gray-300">Director: Christopher Nolan</p>
                       </div>
                       
-                      <MoodRating size="sm" />
+                      <div className="mt-4 sm:mt-0">
+                        <MoodRating size="sm" showLabels />
+                      </div>
                     </div>
                   </Modal>
                 </div>
@@ -470,16 +506,16 @@ const DesignSystem: React.FC = () => {
       />
 
       {/* Call To Action */}
-      <div className="text-center bg-gradient-to-r from-primary to-secondary text-white p-10 rounded-xl shadow-lg mt-16">
+      <div className="text-center bg-gradient-to-r from-primary-500 to-secondary-500 text-white p-10 rounded-xl shadow-lg mt-16 transform hover:scale-105 transition-all duration-300">
         <h2 className="text-3xl font-bold mb-3">Ready to Explore?</h2>
         <p className="text-lg opacity-90 mb-6 max-w-xl mx-auto">
           Discover the latest movies and TV shows using our emotion-focused interface.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
-          <Button variant="ghost" size="lg" className="bg-white/20 hover:bg-white/30 text-white">
+          <Button variant="ghost" size="lg" className="bg-white/20 hover:bg-white/30 text-white hover:scale-105 transition-transform">
             Browse Movies
           </Button>
-          <Button variant="ghost" size="lg" className="bg-white/20 hover:bg-white/30 text-white">
+          <Button variant="ghost" size="lg" className="bg-white/20 hover:bg-white/30 text-white hover:scale-105 transition-transform">
             Explore TV Shows
           </Button>
         </div>
@@ -488,34 +524,76 @@ const DesignSystem: React.FC = () => {
       {/* Add global styles for animations */}
       <style>
         {`
-        .background-animate {
-          background-size: 400%;
-          -webkit-animation: AnimateBackground 8s ease infinite;
-          -moz-animation: AnimateBackground 8s ease infinite;
-          animation: AnimateBackground 8s ease infinite;
-        }
+          .background-animate {
+            background-size: 400%;
+            -webkit-animation: AnimateBackground 8s ease infinite;
+            -moz-animation: AnimateBackground 8s ease infinite;
+            animation: AnimateBackground 8s ease infinite;
+          }
 
-        @keyframes AnimateBackground {
-          0%, 100% {
-            background-position: 0% 50%;
+          @keyframes AnimateBackground {
+            0%, 100% {
+              background-position: 0% 50%;
+            }
+            50% {
+              background-position: 100% 50%;
+            }
           }
-          50% {
-            background-position: 100% 50%;
+          
+          @keyframes bounce {
+            0%, 100% {
+              transform: translateY(0);
+            }
+            50% {
+              transform: translateY(-10px);
+            }
           }
-        }
-        
-        @keyframes bounce {
-          0%, 100% {
-            transform: translateY(0);
+          
+          .animate-bounce {
+            animation: bounce 2s infinite;
           }
-          50% {
-            transform: translateY(-10px);
+          
+          @keyframes float {
+            0% {
+              transform: translateY(0) translateX(0);
+            }
+            50% {
+              transform: translateY(-20px) translateX(10px);
+            }
+            100% {
+              transform: translateY(0) translateX(0);
+            }
           }
-        }
-        
-        .animate-bounce {
-          animation: bounce 2s infinite;
-        }
+          
+          .animate-pulse-subtle {
+            animation: pulse-subtle 2s infinite;
+          }
+          
+          @keyframes pulse-subtle {
+            0%, 100% {
+              opacity: 1;
+              transform: scale(1);
+            }
+            50% {
+              opacity: 0.9;
+              transform: scale(1.03);
+            }
+          }
+          
+          .aspect-w-16 {
+            position: relative;
+            padding-bottom: 56.25%;
+          }
+          
+          .aspect-w-16 iframe {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+          }
         `}
       </style>
     </div>

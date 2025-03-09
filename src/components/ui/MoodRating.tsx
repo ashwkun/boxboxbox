@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Define emotion types
 export type MoodType = 
@@ -15,35 +15,40 @@ export const MOOD_DETAILS = {
     label: 'Loved it!',
     description: 'Absolutely amazing',
     value: 5.0,
-    color: 'from-pink-500 to-red-500'
+    color: 'from-pink-500 to-red-500',
+    glow: 'shadow-[0_0_15px_rgba(244,114,182,0.7)]'
   },
   ENJOYED_IT: {
     emoji: '😊',
     label: 'Enjoyed it',
     description: 'Really good',
     value: 4.0,
-    color: 'from-green-400 to-blue-500'
+    color: 'from-green-400 to-blue-500',
+    glow: 'shadow-[0_0_15px_rgba(96,165,250,0.7)]'
   },
   MEH: {
     emoji: '😐',
     label: 'Meh',
     description: 'It was okay',
     value: 3.0,
-    color: 'from-yellow-400 to-orange-400'
+    color: 'from-yellow-400 to-orange-400',
+    glow: 'shadow-[0_0_15px_rgba(251,191,36,0.7)]'
   },
   DISAPPOINTED: {
     emoji: '😕',
     label: 'Disappointed',
     description: 'Not what I expected',
     value: 2.0,
-    color: 'from-blue-400 to-indigo-500'
+    color: 'from-blue-400 to-indigo-500',
+    glow: 'shadow-[0_0_15px_rgba(99,102,241,0.7)]'
   },
   REGRET: {
     emoji: '😫',
     label: 'Regret',
     description: 'Waste of time',
     value: 1.0,
-    color: 'from-purple-500 to-indigo-600'
+    color: 'from-purple-500 to-indigo-600',
+    glow: 'shadow-[0_0_15px_rgba(139,92,246,0.7)]'
   }
 } as const;
 
@@ -70,13 +75,14 @@ export const getMoodFromValue = (value: number): MoodType => {
 
 interface MoodRatingProps {
   value?: MoodType | number;
-  onChange?: (mood: MoodType) => void;
+  onChange?: (mood: MoodType, wouldRewatch?: boolean) => void;
   showLabels?: boolean;
   showDescription?: boolean;
   size?: 'sm' | 'md' | 'lg';
   withRewatch?: boolean;
   disabled?: boolean;
   className?: string;
+  animated?: boolean;
 }
 
 const MoodRating: React.FC<MoodRatingProps> = ({
@@ -88,6 +94,7 @@ const MoodRating: React.FC<MoodRatingProps> = ({
   withRewatch = false,
   disabled = false,
   className = '',
+  animated = true,
 }) => {
   // Convert numeric value to mood if needed
   const initialMood = typeof value === 'number' 
@@ -97,6 +104,14 @@ const MoodRating: React.FC<MoodRatingProps> = ({
   const [selectedMood, setSelectedMood] = useState<MoodType | null>(initialMood);
   const [hoveredMood, setHoveredMood] = useState<MoodType | null>(null);
   const [wouldRewatch, setWouldRewatch] = useState(false);
+  
+  // Update state if props change
+  useEffect(() => {
+    if (value) {
+      const newMood = typeof value === 'number' ? getMoodFromValue(value) : value;
+      setSelectedMood(newMood);
+    }
+  }, [value]);
   
   // Size classes for the emotion buttons
   const sizeClasses = {
@@ -110,13 +125,19 @@ const MoodRating: React.FC<MoodRatingProps> = ({
     if (disabled) return;
     
     setSelectedMood(mood);
-    onChange?.(mood);
+    onChange?.(mood, wouldRewatch);
   };
 
   // Toggle rewatch button
   const handleRewatchToggle = () => {
     if (disabled) return;
-    setWouldRewatch(!wouldRewatch);
+    
+    const newValue = !wouldRewatch;
+    setWouldRewatch(newValue);
+    
+    if (selectedMood) {
+      onChange?.(selectedMood, newValue);
+    }
   };
 
   return (
@@ -136,8 +157,9 @@ const MoodRating: React.FC<MoodRatingProps> = ({
                   transition-all duration-200
                   ${sizeClasses[size]}
                   ${isSelected 
-                    ? `bg-gradient-to-r ${details.color} transform scale-110 shadow-md text-white` 
+                    ? `bg-gradient-to-r ${details.color} transform scale-110 ${details.glow} text-white` 
                     : 'hover:bg-gray-100'}
+                  ${animated && 'hover:scale-110 active:scale-95'}
                   ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
                 `}
                 onClick={() => handleMoodSelect(mood)}
@@ -145,8 +167,18 @@ const MoodRating: React.FC<MoodRatingProps> = ({
                 onMouseLeave={() => setHoveredMood(null)}
                 disabled={disabled}
                 aria-label={details.label}
+                style={{
+                  transition: 'all 0.2s ease-in-out',
+                }}
               >
-                <span role="img" aria-hidden="true">
+                <span 
+                  role="img" 
+                  aria-hidden="true"
+                  className={`${animated ? 'transform transition-transform duration-300' : ''} ${isSelected ? 'animate-pulse' : ''}`}
+                  style={isSelected && animated ? { 
+                    animation: 'floating 2s ease-in-out infinite',
+                  } : {}}
+                >
                   {details.emoji}
                 </span>
 
@@ -161,7 +193,7 @@ const MoodRating: React.FC<MoodRatingProps> = ({
               {/* Labels (optional) */}
               {showLabels && (
                 <span className={`mt-1 text-xs font-medium whitespace-nowrap 
-                  ${isSelected ? 'text-primary' : 'text-gray-600'}`}
+                  ${isSelected ? 'text-primary font-semibold' : 'text-gray-600'}`}
                 >
                   {details.label}
                 </span>
@@ -173,7 +205,7 @@ const MoodRating: React.FC<MoodRatingProps> = ({
 
       {/* Description (optional) */}
       {showDescription && selectedMood && (
-        <div className="mt-2 text-sm text-gray-600 text-center">
+        <div className="mt-2 text-sm font-medium text-gray-600 text-center animate-fadeIn">
           {MOOD_DETAILS[selectedMood].description}
         </div>
       )}
@@ -185,19 +217,61 @@ const MoodRating: React.FC<MoodRatingProps> = ({
           disabled={disabled}
           className={`
             mt-4 flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium
-            transition-all duration-200
+            transition-all duration-300
             ${wouldRewatch 
-              ? 'bg-gradient-to-r from-secondary to-primary text-white shadow-md' 
+              ? 'bg-gradient-to-r from-secondary to-primary text-white shadow-lg transform scale-105' 
               : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}
-            ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
+            ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:shadow-md'}
+            ${animated ? 'hover:scale-105 active:scale-95' : ''}
           `}
         >
-          <span role="img" aria-hidden="true" className="text-lg">
+          <span 
+            role="img" 
+            aria-hidden="true" 
+            className={`text-lg ${wouldRewatch && animated ? 'animate-spin' : ''}`}
+            style={wouldRewatch && animated ? { 
+              animationDuration: '3s',
+              animationTimingFunction: 'linear',
+              animationIterationCount: 'infinite'
+            } : {}}
+          >
             {wouldRewatch ? '🔄' : '⭕'}
           </span>
           <span>{wouldRewatch ? 'Would watch again!' : 'Would you watch this again?'}</span>
         </button>
       )}
+      
+      <style>
+        {`
+          @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0px); }
+          }
+          
+          @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+          }
+          
+          .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+          }
+          
+          .animate-fadeIn {
+            animation: fadeIn 0.5s ease-in-out;
+          }
+          
+          @keyframes pulse {
+            0%, 100% {
+              opacity: 1;
+            }
+            50% {
+              opacity: 0.7;
+            }
+          }
+        `}
+      </style>
     </div>
   );
 };
