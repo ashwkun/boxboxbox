@@ -12,7 +12,6 @@ interface ModalProps {
   children: React.ReactNode;
   footer?: React.ReactNode;
   hasVideo?: boolean;
-  neon?: boolean;
   className?: string;
 }
 
@@ -27,11 +26,9 @@ const Modal: React.FC<ModalProps> = ({
   children,
   footer,
   hasVideo = false,
-  neon = false,
   className = '',
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
 
   // Handle ESC key press
   useEffect(() => {
@@ -44,15 +41,6 @@ const Modal: React.FC<ModalProps> = ({
     if (isOpen) {
       document.addEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
-      
-      // Apply focus trap
-      const focusableElements = modalRef.current?.querySelectorAll(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      );
-      
-      if (focusableElements?.length) {
-        (focusableElements[0] as HTMLElement).focus();
-      }
     }
 
     return () => {
@@ -86,43 +74,19 @@ const Modal: React.FC<ModalProps> = ({
   // Create a portal to render the modal at the end of the document body
   return createPortal(
     <div
-      className="fixed inset-0 z-50 flex overflow-y-auto backdrop-blur-sm transition-opacity"
+      className="fixed inset-0 z-50 flex overflow-y-auto bg-black bg-opacity-75 transition-opacity"
       onClick={handleOverlayClick}
       role="dialog"
       aria-modal="true"
       aria-labelledby={title ? 'modal-title' : undefined}
-      style={{ 
-        alignItems: centered ? 'center' : 'flex-start',
-        background: 'rgba(0, 0, 0, 0.7)'
-      }}
+      style={{ alignItems: centered ? 'center' : 'flex-start' }}
     >
       <div
         ref={modalRef}
-        className={`
-          relative m-auto ${centered ? '' : 'mt-16'} w-full 
-          ${sizeClasses[size]} rounded-xl bg-white
-          transition-all duration-300 transform
-          ${neon ? 'shadow-[0_0_30px_rgba(120,37,255,0.6)]' : 'shadow-xl'}
-          ${className}
-        `}
+        className={`relative m-auto ${centered ? '' : 'mt-16'} w-full 
+        ${sizeClasses[size]} rounded-lg bg-white shadow-xl ${className}`}
         role="document"
-        style={{
-          animation: 'modalFadeIn 0.3s ease-out',
-        }}
       >
-        {/* Animated border effect */}
-        {neon && (
-          <div
-            className="absolute inset-0 -z-10 rounded-xl"
-            style={{
-              background: 'var(--gradient-rainbow)',
-              padding: '2px',
-              animation: 'rotate 4s linear infinite',
-              margin: '-2px',
-            }}
-          />
-        )}
-      
         {/* Header */}
         {title && (
           <div className={`flex items-center justify-between border-b border-gray-200 p-4 ${hasVideo ? 'absolute top-0 left-0 right-0 z-10 bg-gray-900/70 backdrop-blur-sm' : ''}`}>
@@ -134,11 +98,7 @@ const Modal: React.FC<ModalProps> = ({
             </h3>
             <button
               type="button"
-              className={`
-                rounded-full p-1 hover:bg-gray-100/20 focus:outline-none
-                transition-transform hover:scale-110 transform
-                ${hasVideo ? 'text-white' : 'text-gray-400 hover:text-gray-600'}
-              `}
+              className={`rounded-full p-1 ${hasVideo ? 'text-white hover:bg-gray-700' : 'text-gray-400 hover:bg-gray-100 hover:text-gray-600'} focus:outline-none`}
               onClick={onClose}
               aria-label="Close"
             >
@@ -151,7 +111,6 @@ const Modal: React.FC<ModalProps> = ({
         
         {/* Body */}
         <div
-          ref={contentRef}
           className={`${!title && !hasVideo ? 'pt-6' : ''} ${contentPadding}`}
         >
           {children}
@@ -167,24 +126,19 @@ const Modal: React.FC<ModalProps> = ({
       
       <style>
         {`
-          @keyframes modalFadeIn {
-            from {
-              opacity: 0;
-              transform: scale(0.95) translateY(-10px);
-            }
-            to {
-              opacity: 1;
-              transform: scale(1) translateY(0);
-            }
+          .aspect-w-16 {
+            position: relative;
+            padding-bottom: 56.25%;
           }
           
-          @keyframes rotate {
-            from {
-              transform: rotate(0deg);
-            }
-            to {
-              transform: rotate(360deg);
-            }
+          .aspect-w-16 iframe {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
           }
         `}
       </style>

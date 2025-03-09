@@ -15,40 +15,35 @@ export const MOOD_DETAILS = {
     label: 'Loved it!',
     description: 'Absolutely amazing',
     value: 5.0,
-    color: 'from-pink-500 to-red-500',
-    glow: 'shadow-[0_0_15px_rgba(244,114,182,0.7)]'
+    color: 'bg-pink-500'
   },
   ENJOYED_IT: {
     emoji: '😊',
     label: 'Enjoyed it',
     description: 'Really good',
     value: 4.0,
-    color: 'from-green-400 to-blue-500',
-    glow: 'shadow-[0_0_15px_rgba(96,165,250,0.7)]'
+    color: 'bg-blue-500'
   },
   MEH: {
     emoji: '😐',
     label: 'Meh',
     description: 'It was okay',
     value: 3.0,
-    color: 'from-yellow-400 to-orange-400',
-    glow: 'shadow-[0_0_15px_rgba(251,191,36,0.7)]'
+    color: 'bg-yellow-500'
   },
   DISAPPOINTED: {
     emoji: '😕',
     label: 'Disappointed',
     description: 'Not what I expected',
     value: 2.0,
-    color: 'from-blue-400 to-indigo-500',
-    glow: 'shadow-[0_0_15px_rgba(99,102,241,0.7)]'
+    color: 'bg-indigo-500'
   },
   REGRET: {
     emoji: '😫',
     label: 'Regret',
     description: 'Waste of time',
     value: 1.0,
-    color: 'from-purple-500 to-indigo-600',
-    glow: 'shadow-[0_0_15px_rgba(139,92,246,0.7)]'
+    color: 'bg-purple-500'
   }
 } as const;
 
@@ -82,7 +77,6 @@ interface MoodRatingProps {
   withRewatch?: boolean;
   disabled?: boolean;
   className?: string;
-  animated?: boolean;
 }
 
 const MoodRating: React.FC<MoodRatingProps> = ({
@@ -94,7 +88,6 @@ const MoodRating: React.FC<MoodRatingProps> = ({
   withRewatch = false,
   disabled = false,
   className = '',
-  animated = true,
 }) => {
   // Convert numeric value to mood if needed
   const initialMood = typeof value === 'number' 
@@ -143,7 +136,7 @@ const MoodRating: React.FC<MoodRatingProps> = ({
   return (
     <div className={`flex flex-col items-center ${className}`}>
       {/* Mood buttons */}
-      <div className="flex items-center gap-1 md:gap-2">
+      <div className="flex items-center gap-2">
         {(Object.entries(MOOD_DETAILS) as [MoodType, typeof MOOD_DETAILS[MoodType]][]).map(([mood, details]) => {
           const isSelected = selectedMood === mood;
           const isHovered = hoveredMood === mood;
@@ -157,9 +150,8 @@ const MoodRating: React.FC<MoodRatingProps> = ({
                   transition-all duration-200
                   ${sizeClasses[size]}
                   ${isSelected 
-                    ? `bg-gradient-to-r ${details.color} transform scale-110 ${details.glow} text-white` 
-                    : 'hover:bg-gray-100'}
-                  ${animated && 'hover:scale-110 active:scale-95'}
+                    ? `${details.color} text-white shadow-md` 
+                    : 'bg-gray-100 hover:bg-gray-200'}
                   ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
                 `}
                 onClick={() => handleMoodSelect(mood)}
@@ -167,18 +159,8 @@ const MoodRating: React.FC<MoodRatingProps> = ({
                 onMouseLeave={() => setHoveredMood(null)}
                 disabled={disabled}
                 aria-label={details.label}
-                style={{
-                  transition: 'all 0.2s ease-in-out',
-                }}
               >
-                <span 
-                  role="img" 
-                  aria-hidden="true"
-                  className={`${animated ? 'transform transition-transform duration-300' : ''} ${isSelected ? 'animate-pulse' : ''}`}
-                  style={isSelected && animated ? { 
-                    animation: 'floating 2s ease-in-out infinite',
-                  } : {}}
-                >
+                <span role="img" aria-hidden="true">
                   {details.emoji}
                 </span>
 
@@ -193,7 +175,7 @@ const MoodRating: React.FC<MoodRatingProps> = ({
               {/* Labels (optional) */}
               {showLabels && (
                 <span className={`mt-1 text-xs font-medium whitespace-nowrap 
-                  ${isSelected ? 'text-primary font-semibold' : 'text-gray-600'}`}
+                  ${isSelected ? 'text-gray-900 font-semibold' : 'text-gray-600'}`}
                 >
                   {details.label}
                 </span>
@@ -205,7 +187,7 @@ const MoodRating: React.FC<MoodRatingProps> = ({
 
       {/* Description (optional) */}
       {showDescription && selectedMood && (
-        <div className="mt-2 text-sm font-medium text-gray-600 text-center animate-fadeIn">
+        <div className="mt-2 text-sm font-medium text-gray-600 text-center">
           {MOOD_DETAILS[selectedMood].description}
         </div>
       )}
@@ -217,61 +199,19 @@ const MoodRating: React.FC<MoodRatingProps> = ({
           disabled={disabled}
           className={`
             mt-4 flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium
-            transition-all duration-300
+            transition-all duration-200
             ${wouldRewatch 
-              ? 'bg-gradient-to-r from-secondary to-primary text-white shadow-lg transform scale-105' 
+              ? 'bg-blue-500 text-white shadow-md' 
               : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}
-            ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:shadow-md'}
-            ${animated ? 'hover:scale-105 active:scale-95' : ''}
+            ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
           `}
         >
-          <span 
-            role="img" 
-            aria-hidden="true" 
-            className={`text-lg ${wouldRewatch && animated ? 'animate-spin' : ''}`}
-            style={wouldRewatch && animated ? { 
-              animationDuration: '3s',
-              animationTimingFunction: 'linear',
-              animationIterationCount: 'infinite'
-            } : {}}
-          >
+          <span role="img" aria-hidden="true" className="text-lg">
             {wouldRewatch ? '🔄' : '⭕'}
           </span>
           <span>{wouldRewatch ? 'Would watch again!' : 'Would you watch this again?'}</span>
         </button>
       )}
-      
-      <style>
-        {`
-          @keyframes floating {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-            100% { transform: translateY(0px); }
-          }
-          
-          @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-          }
-          
-          .animate-pulse {
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-          }
-          
-          .animate-fadeIn {
-            animation: fadeIn 0.5s ease-in-out;
-          }
-          
-          @keyframes pulse {
-            0%, 100% {
-              opacity: 1;
-            }
-            50% {
-              opacity: 0.7;
-            }
-          }
-        `}
-      </style>
     </div>
   );
 };
