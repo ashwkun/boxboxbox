@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchConstructorStandings, ConstructorStanding } from '../../services/api/jolpica';
+import { motion } from 'framer-motion';
 
 interface ConstructorStandingsProps {
   className?: string;
@@ -10,6 +11,7 @@ const ConstructorStandings: React.FC<ConstructorStandingsProps> = ({ className }
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedSeason, setSelectedSeason] = useState<string>('2025');
+  const [expandedTeam, setExpandedTeam] = useState<string | null>(null);
   
   // Available seasons for dropdown
   const seasons = ['2025', '2024', '2023', '2022', '2021'];
@@ -135,50 +137,84 @@ const ConstructorStandings: React.FC<ConstructorStandingsProps> = ({ className }
         </div>
       ) : (
         <div className="space-y-2">
-          {constructorStandings.map((standing) => (
-            <div
-              key={standing.Constructor.constructorId}
-              className="bg-white/5 backdrop-blur-sm rounded-xl p-2 border border-white/10 hover:bg-white/10 transition-colors"
-            >
-              <div className="grid grid-cols-[auto_auto_1fr_auto] items-center gap-3">
-                <div className="flex justify-center w-8">
-                  <span className={`font-bold text-lg ${
-                    standing.position === '1' ? 'text-yellow-500' :
-                    standing.position === '2' ? 'text-gray-400' :
-                    standing.position === '3' ? 'text-amber-700' : 'text-white'
-                  }`}>
-                    {standing.position}
-                  </span>
+          {constructorStandings.map((standing) => {
+            const isExpanded = expandedTeam === standing.Constructor.constructorId;
+            return (
+              <div
+                key={standing.Constructor.constructorId}
+                className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:bg-white/10 transition-colors overflow-hidden"
+                onClick={() => setExpandedTeam(isExpanded ? null : standing.Constructor.constructorId)}
+              >
+                <div className="p-2 sm:p-3">
+                  <div className="grid grid-cols-[auto_auto_1fr_auto] items-center gap-2 sm:gap-3">
+                    <div className="flex justify-center w-6 sm:w-8">
+                      <span className={`font-bold text-base sm:text-lg ${
+                        standing.position === '1' ? 'text-yellow-500' :
+                        standing.position === '2' ? 'text-gray-400' :
+                        standing.position === '3' ? 'text-amber-700' : 'text-white'
+                      }`}>
+                        {standing.position}
+                      </span>
+                    </div>
+                    <div className="bg-white rounded-md p-0.5 sm:p-1 flex items-center justify-center">
+                      <img
+                        src={getTeamLogoUrl(standing.Constructor.constructorId)}
+                        alt={standing.Constructor.name}
+                        className="h-6 sm:h-10 w-auto"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                    <div className="font-bold text-white flex items-center min-w-0">
+                      <span className="truncate text-sm sm:text-base">
+                        {isExpanded ? getFullTeamName(standing.Constructor.constructorId, standing.Constructor.name) : standing.Constructor.name}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="text-base sm:text-lg font-bold text-white whitespace-nowrap pl-2">
+                        {standing.points}
+                        <span className="text-sm sm:text-base text-white/70"> pts</span>
+                      </div>
+                      <div className={`transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}>
+                        <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="bg-white rounded-md p-1 flex items-center justify-center">
-                  <img
-                    src={getTeamLogoUrl(standing.Constructor.constructorId)}
-                    alt={standing.Constructor.name}
-                    className="h-10 w-auto"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                    }}
-                  />
-                </div>
-                <div className="font-bold text-white flex items-center">
-                  <span>{getFullTeamName(standing.Constructor.constructorId, standing.Constructor.name)}</span>
-                  <img
-                    src={getTeamCarImageUrl(standing.Constructor.constructorId)}
-                    alt={`${standing.Constructor.name} car`}
-                    className="h-7 w-auto object-contain opacity-50 ml-3"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                    }}
-                  />
-                </div>
-                <div className="text-lg font-bold text-white whitespace-nowrap">
-                  {standing.points} pts
-                </div>
+                <motion.div
+                  initial={false}
+                  animate={{ height: isExpanded ? 'auto' : 0 }}
+                  className="overflow-hidden border-t border-white/10"
+                >
+                  <div className="p-3 sm:p-4 flex items-center gap-4">
+                    <img
+                      src={getTeamCarImageUrl(standing.Constructor.constructorId)}
+                      alt={`${standing.Constructor.name} car`}
+                      className="h-12 sm:h-16 w-auto object-contain"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                      }}
+                    />
+                    <div className="flex-1">
+                      <h4 className="text-sm sm:text-base font-medium text-white mb-1">
+                        {getFullTeamName(standing.Constructor.constructorId, standing.Constructor.name)}
+                      </h4>
+                      <div className="text-xs sm:text-sm text-white/70 space-y-1">
+                        <p>Position: {standing.position}</p>
+                        <p>Points: {standing.points}</p>
+                        <p>Wins: {standing.wins}</p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="512" height="512" rx="128" fill="#000000"/>
+  
+  <!-- BOX 1 with Red Tire -->
+  <g transform="translate(106, 96)">
+    <text x="0" y="80" font-family="Arial Black" font-weight="900" font-size="90" fill="white">B</text>
+    <g transform="translate(80, 20)">
+      <!-- Tire Base -->
+      <circle cx="40" cy="40" r="36" fill="#1A1A1A"/>
+      <!-- Tire Rim -->
+      <circle cx="40" cy="40" r="28" fill="#333333"/>
+      <!-- Tire Inner -->
+      <circle cx="40" cy="40" r="22" fill="#1A1A1A"/>
+      <!-- Tire Tread -->
+      <path d="M40 4A36 36 0 0 1 76 40" stroke="#FF1E1E" stroke-width="8" stroke-linecap="round"/>
+      <!-- Tire Center -->
+      <circle cx="40" cy="40" r="6" fill="#666666"/>
+    </g>
+    <text x="160" y="80" font-family="Arial Black" font-weight="900" font-size="90" fill="white">X</text>
+  </g>
+
+  <!-- BOX 2 with White Tire -->
+  <g transform="translate(106, 216)">
+    <text x="0" y="80" font-family="Arial Black" font-weight="900" font-size="90" fill="white">B</text>
+    <g transform="translate(80, 20)">
+      <!-- Tire Base -->
+      <circle cx="40" cy="40" r="36" fill="#1A1A1A"/>
+      <!-- Tire Rim -->
+      <circle cx="40" cy="40" r="28" fill="#333333"/>
+      <!-- Tire Inner -->
+      <circle cx="40" cy="40" r="22" fill="#1A1A1A"/>
+      <!-- Tire Tread -->
+      <path d="M40 4A36 36 0 0 1 76 40" stroke="white" stroke-width="8" stroke-linecap="round"/>
+      <!-- Tire Center -->
+      <circle cx="40" cy="40" r="6" fill="#666666"/>
+    </g>
+    <text x="160" y="80" font-family="Arial Black" font-weight="900" font-size="90" fill="white">X</text>
+  </g>
+
+  <!-- BOX 3 with Yellow Tire -->
+  <g transform="translate(106, 336)">
+    <text x="0" y="80" font-family="Arial Black" font-weight="900" font-size="90" fill="white">B</text>
+    <g transform="translate(80, 20)">
+      <!-- Tire Base -->
+      <circle cx="40" cy="40" r="36" fill="#1A1A1A"/>
+      <!-- Tire Rim -->
+      <circle cx="40" cy="40" r="28" fill="#333333"/>
+      <!-- Tire Inner -->
+      <circle cx="40" cy="40" r="22" fill="#1A1A1A"/>
+      <!-- Tire Tread -->
+      <path d="M40 4A36 36 0 0 1 76 40" stroke="#FFC700" stroke-width="8" stroke-linecap="round"/>
+      <!-- Tire Center -->
+      <circle cx="40" cy="40" r="6" fill="#666666"/>
+    </g>
+    <text x="160" y="80" font-family="Arial Black" font-weight="900" font-size="90" fill="white">X</text>
+  </g>
+
+  <!-- Additional Tire Details -->
+  <defs>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+</svg> 

@@ -271,10 +271,10 @@ const RaceSchedule: React.FC<RaceScheduleProps> = ({ races }) => {
           </div>
         </div>
       </div>
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         {/* Race Cards Row */}
-        <div className="overflow-x-auto">
-          <div className="flex gap-4 pb-4">
+        <div className="overflow-x-auto -mx-4 sm:mx-0">
+          <div className="flex gap-3 sm:gap-4 pb-4 px-4 sm:px-0">
             {futureRaces.map((race) => {
               const countryCode = getCountryCode(race.Circuit.Location.country);
               const gradientClass = getCountryGradient(countryCode);
@@ -283,11 +283,11 @@ const RaceSchedule: React.FC<RaceScheduleProps> = ({ races }) => {
               return (
                 <div
                   key={race.round}
-                  className="flex-shrink-0 w-[400px]"
+                  className="flex-shrink-0 w-[280px] sm:w-[400px]"
                 >
                   <motion.div
                     layout
-                    className="relative rounded-xl overflow-hidden group cursor-pointer bg-black h-[250px]"
+                    className="relative rounded-xl overflow-hidden group cursor-pointer bg-black h-[200px] sm:h-[250px]"
                     onClick={() => setExpandedRace(isExpanded ? null : race)}
                   >
                     {/* Map Container */}
@@ -304,26 +304,26 @@ const RaceSchedule: React.FC<RaceScheduleProps> = ({ races }) => {
                     
                     {/* Content */}
                     <div className="absolute inset-0 z-[3]">
-                      <div className="h-full flex flex-col p-6">
+                      <div className="h-full flex flex-col p-4 sm:p-6">
                         <div className="flex items-start justify-between mb-auto">
                           <img
                             src={`https://flagcdn.com/w160/${countryCode}.png`}
                             alt={`${race.Circuit.Location.country} flag`}
-                            className="w-14 h-9 rounded-md shadow-lg object-cover"
+                            className="w-10 h-7 sm:w-14 sm:h-9 rounded-md shadow-lg object-cover"
                           />
-                          <span className="text-sm font-medium text-white/90 bg-black/50 px-3 py-1 rounded-full">
+                          <span className="text-xs sm:text-sm font-medium text-white/90 bg-black/50 px-2 sm:px-3 py-1 rounded-full">
                             Round {race.round}
                           </span>
                         </div>
 
                         <div className="mt-auto">
-                          <h3 className="text-2xl font-bold text-white mb-1">
+                          <h3 className="text-xl sm:text-2xl font-bold text-white mb-1">
                             {race.raceName}
                           </h3>
-                          <p className="text-white/80 text-sm mb-2">
+                          <p className="text-sm text-white/80 mb-1 sm:mb-2">
                             {race.Circuit.circuitName}
                           </p>
-                          <p className="text-white/70 text-sm">
+                          <p className="text-xs sm:text-sm text-white/70">
                             {getDateRange(race)}
                           </p>
                         </div>
@@ -351,18 +351,18 @@ const RaceSchedule: React.FC<RaceScheduleProps> = ({ races }) => {
             >
               <div className="bg-black/50 backdrop-blur-sm rounded-xl border border-white/10 overflow-hidden">
                 {/* Header with close button */}
-                <div className="p-6 border-b border-white/10 flex items-center justify-between">
-                  <div className="flex items-center gap-4">
+                <div className="p-4 sm:p-6 border-b border-white/10 flex items-center justify-between">
+                  <div className="flex items-center gap-2 sm:gap-4">
                     <img
                       src={`https://flagcdn.com/w40/${getCountryCode(expandedRace.Circuit.Location.country)}.png`}
                       alt={`${expandedRace.Circuit.Location.country} flag`}
-                      className="w-14 h-9 rounded-md shadow-lg"
+                      className="w-10 h-7 sm:w-14 sm:h-9 rounded-md shadow-lg"
                     />
                     <div>
-                      <h3 className="text-2xl font-bold text-white">
+                      <h3 className="text-xl sm:text-2xl font-bold text-white">
                         {expandedRace.raceName}
                       </h3>
-                      <p className="text-white/70">
+                      <p className="text-sm sm:text-base text-white/70">
                         {expandedRace.Circuit.circuitName}
                       </p>
                     </div>
@@ -371,17 +371,17 @@ const RaceSchedule: React.FC<RaceScheduleProps> = ({ races }) => {
                     onClick={() => setExpandedRace(null)}
                     className="text-white/70 hover:text-white transition-colors"
                   >
-                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
                 </div>
 
                 {/* Content */}
-                <div className="p-6">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="p-4 sm:p-6">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                     {/* Left Column */}
-                    <div className="space-y-6">
+                    <div className="space-y-4 sm:space-y-6">
                       {/* Circuit Layout */}
                       <div className="bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10">
                         <img
@@ -551,7 +551,7 @@ const RaceSchedule: React.FC<RaceScheduleProps> = ({ races }) => {
                             </div>
                           </div>
                         ) : lastYearResults.length > 0 ? (
-                          <div className="space-y-4">
+                          <div className="space-y-2">
                             {lastYearResults.slice(0, 3).map((result, index) => (
                               <div
                                 key={result.position}
@@ -559,40 +559,41 @@ const RaceSchedule: React.FC<RaceScheduleProps> = ({ races }) => {
                                   index === 0 ? 'from-yellow-500/20 to-yellow-700/10' :
                                   index === 1 ? 'from-gray-400/20 to-gray-600/10' :
                                   'from-amber-700/20 to-amber-900/10'
-                                } backdrop-blur-sm rounded-xl p-4 border border-white/10`}
+                                } backdrop-blur-sm rounded-xl p-3 border border-white/10`}
                               >
-                                <div className="flex items-center gap-4">
-                                  <div className={`text-2xl font-bold ${
+                                <div className="flex items-center gap-2 sm:gap-4">
+                                  <div className={`text-lg sm:text-2xl font-bold min-w-[32px] sm:min-w-[48px] text-center ${
                                     index === 0 ? 'text-yellow-500' :
                                     index === 1 ? 'text-gray-400' :
                                     'text-amber-700'
                                   }`}>
                                     P{result.position}
                                   </div>
-                                  <div className="flex items-center gap-4 flex-1">
+                                  <div className="flex items-center gap-2 sm:gap-4 flex-1 min-w-0">
                                     <img
                                       src={getDriverImageUrl(result.Driver.driverId, result.Driver.givenName, result.Driver.familyName)}
                                       alt={`${result.Driver.givenName} ${result.Driver.familyName}`}
-                                      className="w-12 h-12 rounded-full object-cover border border-white/10"
+                                      className="w-8 h-8 sm:w-12 sm:h-12 rounded-full object-cover border border-white/10"
                                     />
-                                    <div>
-                                      <div className="text-lg font-bold text-white">
-                                        {result.Driver.givenName} {result.Driver.familyName}
+                                    <div className="flex-1 min-w-0">
+                                      <div className="text-base sm:text-lg font-bold text-white truncate">
+                                        {result.Driver.code}
+                                        <span className="hidden sm:inline"> - {result.Driver.givenName} {result.Driver.familyName}</span>
                                       </div>
-                                      <div className="flex items-center gap-2 mt-1">
+                                      <div className="flex items-center gap-2">
                                         <img
                                           src={getTeamLogoUrl(result.Constructor.constructorId)}
                                           alt={result.Constructor.name}
-                                          className="h-4 w-auto"
+                                          className="h-3 sm:h-4 w-auto"
                                         />
-                                        <span className="text-sm text-white/70">
+                                        <span className="text-xs sm:text-sm text-white/70 truncate">
                                           {result.Constructor.name}
                                         </span>
                                       </div>
                                     </div>
                                   </div>
                                   {result.Time && (
-                                    <div className="text-sm text-white/50">
+                                    <div className="text-xs sm:text-sm text-white/50 hidden sm:block">
                                       {result.Time.time}
                                     </div>
                                   )}

@@ -5,7 +5,6 @@ import { Race, RaceResult, fetchRaceResults } from '../../services/api/jolpica';
 import { getWeatherForSessions, SessionWeather } from '../../services/api/weather';
 import { getCountryCode } from '../../utils/countryCodeMap';
 import WeatherIcon from '../WeatherIcon';
-import Header from '../Header';
 import tracksData from '../../data/tracks.json';
 
 interface CountdownData {
@@ -200,25 +199,19 @@ const NextRaceHero: React.FC<NextRaceHeroProps> = ({ race, loading }) => {
 
   if (loading) {
     return (
-      <>
-        <Header />
-        <div className="w-full bg-card rounded-xl border border-border p-8 animate-pulse">
-          <div className="h-8 bg-background/50 rounded w-1/3 mb-4"></div>
-          <div className="h-6 bg-background/50 rounded w-1/4"></div>
-        </div>
-      </>
+      <div className="w-full bg-card rounded-xl border border-border p-8 animate-pulse">
+        <div className="h-8 bg-background/50 rounded w-1/3 mb-4"></div>
+        <div className="h-6 bg-background/50 rounded w-1/4"></div>
+      </div>
     );
   }
 
   if (!race) {
     return (
-      <>
-        <Header />
-        <div className="w-full bg-card rounded-xl border border-border p-8">
-          <h2 className="text-2xl font-bold font-display mb-2">No Upcoming Races</h2>
-          <p className="text-white/70">Check back later for the next race schedule.</p>
-        </div>
-      </>
+      <div className="w-full bg-card rounded-xl border border-border p-8">
+        <h2 className="text-2xl font-bold font-display mb-2">No Upcoming Races</h2>
+        <p className="text-white/70">Check back later for the next race schedule.</p>
+      </div>
     );
   }
 
@@ -311,7 +304,6 @@ const NextRaceHero: React.FC<NextRaceHeroProps> = ({ race, loading }) => {
 
   return (
     <>
-      <Header />
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -336,27 +328,27 @@ const NextRaceHero: React.FC<NextRaceHeroProps> = ({ race, loading }) => {
             <div className={`absolute inset-0 bg-gradient-to-bl ${getCountryGradient(countryCode)} via-transparent to-transparent z-[2] opacity-90`} />
 
             {/* Main Content */}
-            <div className="flex flex-col h-full p-8 relative z-[3]">
+            <div className="flex flex-col h-full p-4 sm:p-8 relative z-[3]">
               {/* Top Bar - Country & Round */}
-              <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center justify-between mb-4 sm:mb-8">
                 <div className="flex flex-col">
-                  <h2 className="text-2xl font-bold font-display mb-4">NEXT RACE</h2>
-                  <div className="flex items-center space-x-4">
+                  <h2 className="text-xl sm:text-2xl font-bold font-display mb-2 sm:mb-4">NEXT RACE</h2>
+                  <div className="flex items-center space-x-2 sm:space-x-4">
                     <img
                       src={`https://flagcdn.com/w160/${countryCode}.png`}
-                  alt={`${race.Circuit.Location.country} flag`}
-                      className="w-12 h-8 rounded-md shadow-lg object-cover"
-                />
-                <div>
-                      <h3 className="text-xl font-medium text-white">
-                    {race.Circuit.Location.country}
-                  </h3>
-                      <p className="text-sm font-medium text-white/50">Round {race.round}</p>
+                      alt={`${race.Circuit.Location.country} flag`}
+                      className="w-8 h-6 sm:w-12 sm:h-8 rounded-md shadow-lg object-cover"
+                    />
+                    <div>
+                      <h3 className="text-lg sm:text-xl font-medium text-white">
+                        {race.Circuit.Location.country}
+                      </h3>
+                      <p className="text-xs sm:text-sm font-medium text-white/50">Round {race.round}</p>
                     </div>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-sm text-white/50">Click to {isExpanded ? 'collapse' : 'expand'}</span>
+                  <span className="hidden sm:inline text-sm text-white/50">Click to {isExpanded ? 'collapse' : 'expand'}</span>
                   <div className={`w-6 h-6 rounded-full border border-white/20 flex items-center justify-center transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}>
                     <svg className="w-4 h-4 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -366,22 +358,22 @@ const NextRaceHero: React.FC<NextRaceHeroProps> = ({ race, loading }) => {
               </div>
               
               {/* Race Title & Circuit */}
-              <div className="flex-1 flex flex-col justify-center mb-8">
-                <h2 className="text-5xl font-bold font-display mb-4 bg-gradient-to-r from-white via-white/90 to-white/80 bg-clip-text text-transparent">
-                    {race.raceName}
-                  </h2>
-                <p className="text-2xl text-white/70">{race.Circuit.circuitName}</p>
+              <div className="flex-1 flex flex-col justify-center mb-4 sm:mb-8">
+                <h2 className="text-3xl sm:text-5xl font-bold font-display mb-2 sm:mb-4 bg-gradient-to-r from-white via-white/90 to-white/80 bg-clip-text text-transparent">
+                  {race.raceName}
+                </h2>
+                <p className="text-xl sm:text-2xl text-white/70">{race.Circuit.circuitName}</p>
               </div>
 
               {/* Bottom Section - Next Session & Weather */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
                 {/* Countdown Timer */}
                 {countdown && (
-                  <div className="bg-black/30 backdrop-blur-md rounded-xl border border-white/10 p-6">
+                  <div className="bg-black/30 backdrop-blur-md rounded-xl border border-white/10 p-4 sm:p-6">
                     <div className="mb-4">
-                      <p className="text-white/70 text-sm uppercase tracking-wider">Next main event</p>
-                      <h3 className="text-2xl font-bold text-white">{countdown.event}</h3>
-                      <p className="text-sm text-white/50 mt-1">
+                      <p className="text-white/70 text-xs sm:text-sm uppercase tracking-wider">Next main event</p>
+                      <h3 className="text-xl sm:text-2xl font-bold text-white">{countdown.event}</h3>
+                      <p className="text-xs sm:text-sm text-white/50 mt-1">
                         {countdown.eventTime.toLocaleString(undefined, {
                           weekday: 'short',
                           month: 'short',
@@ -403,33 +395,33 @@ const NextRaceHero: React.FC<NextRaceHeroProps> = ({ race, loading }) => {
                       )}
                     </div>
                     <div className="grid grid-cols-4 gap-4">
-                <div className="text-center">
+                      <div className="text-center">
                         <div className="text-3xl font-bold bg-white/5 backdrop-blur-sm rounded-lg p-4 border border-white/10">
-                    {countdown.days}
-                  </div>
-                  <div className="text-sm text-white/70 mt-2">Days</div>
-                </div>
-                <div className="text-center">
+                          {countdown.days}
+                        </div>
+                        <div className="text-sm text-white/70 mt-2">Days</div>
+                      </div>
+                      <div className="text-center">
                         <div className="text-3xl font-bold bg-white/5 backdrop-blur-sm rounded-lg p-4 border border-white/10">
-                    {countdown.hours}
-                  </div>
-                  <div className="text-sm text-white/70 mt-2">Hours</div>
-                </div>
-                <div className="text-center">
+                          {countdown.hours}
+                        </div>
+                        <div className="text-sm text-white/70 mt-2">Hours</div>
+                      </div>
+                      <div className="text-center">
                         <div className="text-3xl font-bold bg-white/5 backdrop-blur-sm rounded-lg p-4 border border-white/10">
-                    {countdown.minutes}
-                  </div>
-                  <div className="text-sm text-white/70 mt-2">Minutes</div>
-                </div>
-                <div className="text-center">
+                          {countdown.minutes}
+                        </div>
+                        <div className="text-sm text-white/70 mt-2">Minutes</div>
+                      </div>
+                      <div className="text-center">
                         <div className="text-3xl font-bold bg-white/5 backdrop-blur-sm rounded-lg p-4 border border-white/10">
-                    {countdown.seconds}
+                          {countdown.seconds}
+                        </div>
+                        <div className="text-sm text-white/70 mt-2">Seconds</div>
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-sm text-white/70 mt-2">Seconds</div>
-                </div>
-              </div>
-            </div>
-          )}
+                )}
 
                 {/* Quick Schedule Overview */}
                 <div className="bg-black/30 backdrop-blur-md rounded-xl border border-white/10 p-6">
@@ -523,9 +515,9 @@ const NextRaceHero: React.FC<NextRaceHeroProps> = ({ race, loading }) => {
                                 hour12: true
                               })}
                             </p>
-                  </div>
+                          </div>
                           {session.date && session.time && renderSessionWeather(session.date, session.time)}
-                </div>
+                        </div>
                       ));
                     })()}
                   </div>
@@ -607,21 +599,19 @@ const NextRaceHero: React.FC<NextRaceHeroProps> = ({ race, loading }) => {
                                 </div>
 
                                 {/* Last Year's Results */}
-                                <div className="mt-4">
-                                  <h3 className="text-xl font-bold mb-4 text-white flex items-center gap-2">
+                                <div className="bg-black/50 backdrop-blur-sm rounded-xl border border-white/10 p-4 sm:p-6">
+                                  <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4 flex items-center gap-2">
                                     <TrophyIcon className="w-5 h-5 text-yellow-500" />
                                     Last Year's Results
                                   </h3>
                                   {loadingResults ? (
-                                    <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
-                                      <div className="animate-pulse space-y-4">
-                                        <div className="h-4 bg-white/10 rounded w-3/4"></div>
-                                        <div className="h-4 bg-white/10 rounded w-2/3"></div>
-                                        <div className="h-4 bg-white/10 rounded w-1/2"></div>
-                                      </div>
+                                    <div className="animate-pulse space-y-4">
+                                      <div className="h-4 bg-white/10 rounded w-3/4"></div>
+                                      <div className="h-4 bg-white/10 rounded w-2/3"></div>
+                                      <div className="h-4 bg-white/10 rounded w-1/2"></div>
                                     </div>
                                   ) : lastYearResults.length > 0 ? (
-                                    <div className="space-y-6">
+                                    <div className="space-y-2">
                                       {lastYearResults.slice(0, 3).map((result, index) => (
                                         <div
                                           key={result.position}
@@ -629,63 +619,50 @@ const NextRaceHero: React.FC<NextRaceHeroProps> = ({ race, loading }) => {
                                             index === 0 ? 'from-yellow-500/20 to-yellow-700/10' :
                                             index === 1 ? 'from-gray-400/20 to-gray-600/10' :
                                             'from-amber-700/20 to-amber-900/10'
-                                          } backdrop-blur-sm rounded-xl p-6 border border-white/10`}
+                                          } backdrop-blur-sm rounded-xl p-3 border border-white/10`}
                                         >
-                                          <div className="flex items-center gap-6">
-                                            <div className={`text-4xl font-bold min-w-[48px] ${
+                                          <div className="flex items-center gap-2 sm:gap-4">
+                                            <div className={`text-lg sm:text-2xl font-bold min-w-[32px] sm:min-w-[48px] text-center ${
                                               index === 0 ? 'text-yellow-500' :
                                               index === 1 ? 'text-gray-400' :
                                               'text-amber-700'
                                             }`}>
                                               P{result.position}
                                             </div>
-                                            <div className="relative w-24 h-24 shrink-0 rounded-xl overflow-hidden bg-white/5">
+                                            <div className="flex items-center gap-2 sm:gap-4 flex-1 min-w-0">
                                               <img
-                                                src={getDriverImageUrl(
-                                                  result.Driver.driverId,
-                                                  result.Driver.givenName,
-                                                  result.Driver.familyName
-                                                )}
+                                                src={getDriverImageUrl(result.Driver.driverId, result.Driver.givenName, result.Driver.familyName)}
                                                 alt={`${result.Driver.givenName} ${result.Driver.familyName}`}
-                                                className="w-full h-full object-cover"
-                                                onError={(e) => {
-                                                  const target = e.target as HTMLImageElement;
-                                                  target.src = 'https://media.formula1.com/d_driver_fallback_image.png';
-                                                }}
+                                                className="w-8 h-8 sm:w-12 sm:h-12 rounded-full object-cover border border-white/10"
                                               />
-                                            </div>
-                                            <div className="flex-1 min-w-0">
-                                              <div className="text-2xl font-bold text-white leading-tight">
-                                                {result.Driver.givenName} {result.Driver.familyName}
-                                              </div>
-                                              <div className="flex items-center gap-3 mt-2">
-                                                <img
-                                                  src={getTeamLogoUrl(result.Constructor.constructorId)}
-                                                  alt={result.Constructor.name}
-                                                  className="h-6 w-auto object-contain"
-                                                  onError={(e) => {
-                                                    const target = e.target as HTMLImageElement;
-                                                    target.style.display = 'none';
-                                                  }}
-                                                />
-                                                <span className="text-lg text-white/70">
-                                                  {result.Constructor.name}
-                                                </span>
-                                              </div>
-                                              {result.Time && (
-                                                <div className="text-base text-white/50 mt-2">
-                                                  Race Time: {result.Time.time}
+                                              <div className="flex-1 min-w-0">
+                                                <div className="text-base sm:text-lg font-bold text-white truncate">
+                                                  {result.Driver.code}
+                                                  <span className="hidden sm:inline"> - {result.Driver.givenName} {result.Driver.familyName}</span>
                                                 </div>
-                                              )}
+                                                <div className="flex items-center gap-2">
+                                                  <img
+                                                    src={getTeamLogoUrl(result.Constructor.constructorId)}
+                                                    alt={result.Constructor.name}
+                                                    className="h-3 sm:h-4 w-auto"
+                                                  />
+                                                  <span className="text-xs sm:text-sm text-white/70 truncate">
+                                                    {result.Constructor.name}
+                                                  </span>
+                                                </div>
+                                              </div>
                                             </div>
+                                            {result.Time && (
+                                              <div className="text-xs sm:text-sm text-white/50 hidden sm:block">
+                                                {result.Time.time}
+                                              </div>
+                                            )}
                                           </div>
                                         </div>
                                       ))}
                                     </div>
                                   ) : (
-                                    <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
-                                      <p className="text-white/70">No results available for last year's race</p>
-                                    </div>
+                                    <p className="text-white/70">No results available for last year's race</p>
                                   )}
                                 </div>
                               </div>
@@ -715,37 +692,41 @@ const NextRaceHero: React.FC<NextRaceHeroProps> = ({ race, loading }) => {
                                     setExpandedSession(expandedSession === 'practice1' ? null : 'practice1');
                                   }}
                                 >
-                                  <div className="p-5">
-                                    <div className="flex items-center justify-between">
-                                      <div className="flex-1">
-                                        <h4 className="text-xl font-semibold text-white">Practice 1</h4>
-                                        <p className="text-white/70 mt-1">
+                                  <div className="p-3 sm:p-5">
+                                    <div className="flex items-center justify-between gap-2">
+                                      <div className="flex-1 min-w-0">
+                                        <h4 className="text-base sm:text-xl font-semibold text-white truncate">Practice 1</h4>
+                                        <p className="text-sm sm:text-base text-white/70 mt-0.5 sm:mt-1 truncate">
                                           {new Date(`${race.FirstPractice.date}T${race.FirstPractice.time}`).toLocaleString(undefined, {
-                                            weekday: 'long',
+                                            weekday: 'short',
                                             day: 'numeric',
-                                            month: 'long',
+                                            month: 'short',
                                             hour: '2-digit',
                                             minute: '2-digit',
                                             hour12: true
                                           })}
                                         </p>
                                       </div>
-                                      <div className="flex items-center gap-6">
+                                      <div className="flex items-center gap-2 sm:gap-6">
                                         {weatherData[`${race.FirstPractice.date}T${race.FirstPractice.time}`] && (
-                                          <div className="flex items-center">
+                                          <div className="flex items-center gap-2">
                                             <WeatherIcon
                                               weatherCode={weatherData[`${race.FirstPractice.date}T${race.FirstPractice.time}`].weatherCode}
                                               precipitationProbability={weatherData[`${race.FirstPractice.date}T${race.FirstPractice.time}`].precipitationProbability}
-                                              className="w-10 h-10"
+                                              className="w-6 h-6 sm:w-8 sm:h-8"
                                             />
-                                            <div className="ml-2">
-                                              <span className="text-2xl font-bold text-white">{weatherData[`${race.FirstPractice.date}T${race.FirstPractice.time}`].temperature}°C</span>
-                                              <span className="ml-2 text-lg text-blue-400">{weatherData[`${race.FirstPractice.date}T${race.FirstPractice.time}`].precipitationProbability}% rain</span>
+                                            <div className="hidden sm:block">
+                                              <span className="text-lg sm:text-2xl font-bold text-white">{weatherData[`${race.FirstPractice.date}T${race.FirstPractice.time}`].temperature}°C</span>
+                                              <span className="ml-2 text-sm sm:text-lg text-blue-400">{weatherData[`${race.FirstPractice.date}T${race.FirstPractice.time}`].precipitationProbability}%</span>
+                                            </div>
+                                            <div className="flex flex-col items-end sm:hidden">
+                                              <span className="text-sm font-bold text-white">{weatherData[`${race.FirstPractice.date}T${race.FirstPractice.time}`].temperature}°</span>
+                                              <span className="text-xs text-blue-400">{weatherData[`${race.FirstPractice.date}T${race.FirstPractice.time}`].precipitationProbability}%</span>
                                             </div>
                                           </div>
                                         )}
                                         <div className={`transition-transform duration-300 ${expandedSession === 'practice1' ? 'rotate-180' : ''}`}>
-                                          <svg className="w-8 h-8 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                          <svg className="w-5 h-5 sm:w-8 sm:h-8 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                           </svg>
                                         </div>
@@ -760,12 +741,12 @@ const NextRaceHero: React.FC<NextRaceHeroProps> = ({ race, loading }) => {
                                         exit={{ height: 0, opacity: 0 }}
                                         className="border-t border-white/10"
                                       >
-                                        <div className="p-4 space-y-4">
+                                        <div className="p-3 sm:p-4 space-y-3 sm:space-y-4">
                                           <div>
-                                            <h5 className="text-sm font-medium text-white/70 mb-2">Session Format</h5>
-                                            <p className="text-white/70">60-minute free practice session for car setup and track familiarization.</p>
+                                            <h5 className="text-xs sm:text-sm font-medium text-white/70 mb-1 sm:mb-2">Session Format</h5>
+                                            <p className="text-sm sm:text-base text-white/70">60-minute free practice session for car setup and track familiarization.</p>
                                           </div>
-                                          <div>
+                                          <div className="hidden sm:block">
                                             <h5 className="text-sm font-medium text-white/70 mb-2">Focus Areas</h5>
                                             <ul className="list-disc list-inside space-y-1 text-white/70">
                                               <li>Baseline setup evaluation</li>
@@ -789,37 +770,41 @@ const NextRaceHero: React.FC<NextRaceHeroProps> = ({ race, loading }) => {
                                     setExpandedSession(expandedSession === 'practice2' ? null : 'practice2');
                                   }}
                                 >
-                                  <div className="p-5">
-                                    <div className="flex items-center justify-between">
-                                      <div className="flex-1">
-                                        <h4 className="text-xl font-semibold text-white">Practice 2</h4>
-                                        <p className="text-white/70 mt-1">
+                                  <div className="p-3 sm:p-5">
+                                    <div className="flex items-center justify-between gap-2">
+                                      <div className="flex-1 min-w-0">
+                                        <h4 className="text-base sm:text-xl font-semibold text-white truncate">Practice 2</h4>
+                                        <p className="text-sm sm:text-base text-white/70 mt-0.5 sm:mt-1 truncate">
                                           {new Date(`${race.SecondPractice.date}T${race.SecondPractice.time}`).toLocaleString(undefined, {
-                                            weekday: 'long',
+                                            weekday: 'short',
                                             day: 'numeric',
-                                            month: 'long',
+                                            month: 'short',
                                             hour: '2-digit',
                                             minute: '2-digit',
                                             hour12: true
                                           })}
                                         </p>
                                       </div>
-                                      <div className="flex items-center gap-6">
+                                      <div className="flex items-center gap-2 sm:gap-6">
                                         {weatherData[`${race.SecondPractice.date}T${race.SecondPractice.time}`] && (
-                                          <div className="flex items-center">
+                                          <div className="flex items-center gap-2">
                                             <WeatherIcon
                                               weatherCode={weatherData[`${race.SecondPractice.date}T${race.SecondPractice.time}`].weatherCode}
                                               precipitationProbability={weatherData[`${race.SecondPractice.date}T${race.SecondPractice.time}`].precipitationProbability}
-                                              className="w-10 h-10"
+                                              className="w-6 h-6 sm:w-8 sm:h-8"
                                             />
-                                            <div className="ml-2">
-                                              <span className="text-2xl font-bold text-white">{weatherData[`${race.SecondPractice.date}T${race.SecondPractice.time}`].temperature}°C</span>
-                                              <span className="ml-2 text-lg text-blue-400">{weatherData[`${race.SecondPractice.date}T${race.SecondPractice.time}`].precipitationProbability}% rain</span>
+                                            <div className="hidden sm:block">
+                                              <span className="text-lg sm:text-2xl font-bold text-white">{weatherData[`${race.SecondPractice.date}T${race.SecondPractice.time}`].temperature}°C</span>
+                                              <span className="ml-2 text-sm sm:text-lg text-blue-400">{weatherData[`${race.SecondPractice.date}T${race.SecondPractice.time}`].precipitationProbability}%</span>
+                                            </div>
+                                            <div className="flex flex-col items-end sm:hidden">
+                                              <span className="text-sm font-bold text-white">{weatherData[`${race.SecondPractice.date}T${race.SecondPractice.time}`].temperature}°</span>
+                                              <span className="text-xs text-blue-400">{weatherData[`${race.SecondPractice.date}T${race.SecondPractice.time}`].precipitationProbability}%</span>
                                             </div>
                                           </div>
                                         )}
                                         <div className={`transition-transform duration-300 ${expandedSession === 'practice2' ? 'rotate-180' : ''}`}>
-                                          <svg className="w-8 h-8 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                          <svg className="w-5 h-5 sm:w-8 sm:h-8 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                           </svg>
                                         </div>
@@ -834,12 +819,12 @@ const NextRaceHero: React.FC<NextRaceHeroProps> = ({ race, loading }) => {
                                         exit={{ height: 0, opacity: 0 }}
                                         className="border-t border-white/10"
                                       >
-                                        <div className="p-4 space-y-4">
+                                        <div className="p-3 sm:p-4 space-y-3 sm:space-y-4">
                                           <div>
-                                            <h5 className="text-sm font-medium text-white/70 mb-2">Session Format</h5>
-                                            <p className="text-white/70">60-minute practice session with focus on long run pace and race preparation.</p>
+                                            <h5 className="text-xs sm:text-sm font-medium text-white/70 mb-1 sm:mb-2">Session Format</h5>
+                                            <p className="text-sm sm:text-base text-white/70">60-minute practice session with focus on long run pace and race preparation.</p>
                                           </div>
-                                          <div>
+                                          <div className="hidden sm:block">
                                             <h5 className="text-sm font-medium text-white/70 mb-2">Focus Areas</h5>
                                             <ul className="list-disc list-inside space-y-1 text-white/70">
                                               <li>Race simulation runs</li>
@@ -863,37 +848,41 @@ const NextRaceHero: React.FC<NextRaceHeroProps> = ({ race, loading }) => {
                                     setExpandedSession(expandedSession === 'practice3' ? null : 'practice3');
                                   }}
                                 >
-                                  <div className="p-5">
-                                    <div className="flex items-center justify-between">
-                                      <div className="flex-1">
-                                        <h4 className="text-xl font-semibold text-white">Practice 3</h4>
-                                        <p className="text-white/70 mt-1">
+                                  <div className="p-3 sm:p-5">
+                                    <div className="flex items-center justify-between gap-2">
+                                      <div className="flex-1 min-w-0">
+                                        <h4 className="text-base sm:text-xl font-semibold text-white truncate">Practice 3</h4>
+                                        <p className="text-sm sm:text-base text-white/70 mt-0.5 sm:mt-1 truncate">
                                           {new Date(`${race.ThirdPractice.date}T${race.ThirdPractice.time}`).toLocaleString(undefined, {
-                                            weekday: 'long',
+                                            weekday: 'short',
                                             day: 'numeric',
-                                            month: 'long',
+                                            month: 'short',
                                             hour: '2-digit',
                                             minute: '2-digit',
                                             hour12: true
                                           })}
                                         </p>
                                       </div>
-                                      <div className="flex items-center gap-6">
+                                      <div className="flex items-center gap-2 sm:gap-6">
                                         {weatherData[`${race.ThirdPractice.date}T${race.ThirdPractice.time}`] && (
-                                          <div className="flex items-center">
+                                          <div className="flex items-center gap-2">
                                             <WeatherIcon
                                               weatherCode={weatherData[`${race.ThirdPractice.date}T${race.ThirdPractice.time}`].weatherCode}
                                               precipitationProbability={weatherData[`${race.ThirdPractice.date}T${race.ThirdPractice.time}`].precipitationProbability}
-                                              className="w-10 h-10"
+                                              className="w-6 h-6 sm:w-8 sm:h-8"
                                             />
-                                            <div className="ml-2">
-                                              <span className="text-2xl font-bold text-white">{weatherData[`${race.ThirdPractice.date}T${race.ThirdPractice.time}`].temperature}°C</span>
-                                              <span className="ml-2 text-lg text-blue-400">{weatherData[`${race.ThirdPractice.date}T${race.ThirdPractice.time}`].precipitationProbability}% rain</span>
+                                            <div className="hidden sm:block">
+                                              <span className="text-lg sm:text-2xl font-bold text-white">{weatherData[`${race.ThirdPractice.date}T${race.ThirdPractice.time}`].temperature}°C</span>
+                                              <span className="ml-2 text-sm sm:text-lg text-blue-400">{weatherData[`${race.ThirdPractice.date}T${race.ThirdPractice.time}`].precipitationProbability}%</span>
+                                            </div>
+                                            <div className="flex flex-col items-end sm:hidden">
+                                              <span className="text-sm font-bold text-white">{weatherData[`${race.ThirdPractice.date}T${race.ThirdPractice.time}`].temperature}°</span>
+                                              <span className="text-xs text-blue-400">{weatherData[`${race.ThirdPractice.date}T${race.ThirdPractice.time}`].precipitationProbability}%</span>
                                             </div>
                                           </div>
                                         )}
                                         <div className={`transition-transform duration-300 ${expandedSession === 'practice3' ? 'rotate-180' : ''}`}>
-                                          <svg className="w-8 h-8 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                          <svg className="w-5 h-5 sm:w-8 sm:h-8 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                           </svg>
                                         </div>
@@ -908,12 +897,12 @@ const NextRaceHero: React.FC<NextRaceHeroProps> = ({ race, loading }) => {
                                         exit={{ height: 0, opacity: 0 }}
                                         className="border-t border-white/10"
                                       >
-                                        <div className="p-4 space-y-4">
+                                        <div className="p-3 sm:p-4 space-y-3 sm:space-y-4">
                                           <div>
-                                            <h5 className="text-sm font-medium text-white/70 mb-2">Session Format</h5>
-                                            <p className="text-white/70">60-minute practice session focusing on qualifying preparation and final setup changes.</p>
+                                            <h5 className="text-xs sm:text-sm font-medium text-white/70 mb-1 sm:mb-2">Session Format</h5>
+                                            <p className="text-sm sm:text-base text-white/70">60-minute practice session focusing on qualifying preparation and final setup changes.</p>
                                           </div>
-                                          <div>
+                                          <div className="hidden sm:block">
                                             <h5 className="text-sm font-medium text-white/70 mb-2">Focus Areas</h5>
                                             <ul className="list-disc list-inside space-y-1 text-white/70">
                                               <li>Qualifying simulation runs</li>
@@ -937,37 +926,41 @@ const NextRaceHero: React.FC<NextRaceHeroProps> = ({ race, loading }) => {
                                     setExpandedSession(expandedSession === 'sprintShootout' ? null : 'sprintShootout');
                                   }}
                                 >
-                                  <div className="p-5">
-                                    <div className="flex items-center justify-between">
-                                      <div className="flex-1">
-                                        <h4 className="text-xl font-semibold text-white">Sprint Qualifying</h4>
-                                        <p className="text-white/70 mt-1">
+                                  <div className="p-3 sm:p-5">
+                                    <div className="flex items-center justify-between gap-2">
+                                      <div className="flex-1 min-w-0">
+                                        <h4 className="text-base sm:text-xl font-semibold text-white truncate">Sprint Qualifying</h4>
+                                        <p className="text-sm sm:text-base text-white/70 mt-0.5 sm:mt-1 truncate">
                                           {new Date(`${race.SprintQualifying?.date || race.SprintShootout?.date}T${race.SprintQualifying?.time || race.SprintShootout?.time}`).toLocaleString(undefined, {
-                                            weekday: 'long',
+                                            weekday: 'short',
                                             day: 'numeric',
-                                            month: 'long',
+                                            month: 'short',
                                             hour: '2-digit',
                                             minute: '2-digit',
                                             hour12: true
                                           })}
                                         </p>
                                       </div>
-                                      <div className="flex items-center gap-6">
+                                      <div className="flex items-center gap-2 sm:gap-6">
                                         {weatherData[`${race.SprintQualifying?.date || race.SprintShootout?.date}T${race.SprintQualifying?.time || race.SprintShootout?.time}`] && (
-                                          <div className="flex items-center">
+                                          <div className="flex items-center gap-2">
                                             <WeatherIcon
                                               weatherCode={weatherData[`${race.SprintQualifying?.date || race.SprintShootout?.date}T${race.SprintQualifying?.time || race.SprintShootout?.time}`].weatherCode}
                                               precipitationProbability={weatherData[`${race.SprintQualifying?.date || race.SprintShootout?.date}T${race.SprintQualifying?.time || race.SprintShootout?.time}`].precipitationProbability}
-                                              className="w-10 h-10"
+                                              className="w-6 h-6 sm:w-8 sm:h-8"
                                             />
-                                            <div className="ml-2">
-                                              <span className="text-2xl font-bold text-white">{weatherData[`${race.SprintQualifying?.date || race.SprintShootout?.date}T${race.SprintQualifying?.time || race.SprintShootout?.time}`].temperature}°C</span>
-                                              <span className="ml-2 text-lg text-blue-400">{weatherData[`${race.SprintQualifying?.date || race.SprintShootout?.date}T${race.SprintQualifying?.time || race.SprintShootout?.time}`].precipitationProbability}% rain</span>
+                                            <div className="hidden sm:block">
+                                              <span className="text-lg sm:text-2xl font-bold text-white">{weatherData[`${race.SprintQualifying?.date || race.SprintShootout?.date}T${race.SprintQualifying?.time || race.SprintShootout?.time}`].temperature}°C</span>
+                                              <span className="ml-2 text-sm sm:text-lg text-blue-400">{weatherData[`${race.SprintQualifying?.date || race.SprintShootout?.date}T${race.SprintQualifying?.time || race.SprintShootout?.time}`].precipitationProbability}%</span>
+                                            </div>
+                                            <div className="flex flex-col items-end sm:hidden">
+                                              <span className="text-sm font-bold text-white">{weatherData[`${race.SprintQualifying?.date || race.SprintShootout?.date}T${race.SprintQualifying?.time || race.SprintShootout?.time}`].temperature}°</span>
+                                              <span className="text-xs text-blue-400">{weatherData[`${race.SprintQualifying?.date || race.SprintShootout?.date}T${race.SprintQualifying?.time || race.SprintShootout?.time}`].precipitationProbability}%</span>
                                             </div>
                                           </div>
                                         )}
                                         <div className={`transition-transform duration-300 ${expandedSession === 'sprintShootout' ? 'rotate-180' : ''}`}>
-                                          <svg className="w-8 h-8 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                          <svg className="w-5 h-5 sm:w-8 sm:h-8 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                           </svg>
                                         </div>
@@ -982,12 +975,12 @@ const NextRaceHero: React.FC<NextRaceHeroProps> = ({ race, loading }) => {
                                         exit={{ height: 0, opacity: 0 }}
                                         className="border-t border-white/10"
                                       >
-                                        <div className="p-4 space-y-4">
+                                        <div className="p-3 sm:p-4 space-y-3 sm:space-y-4">
                                           <div>
-                                            <h5 className="text-sm font-medium text-white/70 mb-2">Session Format</h5>
-                                            <p className="text-white/70">Three knockout sessions (Q1, Q2, Q3) to determine the grid order. Bottom 5 drivers eliminated in Q1 and Q2.</p>
+                                            <h5 className="text-xs sm:text-sm font-medium text-white/70 mb-1 sm:mb-2">Session Format</h5>
+                                            <p className="text-sm sm:text-base text-white/70">Three knockout sessions (Q1, Q2, Q3) to determine the grid order. Bottom 5 drivers eliminated in Q1 and Q2.</p>
                                           </div>
-                                          <div>
+                                          <div className="hidden sm:block">
                                             <h5 className="text-sm font-medium text-white/70 mb-2">Session Breakdown</h5>
                                             <ul className="list-disc list-inside space-y-1 text-white/70">
                                               <li>Q1: 18 minutes, all cars</li>
@@ -1012,37 +1005,41 @@ const NextRaceHero: React.FC<NextRaceHeroProps> = ({ race, loading }) => {
                                     setExpandedSession(expandedSession === 'sprint' ? null : 'sprint');
                                   }}
                                 >
-                                  <div className="p-5">
-                                    <div className="flex items-center justify-between">
-                                      <div className="flex-1">
-                                        <h4 className="text-xl font-semibold text-white">Sprint</h4>
-                                        <p className="text-white/70 mt-1">
+                                  <div className="p-3 sm:p-5">
+                                    <div className="flex items-center justify-between gap-2">
+                                      <div className="flex-1 min-w-0">
+                                        <h4 className="text-base sm:text-xl font-semibold text-white truncate">Sprint</h4>
+                                        <p className="text-sm sm:text-base text-white/70 mt-0.5 sm:mt-1 truncate">
                                           {new Date(`${race.Sprint.date}T${race.Sprint.time}`).toLocaleString(undefined, {
-                                            weekday: 'long',
+                                            weekday: 'short',
                                             day: 'numeric',
-                                            month: 'long',
+                                            month: 'short',
                                             hour: '2-digit',
                                             minute: '2-digit',
                                             hour12: true
                                           })}
                                         </p>
                                       </div>
-                                      <div className="flex items-center gap-6">
+                                      <div className="flex items-center gap-2 sm:gap-6">
                                         {weatherData[`${race.Sprint.date}T${race.Sprint.time}`] && (
-                                          <div className="flex items-center">
+                                          <div className="flex items-center gap-2">
                                             <WeatherIcon
                                               weatherCode={weatherData[`${race.Sprint.date}T${race.Sprint.time}`].weatherCode}
                                               precipitationProbability={weatherData[`${race.Sprint.date}T${race.Sprint.time}`].precipitationProbability}
-                                              className="w-10 h-10"
+                                              className="w-6 h-6 sm:w-8 sm:h-8"
                                             />
-                                            <div className="ml-2">
-                                              <span className="text-2xl font-bold text-white">{weatherData[`${race.Sprint.date}T${race.Sprint.time}`].temperature}°C</span>
-                                              <span className="ml-2 text-lg text-blue-400">{weatherData[`${race.Sprint.date}T${race.Sprint.time}`].precipitationProbability}% rain</span>
+                                            <div className="hidden sm:block">
+                                              <span className="text-lg sm:text-2xl font-bold text-white">{weatherData[`${race.Sprint.date}T${race.Sprint.time}`].temperature}°C</span>
+                                              <span className="ml-2 text-sm sm:text-lg text-blue-400">{weatherData[`${race.Sprint.date}T${race.Sprint.time}`].precipitationProbability}%</span>
+                                            </div>
+                                            <div className="flex flex-col items-end sm:hidden">
+                                              <span className="text-sm font-bold text-white">{weatherData[`${race.Sprint.date}T${race.Sprint.time}`].temperature}°</span>
+                                              <span className="text-xs text-blue-400">{weatherData[`${race.Sprint.date}T${race.Sprint.time}`].precipitationProbability}%</span>
                                             </div>
                                           </div>
                                         )}
                                         <div className={`transition-transform duration-300 ${expandedSession === 'sprint' ? 'rotate-180' : ''}`}>
-                                          <svg className="w-8 h-8 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                          <svg className="w-5 h-5 sm:w-8 sm:h-8 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                           </svg>
                                         </div>
@@ -1057,12 +1054,12 @@ const NextRaceHero: React.FC<NextRaceHeroProps> = ({ race, loading }) => {
                                         exit={{ height: 0, opacity: 0 }}
                                         className="border-t border-white/10"
                                       >
-                                        <div className="p-4 space-y-4">
+                                        <div className="p-3 sm:p-4 space-y-3 sm:space-y-4">
                                           <div>
-                                            <h5 className="text-sm font-medium text-white/70 mb-2">Session Format</h5>
-                                            <p className="text-white/70">A shorter race (100km) with no mandatory pit stops. Points awarded to top 8 finishers (8-7-6-5-4-3-2-1).</p>
+                                            <h5 className="text-xs sm:text-sm font-medium text-white/70 mb-1 sm:mb-2">Session Format</h5>
+                                            <p className="text-sm sm:text-base text-white/70">A shorter race (100km) with no mandatory pit stops. Points awarded to top 8 finishers (8-7-6-5-4-3-2-1).</p>
                                           </div>
-                                          <div>
+                                          <div className="hidden sm:block">
                                             <h5 className="text-sm font-medium text-white/70 mb-2">Key Considerations</h5>
                                             <ul className="list-disc list-inside space-y-1 text-white/70">
                                               <li>Tire management crucial</li>
@@ -1086,37 +1083,41 @@ const NextRaceHero: React.FC<NextRaceHeroProps> = ({ race, loading }) => {
                                   setExpandedSession(expandedSession === 'qualifying' ? null : 'qualifying');
                                 }}
                               >
-                                <div className="p-5">
-                                  <div className="flex items-center justify-between">
-                                    <div className="flex-1">
-                                      <h4 className="text-xl font-semibold text-white">Qualifying</h4>
-                                      <p className="text-white/70 mt-1">
+                                <div className="p-3 sm:p-5">
+                                  <div className="flex items-center justify-between gap-2">
+                                    <div className="flex-1 min-w-0">
+                                      <h4 className="text-base sm:text-xl font-semibold text-white truncate">Qualifying</h4>
+                                      <p className="text-sm sm:text-base text-white/70 mt-0.5 sm:mt-1 truncate">
                                         {new Date(`${race.Qualifying.date}T${race.Qualifying.time}`).toLocaleString(undefined, {
-                                          weekday: 'long',
+                                          weekday: 'short',
                                           day: 'numeric',
-                                          month: 'long',
+                                          month: 'short',
                                           hour: '2-digit',
                                           minute: '2-digit',
                                           hour12: true
                                         })}
                                       </p>
                                     </div>
-                                    <div className="flex items-center gap-6">
+                                    <div className="flex items-center gap-2 sm:gap-6">
                                       {weatherData[`${race.Qualifying.date}T${race.Qualifying.time}`] && (
-                                        <div className="flex items-center">
+                                        <div className="flex items-center gap-2">
                                           <WeatherIcon
                                             weatherCode={weatherData[`${race.Qualifying.date}T${race.Qualifying.time}`].weatherCode}
                                             precipitationProbability={weatherData[`${race.Qualifying.date}T${race.Qualifying.time}`].precipitationProbability}
-                                            className="w-10 h-10"
+                                            className="w-6 h-6 sm:w-8 sm:h-8"
                                           />
-                                          <div className="ml-2">
-                                            <span className="text-2xl font-bold text-white">{weatherData[`${race.Qualifying.date}T${race.Qualifying.time}`].temperature}°C</span>
-                                            <span className="ml-2 text-lg text-blue-400">{weatherData[`${race.Qualifying.date}T${race.Qualifying.time}`].precipitationProbability}% rain</span>
+                                          <div className="hidden sm:block">
+                                            <span className="text-lg sm:text-2xl font-bold text-white">{weatherData[`${race.Qualifying.date}T${race.Qualifying.time}`].temperature}°C</span>
+                                            <span className="ml-2 text-sm sm:text-lg text-blue-400">{weatherData[`${race.Qualifying.date}T${race.Qualifying.time}`].precipitationProbability}%</span>
+                                          </div>
+                                          <div className="flex flex-col items-end sm:hidden">
+                                            <span className="text-sm font-bold text-white">{weatherData[`${race.Qualifying.date}T${race.Qualifying.time}`].temperature}°</span>
+                                            <span className="text-xs text-blue-400">{weatherData[`${race.Qualifying.date}T${race.Qualifying.time}`].precipitationProbability}%</span>
                                           </div>
                                         </div>
                                       )}
                                       <div className={`transition-transform duration-300 ${expandedSession === 'qualifying' ? 'rotate-180' : ''}`}>
-                                        <svg className="w-8 h-8 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg className="w-5 h-5 sm:w-8 sm:h-8 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                         </svg>
                                       </div>
@@ -1131,12 +1132,12 @@ const NextRaceHero: React.FC<NextRaceHeroProps> = ({ race, loading }) => {
                                       exit={{ height: 0, opacity: 0 }}
                                       className="border-t border-white/10"
                                     >
-                                      <div className="p-4 space-y-4">
+                                      <div className="p-3 sm:p-4 space-y-3 sm:space-y-4">
                                         <div>
-                                          <h5 className="text-sm font-medium text-white/70 mb-2">Session Format</h5>
-                                          <p className="text-white/70">Three knockout sessions (Q1, Q2, Q3) to determine the grid order. Bottom 5 drivers eliminated in Q1 and Q2.</p>
+                                          <h5 className="text-xs sm:text-sm font-medium text-white/70 mb-1 sm:mb-2">Session Format</h5>
+                                          <p className="text-sm sm:text-base text-white/70">Three knockout sessions (Q1, Q2, Q3) to determine the grid order. Bottom 5 drivers eliminated in Q1 and Q2.</p>
                                         </div>
-                                        <div>
+                                        <div className="hidden sm:block">
                                           <h5 className="text-sm font-medium text-white/70 mb-2">Session Breakdown</h5>
                                           <ul className="list-disc list-inside space-y-1 text-white/70">
                                             <li>Q1: 18 minutes, all cars</li>
@@ -1159,37 +1160,41 @@ const NextRaceHero: React.FC<NextRaceHeroProps> = ({ race, loading }) => {
                                   setExpandedSession(expandedSession === 'race' ? null : 'race');
                                 }}
                               >
-                                <div className="p-5">
-                                  <div className="flex items-center justify-between">
-                                    <div className="flex-1">
-                                      <h4 className="text-xl font-semibold text-white">Race</h4>
-                                      <p className="text-white/70 mt-1">
+                                <div className="p-3 sm:p-5">
+                                  <div className="flex items-center justify-between gap-2">
+                                    <div className="flex-1 min-w-0">
+                                      <h4 className="text-base sm:text-xl font-semibold text-white truncate">Race</h4>
+                                      <p className="text-sm sm:text-base text-white/70 mt-0.5 sm:mt-1 truncate">
                                         {new Date(`${race.date}T${race.time}`).toLocaleString(undefined, {
-                                          weekday: 'long',
+                                          weekday: 'short',
                                           day: 'numeric',
-                                          month: 'long',
+                                          month: 'short',
                                           hour: '2-digit',
                                           minute: '2-digit',
                                           hour12: true
                                         })}
                                       </p>
                                     </div>
-                                    <div className="flex items-center gap-6">
+                                    <div className="flex items-center gap-2 sm:gap-6">
                                       {weatherData[`${race.date}T${race.time}`] && (
-                                        <div className="flex items-center">
+                                        <div className="flex items-center gap-2">
                                           <WeatherIcon
                                             weatherCode={weatherData[`${race.date}T${race.time}`].weatherCode}
                                             precipitationProbability={weatherData[`${race.date}T${race.time}`].precipitationProbability}
-                                            className="w-10 h-10"
+                                            className="w-6 h-6 sm:w-8 sm:h-8"
                                           />
-                                          <div className="ml-2">
-                                            <span className="text-2xl font-bold text-white">{weatherData[`${race.date}T${race.time}`].temperature}°C</span>
-                                            <span className="ml-2 text-lg text-blue-400">{weatherData[`${race.date}T${race.time}`].precipitationProbability}% rain</span>
+                                          <div className="hidden sm:block">
+                                            <span className="text-lg sm:text-2xl font-bold text-white">{weatherData[`${race.date}T${race.time}`].temperature}°C</span>
+                                            <span className="ml-2 text-sm sm:text-lg text-blue-400">{weatherData[`${race.date}T${race.time}`].precipitationProbability}%</span>
+                                          </div>
+                                          <div className="flex flex-col items-end sm:hidden">
+                                            <span className="text-sm font-bold text-white">{weatherData[`${race.date}T${race.time}`].temperature}°</span>
+                                            <span className="text-xs text-blue-400">{weatherData[`${race.date}T${race.time}`].precipitationProbability}%</span>
                                           </div>
                                         </div>
                                       )}
                                       <div className={`transition-transform duration-300 ${expandedSession === 'race' ? 'rotate-180' : ''}`}>
-                                        <svg className="w-8 h-8 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg className="w-5 h-5 sm:w-8 sm:h-8 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                         </svg>
                                       </div>
@@ -1204,13 +1209,13 @@ const NextRaceHero: React.FC<NextRaceHeroProps> = ({ race, loading }) => {
                                       exit={{ height: 0, opacity: 0 }}
                                       className="border-t border-white/10"
                                     >
-                                      <div className="p-4 space-y-4">
+                                      <div className="p-3 sm:p-4 space-y-3 sm:space-y-4">
                                         <div>
-                                          <h5 className="text-sm font-medium text-white/70 mb-2">Race Distance</h5>
-                                          <p className="text-white/70">Approximately 305 km (190 miles) or a maximum of 2 hours, whichever comes first.</p>
+                                          <h5 className="text-xs sm:text-sm font-medium text-white/70 mb-1 sm:mb-2">Race Distance</h5>
+                                          <p className="text-sm sm:text-base text-white/70">Approximately 305 km (190 miles) or a maximum of 2 hours, whichever comes first.</p>
                                         </div>
                                         <div>
-                                          <h5 className="text-sm font-medium text-white/70 mb-2">Key Rules</h5>
+                                          <h5 className="text-xs sm:text-sm font-medium text-white/70 mb-2">Key Rules</h5>
                                           <ul className="list-disc list-inside space-y-1 text-white/70">
                                             <li>Mandatory pit stop required</li>
                                             <li>Two tire compounds must be used</li>

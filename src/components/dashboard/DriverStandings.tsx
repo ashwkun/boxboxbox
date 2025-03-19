@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchDriverStandings, DriverStanding } from '../../services/api/jolpica';
+import { motion } from 'framer-motion';
 
 interface DriverStandingsProps {
   className?: string;
@@ -10,6 +11,7 @@ const DriverStandings: React.FC<DriverStandingsProps> = ({ className }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedSeason, setSelectedSeason] = useState<string>('2025');
+  const [expandedDriver, setExpandedDriver] = useState<string | null>(null);
   
   // Available seasons for dropdown
   const seasons = ['2025', '2024', '2023', '2022', '2021'];
@@ -20,7 +22,20 @@ const DriverStandings: React.FC<DriverStandingsProps> = ({ className }) => {
         setLoading(true);
         setError(null);
         const standings = await fetchDriverStandings(selectedSeason);
-        setDriverStandings(standings);
+        // Sort standings by position, handling both numbered positions and "-" positions
+        const sortedStandings = standings.sort((a, b) => {
+          // If both have numeric positions, compare them
+          if (a.position && b.position) {
+            return parseInt(a.position) - parseInt(b.position);
+          }
+          // If only one has a position, the one with position comes first
+          if (a.position) return -1;
+          if (b.position) return 1;
+          // If neither has a position, maintain their original order
+          return 0;
+        });
+        console.log('Fetched standings:', sortedStandings); // Debug log
+        setDriverStandings(sortedStandings);
       } catch (err) {
         console.error('Error fetching driver standings:', err);
         setError('Failed to load driver standings. Please try again later.');
@@ -112,67 +127,119 @@ const DriverStandings: React.FC<DriverStandingsProps> = ({ className }) => {
         </div>
       ) : (
         <div className="space-y-2">
-          {driverStandings.map((standing) => (
-            <div
-              key={standing.Driver.driverId}
-              className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10 hover:bg-white/10 transition-colors"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-10 flex justify-center">
-                  <span className={`font-bold text-lg ${
-                    standing.position === '1' ? 'text-yellow-500' :
-                    standing.position === '2' ? 'text-gray-400' :
-                    standing.position === '3' ? 'text-amber-700' : 'text-white'
-                  }`}>
-                    {standing.position}
-                  </span>
-                </div>
-                <div className="flex-1 flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-full overflow-hidden bg-white/5">
-                    <img
-                      src={getDriverImageUrl(
-                        standing.Driver.driverId,
-                        standing.Driver.givenName,
-                        standing.Driver.familyName
-                      )}
-                      alt={`${standing.Driver.givenName} ${standing.Driver.familyName}`}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = 'https://media.formula1.com/d_driver_fallback_image.png';
-                      }}
-                    />
-                  </div>
-                  <div>
-                    <div className="font-bold text-white">
-                      {standing.Driver.givenName} {standing.Driver.familyName}
+          {driverStandings.map((standing, index) => {
+            const isExpanded = expandedDriver === standing.Driver.driverId;
+            return (
+              <div
+                key={standing.Driver.driverId}
+                className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:bg-white/10 transition-colors overflow-hidden"
+                onClick={() => setExpandedDriver(isExpanded ? null : standing.Driver.driverId)}
+              >
+                <div className="p-2 sm:p-4">
+                  <div className="flex items-center gap-2 sm:gap-4">
+                    <div className="w-7 sm:w-10 flex justify-center shrink-0">
+                      <span className={`font-bold text-base sm:text-lg ${
+                        String(standing.position) === '1' ? 'text-yellow-500' :
+                        String(standing.position) === '2' ? 'text-gray-400' :
+                        String(standing.position) === '3' ? 'text-amber-700' : 'text-white/90'
+                      }`}>
+                        {standing.position ? String(standing.position).padStart(2, ' ') : 
+                         standing.positionText === '-' ? String(index + 1).padStart(2, ' ') : 
+                         String(standing.positionText).padStart(2, ' ')}
+                      </span>
                     </div>
-                    <div className="flex items-center gap-2 mt-1">
-                      {standing.Constructors[0] && (
-                        <>
-                          <img
-                            src={getTeamLogoUrl(standing.Constructors[0].constructorId)}
-                            alt={standing.Constructors[0].name}
-                            className="h-4 w-auto"
-                            onError={(e) => {
-                              const target = e.target as HTMLImageElement;
-                              target.style.display = 'none';
-                            }}
-                          />
-                          <span className="text-sm text-white/70">
-                            {standing.Constructors[0].name}
-                          </span>
-                        </>
-                      )}
+                    <div className="flex-1 flex items-center gap-2 sm:gap-3 min-w-0">
+                      <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-white/5 shrink-0">
+                        <img
+                          src={getDriverImageUrl(
+                            standing.Driver.driverId,
+                            standing.Driver.givenName,
+                            standing.Driver.familyName
+                          )}
+                          alt={`${standing.Driver.givenName} ${standing.Driver.familyName}`}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = 'https://media.formula1.com/d_driver_fallback_image.png';
+                          }}
+                        />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="font-bold text-white truncate">
+                          <span className="sm:hidden">{standing.Driver.code}</span>
+                          <span className="hidden sm:inline">{standing.Driver.givenName} {standing.Driver.familyName}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 sm:gap-2 mt-0.5 sm:mt-1">
+                          {standing.Constructors[0] && (
+                            <>
+                              <img
+                                src={getTeamLogoUrl(standing.Constructors[0].constructorId)}
+                                alt={standing.Constructors[0].name}
+                                className="h-3 sm:h-4 w-auto"
+                                onError={(e) => {
+                                  const target = e.target as HTMLImageElement;
+                                  target.style.display = 'none';
+                                }}
+                              />
+                              <span className="text-xs sm:text-sm text-white/70 truncate">
+                                {standing.Constructors[0].name}
+                              </span>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <div className="text-base sm:text-lg font-bold text-white whitespace-nowrap pl-2">
+                        {standing.points}
+                        <span className="text-sm sm:text-base text-white/70"> pts</span>
+                      </div>
+                      <div className={`transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}>
+                        <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div className="text-lg font-bold text-white">
-                  {standing.points} pts
-                </div>
+                <motion.div
+                  initial={false}
+                  animate={{ height: isExpanded ? 'auto' : 0 }}
+                  className="overflow-hidden border-t border-white/10"
+                >
+                  <div className="p-3 sm:p-4 flex items-center gap-4">
+                    <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden bg-white/5">
+                      <img
+                        src={getDriverImageUrl(
+                          standing.Driver.driverId,
+                          standing.Driver.givenName,
+                          standing.Driver.familyName
+                        )}
+                        alt={`${standing.Driver.givenName} ${standing.Driver.familyName}`}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = 'https://media.formula1.com/d_driver_fallback_image.png';
+                        }}
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="text-sm sm:text-base font-medium text-white mb-1">
+                        {standing.Driver.givenName} {standing.Driver.familyName}
+                      </h4>
+                      <div className="text-xs sm:text-sm text-white/70 space-y-1">
+                        <p>Driver Code: {standing.Driver.code}</p>
+                        <p>Nationality: {standing.Driver.nationality}</p>
+                        <p>Position: {standing.position}</p>
+                        <p>Points: {standing.points}</p>
+                        <p>Wins: {standing.wins}</p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>

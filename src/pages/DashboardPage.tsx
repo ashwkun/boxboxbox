@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import * as jolpica from '../services/api/jolpica';
 import { Race } from '../services/api/jolpica';
+import Header from '../components/Header';
 import NextRaceHero from '../components/dashboard/NextRaceHero';
 import RaceSchedule from '../components/dashboard/RaceSchedule';
 import CompletedRaces from '../components/dashboard/CompletedRaces';
@@ -18,7 +19,6 @@ const DashboardPage: React.FC = () => {
     const fetchData = async () => {
       try {
         console.log('Fetching next race data...');
-        // Fetch next race and schedule
         const [nextRaceData, scheduleData] = await Promise.all([
           jolpica.fetchNextRace(),
           jolpica.fetchRaceSchedule()
@@ -38,20 +38,19 @@ const DashboardPage: React.FC = () => {
     fetchData();
   }, []);
 
-  // Add logging for render
-  console.log('DashboardPage render - nextRace:', nextRace, 'loading:', loading);
-
   return (
-    <div className="min-h-screen bg-background text-white">
-      <div className="container mx-auto px-4 py-8 space-y-8">
-        <NextRaceHero race={nextRace} loading={loading.race} />
-        <RaceSchedule races={raceSchedule} />
-        <CompletedRaces races={raceSchedule} />
-        
-        {/* Standings Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <DriverStandings className="h-full" />
-          <ConstructorStandings className="h-full" />
+    <div className="min-h-screen bg-background text-white overflow-x-hidden">
+      <div className="container mx-auto px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-8 max-w-[1600px]">
+        <Header />
+        <div className="space-y-3 sm:space-y-4 md:space-y-8">
+          <NextRaceHero race={nextRace} loading={loading.race} />
+          <RaceSchedule races={raceSchedule} />
+          <CompletedRaces races={raceSchedule} />
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
+            <DriverStandings className="h-full" />
+            <ConstructorStandings className="h-full" />
+          </div>
         </div>
       </div>
     </div>
