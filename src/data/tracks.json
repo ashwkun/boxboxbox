@@ -1,0 +1,703 @@
+{
+  "tracks": [
+    {
+      "TrackName": "Australian Grand Prix",
+      "Location": "Albert Park Circuit, Melbourne, Australia",
+      "Coordinates": {
+        "Latitude": -37.8497,
+        "Longitude": 144.9680
+      },
+      "TrackLengthPerLap": 5.278,
+      "CircuitLayout": {
+        "TotalNumberOfTurns": 16,
+        "NotableFeatures": [
+          "Temporary street circuit",
+          "Fast straights",
+          "Chicane",
+          "Hairpin turn"
+        ]
+      },
+      "PerformanceRecords": {
+        "LapRecord": {
+          "Time": "1:24.125",
+          "Driver": "Michael Schumacher",
+          "Team": "Ferrari",
+          "Year": 2003
+        }
+      },
+      "HistoricalAndStrategicInsights": {
+        "KeyHistoricalMoments": "Memorable races featuring sudden weather changes and strategic pit stop battles that have shaped championship outcomes.",
+        "RaceStrategyInfluence": "The mix of high-speed straights and tight corners forces teams to balance aerodynamic efficiency and mechanical grip."
+      }
+    },
+    {
+      "TrackName": "Chinese Grand Prix",
+      "Location": "Shanghai International Circuit, Shanghai, China",
+      "Coordinates": {
+        "Latitude": 31.4056,
+        "Longitude": 121.2926
+      },
+      "TrackLengthPerLap": 5.451,
+      "CircuitLayout": {
+        "TotalNumberOfTurns": 16,
+        "NotableFeatures": [
+          "Long back straight",
+          "Complex infield sections",
+          "Wide sweeping corners"
+        ]
+      },
+      "PerformanceRecords": {
+        "LapRecord": {
+          "Time": "1:34.380",
+          "Driver": "Michael Schumacher",
+          "Team": "Ferrari",
+          "Year": 2004
+        }
+      },
+      "HistoricalAndStrategicInsights": {
+        "KeyHistoricalMoments": "Introduced in 2004, the race has seen variable weather and unexpected strategy shifts.",
+        "RaceStrategyInfluence": "Emphasizes aerodynamic efficiency and tire management, particularly in changing conditions."
+      }
+    },
+    {
+      "TrackName": "Japanese Grand Prix",
+      "Location": "Suzuka Circuit, Suzuka, Japan",
+      "Coordinates": {
+        "Latitude": 34.8431,
+        "Longitude": 136.5419
+      },
+      "TrackLengthPerLap": 5.807,
+      "CircuitLayout": {
+        "TotalNumberOfTurns": 18,
+        "NotableFeatures": [
+          "Figure-eight layout",
+          "Fast corners",
+          "Challenging off-camber sections"
+        ]
+      },
+      "PerformanceRecords": {
+        "LapRecord": {
+          "Time": "1:30.983",
+          "Driver": "Max Verstappen",
+          "Team": "Red Bull Racing",
+          "Year": 2021
+        }
+      },
+      "HistoricalAndStrategicInsights": {
+        "KeyHistoricalMoments": "Known for its technical challenges and historic races that have influenced championship titles.",
+        "RaceStrategyInfluence": "Requires balanced setups for both high-speed sections and technical corners."
+      }
+    },
+    {
+      "TrackName": "Bahrain Grand Prix",
+      "Location": "Bahrain International Circuit, Sakhir, Bahrain",
+      "Coordinates": {
+        "Latitude": 26.0325,
+        "Longitude": 50.5106
+      },
+      "TrackLengthPerLap": 5.412,
+      "CircuitLayout": {
+        "TotalNumberOfTurns": 15,
+        "NotableFeatures": [
+          "Long straights",
+          "High-speed corners",
+          "Variable grip zones"
+        ]
+      },
+      "PerformanceRecords": {
+        "LapRecord": {
+          "Time": "1:31.447",
+          "Driver": "Lewis Hamilton",
+          "Team": "Mercedes",
+          "Year": 2014
+        }
+      },
+      "HistoricalAndStrategicInsights": {
+        "KeyHistoricalMoments": "Famed for twilight races and dramatic, rain-affected events that have altered race outcomes.",
+        "RaceStrategyInfluence": "Demands a precise balance between braking performance and acceleration, with tire management playing a crucial role."
+      }
+    },
+    {
+      "TrackName": "Saudi Arabian Grand Prix",
+      "Location": "Jeddah Corniche Circuit, Jeddah, Saudi Arabia",
+      "Coordinates": {
+        "Latitude": 21.5390,
+        "Longitude": 39.1920
+      },
+      "TrackLengthPerLap": 6.175,
+      "CircuitLayout": {
+        "TotalNumberOfTurns": 27,
+        "NotableFeatures": [
+          "High-speed street layout",
+          "Close barriers",
+          "Varied corner profiles"
+        ]
+      },
+      "PerformanceRecords": {
+        "LapRecord": {
+          "Time": "1:27.511",
+          "Driver": "Lewis Hamilton",
+          "Team": "Mercedes",
+          "Year": 2021
+        }
+      },
+      "HistoricalAndStrategicInsights": {
+        "KeyHistoricalMoments": "A modern classic marked by rapid overtakes and dramatic safety car periods influencing outcomes.",
+        "RaceStrategyInfluence": "Its layout encourages aggressive setups and precise timing for overtaking maneuvers."
+      }
+    },
+    {
+      "TrackName": "Miami Grand Prix",
+      "Location": "Miami International Autodrome, Miami, USA",
+      "Coordinates": {
+        "Latitude": 25.9580,
+        "Longitude": -80.2389
+      },
+      "TrackLengthPerLap": 5.41,
+      "CircuitLayout": {
+        "TotalNumberOfTurns": 19,
+        "NotableFeatures": [
+          "Temporary street circuit",
+          "High-speed straights",
+          "Rapid elevation changes"
+        ]
+      },
+      "PerformanceRecords": {
+        "LapRecord": {
+          "Time": "1:28.912",
+          "Driver": "Max Verstappen",
+          "Team": "Red Bull Racing",
+          "Year": 2022
+        }
+      },
+      "HistoricalAndStrategicInsights": {
+        "KeyHistoricalMoments": "A vibrant new addition characterized by unpredictable weather and high energy race environments.",
+        "RaceStrategyInfluence": "Requires unique tire strategies and high downforce setups to navigate its street circuit features."
+      }
+    },
+    {
+      "TrackName": "Emilia Romagna Grand Prix",
+      "Location": "Imola Circuit, Italy",
+      "Coordinates": {
+        "Latitude": 44.3430,
+        "Longitude": 11.7160
+      },
+      "TrackLengthPerLap": 4.909,
+      "CircuitLayout": {
+        "TotalNumberOfTurns": 19,
+        "NotableFeatures": [
+          "Historic layout",
+          "Technical corners",
+          "Mixed elevation"
+        ]
+      },
+      "PerformanceRecords": {
+        "LapRecord": {
+          "Time": "1:16.103",
+          "Driver": "Lewis Hamilton",
+          "Team": "Mercedes",
+          "Year": 2020
+        }
+      },
+      "HistoricalAndStrategicInsights": {
+        "KeyHistoricalMoments": "Renowned for its storied past and several season-defining races.",
+        "RaceStrategyInfluence": "Challenges teams with its technical layout, forcing a balance between speed and handling."
+      }
+    },
+    {
+      "TrackName": "Monaco Grand Prix",
+      "Location": "Circuit de Monaco, Monte Carlo, Monaco",
+      "Coordinates": {
+        "Latitude": 43.7347,
+        "Longitude": 7.4206
+      },
+      "TrackLengthPerLap": 3.337,
+      "CircuitLayout": {
+        "TotalNumberOfTurns": 19,
+        "NotableFeatures": [
+          "Narrow streets",
+          "Tight corners",
+          "Close barriers",
+          "Elevation changes"
+        ]
+      },
+      "PerformanceRecords": {
+        "LapRecord": {
+          "Time": "1:14.260",
+          "Driver": "Lewis Hamilton",
+          "Team": "Mercedes",
+          "Year": 2021
+        }
+      },
+      "HistoricalAndStrategicInsights": {
+        "KeyHistoricalMoments": "Home to dramatic, unpredictable races steeped in rich motorsport heritage.",
+        "RaceStrategyInfluence": "Demands impeccable precision and well-timed pit stops due to its unforgiving narrow layout."
+      }
+    },
+    {
+      "TrackName": "Spanish Grand Prix",
+      "Location": "Circuit de Barcelona-Catalunya, Montmeló, Spain",
+      "Coordinates": {
+        "Latitude": 41.5767,
+        "Longitude": 2.2611
+      },
+      "TrackLengthPerLap": 4.655,
+      "CircuitLayout": {
+        "TotalNumberOfTurns": 16,
+        "NotableFeatures": [
+          "Technical corners",
+          "High-speed straights",
+          "Elevation changes"
+        ]
+      },
+      "PerformanceRecords": {
+        "LapRecord": {
+          "Time": "1:18.441",
+          "Driver": "Lewis Hamilton",
+          "Team": "Mercedes",
+          "Year": 2020
+        }
+      },
+      "HistoricalAndStrategicInsights": {
+        "KeyHistoricalMoments": "Known for unexpected strategies and midfield battles leading to surprising outcomes.",
+        "RaceStrategyInfluence": "Forces teams to compromise between aerodynamic efficiency and mechanical grip, with tire conservation being key."
+      }
+    },
+    {
+      "TrackName": "Canadian Grand Prix",
+      "Location": "Circuit Gilles Villeneuve, Montreal, Canada",
+      "Coordinates": {
+        "Latitude": 45.5000,
+        "Longitude": -73.5226
+      },
+      "TrackLengthPerLap": 4.361,
+      "CircuitLayout": {
+        "TotalNumberOfTurns": 14,
+        "NotableFeatures": [
+          "High-speed straights",
+          "Tight chicanes",
+          "Close walls"
+        ]
+      },
+      "PerformanceRecords": {
+        "LapRecord": {
+          "Time": "1:13.078",
+          "Driver": "Sergio Pérez",
+          "Team": "Red Bull Racing",
+          "Year": 2021
+        }
+      },
+      "HistoricalAndStrategicInsights": {
+        "KeyHistoricalMoments": "Dramatic races often influenced by sudden weather shifts and on-track incidents.",
+        "RaceStrategyInfluence": "Combines long straights and chicanes that emphasize both braking performance and energy recovery."
+      }
+    },
+    {
+      "TrackName": "Austrian Grand Prix",
+      "Location": "Red Bull Ring, Spielberg, Austria",
+      "Coordinates": {
+        "Latitude": 47.2197,
+        "Longitude": 14.7647
+      },
+      "TrackLengthPerLap": 4.326,
+      "CircuitLayout": {
+        "TotalNumberOfTurns": 10,
+        "NotableFeatures": [
+          "Short lap",
+          "Powerful straights",
+          "Elevation changes"
+        ]
+      },
+      "PerformanceRecords": {
+        "LapRecord": {
+          "Time": "1:05.619",
+          "Driver": "Max Verstappen",
+          "Team": "Red Bull Racing",
+          "Year": 2020
+        }
+      },
+      "HistoricalAndStrategicInsights": {
+        "KeyHistoricalMoments": "Noted for back-to-back season-defining races and record-breaking performances.",
+        "RaceStrategyInfluence": "Encourages low downforce setups to maximize engine power on its short, intense layout."
+      }
+    },
+    {
+      "TrackName": "British Grand Prix",
+      "Location": "Silverstone Circuit, Northamptonshire, United Kingdom",
+      "Coordinates": {
+        "Latitude": 52.0733,
+        "Longitude": -1.0144
+      },
+      "TrackLengthPerLap": 5.891,
+      "CircuitLayout": {
+        "TotalNumberOfTurns": 18,
+        "NotableFeatures": [
+          "High-speed corners",
+          "Fast straights",
+          "Historic layout"
+        ]
+      },
+      "PerformanceRecords": {
+        "LapRecord": {
+          "Time": "1:27.369",
+          "Driver": "Lewis Hamilton",
+          "Team": "Mercedes",
+          "Year": 2020
+        }
+      },
+      "HistoricalAndStrategicInsights": {
+        "KeyHistoricalMoments": "Steeped in tradition with races often turning championship fortunes.",
+        "RaceStrategyInfluence": "Balances aerodynamic efficiency with mechanical grip, often emphasizing qualifying performance."
+      }
+    },
+    {
+      "TrackName": "Belgian Grand Prix",
+      "Location": "Circuit de Spa-Francorchamps, Stavelot, Belgium",
+      "Coordinates": {
+        "Latitude": 50.4372,
+        "Longitude": 5.9714
+      },
+      "TrackLengthPerLap": 7.004,
+      "CircuitLayout": {
+        "TotalNumberOfTurns": 19,
+        "NotableFeatures": [
+          "Long straights",
+          "Eau Rouge",
+          "Significant elevation changes"
+        ]
+      },
+      "PerformanceRecords": {
+        "LapRecord": {
+          "Time": "1:46.286",
+          "Driver": "Lewis Hamilton",
+          "Team": "Mercedes",
+          "Year": 2019
+        }
+      },
+      "HistoricalAndStrategicInsights": {
+        "KeyHistoricalMoments": "Iconic for dramatic weather shifts and challenging corners that have produced legendary moments.",
+        "RaceStrategyInfluence": "Combines high-speed slipstream opportunities with technical braking zones requiring precise timing."
+      }
+    },
+    {
+      "TrackName": "Hungarian Grand Prix",
+      "Location": "Hungaroring, Budapest, Hungary",
+      "Coordinates": {
+        "Latitude": 47.5789,
+        "Longitude": 19.2486
+      },
+      "TrackLengthPerLap": 4.381,
+      "CircuitLayout": {
+        "TotalNumberOfTurns": 14,
+        "NotableFeatures": [
+          "Twisting layout",
+          "Narrow track",
+          "Limited overtaking zones"
+        ]
+      },
+      "PerformanceRecords": {
+        "LapRecord": {
+          "Time": "1:16.627",
+          "Driver": "Lewis Hamilton",
+          "Team": "Mercedes",
+          "Year": 2020
+        }
+      },
+      "HistoricalAndStrategicInsights": {
+        "KeyHistoricalMoments": "A circuit where tire management and energy conservation have often been decisive.",
+        "RaceStrategyInfluence": "Its tight and twisty layout forces precision driving and strategic tire usage."
+      }
+    },
+    {
+      "TrackName": "Dutch Grand Prix",
+      "Location": "Circuit Zandvoort, Zandvoort, Netherlands",
+      "Coordinates": {
+        "Latitude": 52.3870,
+        "Longitude": 4.5400
+      },
+      "TrackLengthPerLap": 4.259,
+      "CircuitLayout": {
+        "TotalNumberOfTurns": 14,
+        "NotableFeatures": [
+          "Banked corners",
+          "Fast chicanes",
+          "Close barriers"
+        ]
+      },
+      "PerformanceRecords": {
+        "LapRecord": {
+          "Time": "1:10.882",
+          "Driver": "Max Verstappen",
+          "Team": "Red Bull Racing",
+          "Year": 2021
+        }
+      },
+      "HistoricalAndStrategicInsights": {
+        "KeyHistoricalMoments": "A revived circuit known for its unique banked curves and thrilling races.",
+        "RaceStrategyInfluence": "Encourages aggressive driving to capitalize on the banked sections for overtaking."
+      }
+    },
+    {
+      "TrackName": "Italian Grand Prix",
+      "Location": "Autodromo Nazionale Monza, Monza, Italy",
+      "Coordinates": {
+        "Latitude": 45.6216,
+        "Longitude": 9.2818
+      },
+      "TrackLengthPerLap": 5.793,
+      "CircuitLayout": {
+        "TotalNumberOfTurns": 11,
+        "NotableFeatures": [
+          "High-speed straights",
+          "Historic layout",
+          "Minimal cornering"
+        ]
+      },
+      "PerformanceRecords": {
+        "LapRecord": {
+          "Time": "1:21.046",
+          "Driver": "Lewis Hamilton",
+          "Team": "Mercedes",
+          "Year": 2020
+        }
+      },
+      "HistoricalAndStrategicInsights": {
+        "KeyHistoricalMoments": "Synonymous with record-breaking speeds and legendary slipstream battles.",
+        "RaceStrategyInfluence": "Favors minimal downforce setups to maximize engine performance on long straights."
+      }
+    },
+    {
+      "TrackName": "Azerbaijan Grand Prix",
+      "Location": "Baku City Circuit, Baku, Azerbaijan",
+      "Coordinates": {
+        "Latitude": 40.3725,
+        "Longitude": 49.8533
+      },
+      "TrackLengthPerLap": 6.003,
+      "CircuitLayout": {
+        "TotalNumberOfTurns": 20,
+        "NotableFeatures": [
+          "Long straight",
+          "Narrow sections",
+          "Undulating layout"
+        ]
+      },
+      "PerformanceRecords": {
+        "LapRecord": {
+          "Time": "1:40.450",
+          "Driver": "Sebastian Vettel",
+          "Team": "Red Bull Racing",
+          "Year": 2018
+        }
+      },
+      "HistoricalAndStrategicInsights": {
+        "KeyHistoricalMoments": "Famed for unpredictable safety car interventions and intense battles in its tight sections.",
+        "RaceStrategyInfluence": "Combines a long straight with demanding braking zones, making car setup critical."
+      }
+    },
+    {
+      "TrackName": "Singapore Grand Prix",
+      "Location": "Marina Bay Street Circuit, Singapore",
+      "Coordinates": {
+        "Latitude": 1.2914,
+        "Longitude": 103.8630
+      },
+      "TrackLengthPerLap": 5.063,
+      "CircuitLayout": {
+        "TotalNumberOfTurns": 23,
+        "NotableFeatures": [
+          "Street circuit",
+          "Night race",
+          "Tight corners",
+          "Humid conditions"
+        ]
+      },
+      "PerformanceRecords": {
+        "LapRecord": {
+          "Time": "1:42.198",
+          "Driver": "Charles Leclerc",
+          "Team": "Ferrari",
+          "Year": 2019
+        }
+      },
+      "HistoricalAndStrategicInsights": {
+        "KeyHistoricalMoments": "Known for its physically demanding races under tropical conditions and strategic gambles.",
+        "RaceStrategyInfluence": "High humidity accelerates tire wear, making pit stop timing and energy recovery vital."
+      }
+    },
+    {
+      "TrackName": "United States Grand Prix",
+      "Location": "Circuit of the Americas, Austin, USA",
+      "Coordinates": {
+        "Latitude": 30.1328,
+        "Longitude": -97.6411
+      },
+      "TrackLengthPerLap": 5.513,
+      "CircuitLayout": {
+        "TotalNumberOfTurns": 20,
+        "NotableFeatures": [
+          "Varied layout",
+          "Long straight",
+          "Technical corners"
+        ]
+      },
+      "PerformanceRecords": {
+        "LapRecord": {
+          "Time": "1:36.169",
+          "Driver": "Lewis Hamilton",
+          "Team": "Mercedes",
+          "Year": 2021
+        }
+      },
+      "HistoricalAndStrategicInsights": {
+        "KeyHistoricalMoments": "Renowned for late-race overtakes and strategic pit stop gambles that have reshaped championship battles.",
+        "RaceStrategyInfluence": "Its mix of high-speed sections and technical corners demands a balanced setup between acceleration and braking."
+      }
+    },
+    {
+      "TrackName": "Mexican Grand Prix",
+      "Location": "Autodromo Hermanos Rodríguez, Mexico City, Mexico",
+      "Coordinates": {
+        "Latitude": 19.4040,
+        "Longitude": -99.0907
+      },
+      "TrackLengthPerLap": 4.304,
+      "CircuitLayout": {
+        "TotalNumberOfTurns": 17,
+        "NotableFeatures": [
+          "High altitude",
+          "Long straight",
+          "Technical corners"
+        ]
+      },
+      "PerformanceRecords": {
+        "LapRecord": {
+          "Time": "1:17.774",
+          "Driver": "Max Verstappen",
+          "Team": "Red Bull Racing",
+          "Year": 2021
+        }
+      },
+      "HistoricalAndStrategicInsights": {
+        "KeyHistoricalMoments": "Famed for its vibrant atmosphere and races affected by high-altitude challenges.",
+        "RaceStrategyInfluence": "The altitude impacts engine performance and tire wear, demanding adaptable strategies."
+      }
+    },
+    {
+      "TrackName": "Brazilian Grand Prix",
+      "Location": "Interlagos Circuit, São Paulo, Brazil",
+      "Coordinates": {
+        "Latitude": -23.7036,
+        "Longitude": -46.6999
+      },
+      "TrackLengthPerLap": 4.309,
+      "CircuitLayout": {
+        "TotalNumberOfTurns": 15,
+        "NotableFeatures": [
+          "Undulating layout",
+          "High-speed sections",
+          "Technical corners"
+        ]
+      },
+      "PerformanceRecords": {
+        "LapRecord": {
+          "Time": "1:11.473",
+          "Driver": "Felipe Massa",
+          "Team": "Ferrari",
+          "Year": 2008
+        }
+      },
+      "HistoricalAndStrategicInsights": {
+        "KeyHistoricalMoments": "Marked by dramatic weather changes and fiercely contested races that created unforgettable moments.",
+        "RaceStrategyInfluence": "Variable conditions demand flexible strategies, often leading to unexpected pit stop tactics."
+      }
+    },
+    {
+      "TrackName": "Las Vegas Grand Prix",
+      "Location": "Las Vegas Strip Circuit, Las Vegas, USA",
+      "Coordinates": {
+        "Latitude": 36.1147,
+        "Longitude": -115.1728
+      },
+      "TrackLengthPerLap": 3.838,
+      "CircuitLayout": {
+        "TotalNumberOfTurns": 14,
+        "NotableFeatures": [
+          "Street circuit",
+          "Night race",
+          "Elevated sections"
+        ]
+      },
+      "PerformanceRecords": {
+        "LapRecord": {
+          "Time": "Information not available",
+          "Driver": "Information not available",
+          "Team": "Information not available",
+          "Year": "Information not available"
+        }
+      },
+      "HistoricalAndStrategicInsights": {
+        "KeyHistoricalMoments": "A brand new addition still in the process of establishing its legacy.",
+        "RaceStrategyInfluence": "Its compact layout and unique street circuit conditions require precision driving and innovative strategy."
+      }
+    },
+    {
+      "TrackName": "Qatar Grand Prix",
+      "Location": "Lusail International Circuit, Lusail, Qatar",
+      "Coordinates": {
+        "Latitude": 25.4358,
+        "Longitude": 51.5362
+      },
+      "TrackLengthPerLap": 5.38,
+      "CircuitLayout": {
+        "TotalNumberOfTurns": 16,
+        "NotableFeatures": [
+          "High-speed layout",
+          "Long straights",
+          "Technical corners"
+        ]
+      },
+      "PerformanceRecords": {
+        "LapRecord": {
+          "Time": "1:27.064",
+          "Driver": "Lewis Hamilton",
+          "Team": "Mercedes",
+          "Year": 2021
+        }
+      },
+      "HistoricalAndStrategicInsights": {
+        "KeyHistoricalMoments": "Rapidly growing in reputation for its high-speed and thrilling races.",
+        "RaceStrategyInfluence": "Favors setups that maximize engine performance and aerodynamic efficiency due to limited braking zones."
+      }
+    },
+    {
+      "TrackName": "Abu Dhabi Grand Prix",
+      "Location": "Yas Marina Circuit, Abu Dhabi, UAE",
+      "Coordinates": {
+        "Latitude": 24.4677,
+        "Longitude": 54.6061
+      },
+      "TrackLengthPerLap": 5.554,
+      "CircuitLayout": {
+        "TotalNumberOfTurns": 21,
+        "NotableFeatures": [
+          "Twilight start",
+          "Long straight",
+          "Technical sections"
+        ]
+      },
+      "PerformanceRecords": {
+        "LapRecord": {
+          "Time": "1:24.411",
+          "Driver": "Lewis Hamilton",
+          "Team": "Mercedes",
+          "Year": 2021
+        }
+      },
+      "HistoricalAndStrategicInsights": {
+        "KeyHistoricalMoments": "Often hosts season-defining races under uniquely lit conditions that influence championship battles.",
+        "RaceStrategyInfluence": "Its mixed characteristics force teams to adopt a balanced setup emphasizing both speed and tire management."
+      }
+    }
+  ]
+} 

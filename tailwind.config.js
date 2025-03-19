@@ -1,42 +1,35 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './lib/**/*.{js,ts,jsx,tsx,mdx}'
-  ],
+  content: ["./src/**/*.{html,js,jsx,ts,tsx}"],
   theme: {
     extend: {
-      fontFamily: {
-        display: ['Clash Display', 'sans-serif'],
-        body: ['Space Grotesk', 'sans-serif'],
-      },
       colors: {
-        primary: {
-          start: '#FF4D8F',
-          end: '#FF8D4D',
-        },
-        emotion: {
-          love: '#FF4D8F',
-          like: '#FF8D4D',
-          meh: '#FFD84D',
-          nope: '#4D4D4D',
-          thinking: '#4DCCFF',
-        },
-        background: {
-          dark: '#121212',
-          card: '#1E1E1E',
-        },
+        primary: 'rgb(var(--color-primary) / <alpha-value>)',
+        secondary: 'rgb(var(--color-secondary) / <alpha-value>)',
+        background: 'rgb(var(--color-background) / <alpha-value>)',
+        card: 'rgb(var(--color-card) / <alpha-value>)',
+        border: 'rgb(var(--color-border) / <alpha-value>)',
+        // F1 Team Colors
+        mercedes: '#00D2BE',
+        redbull: '#0600EF',
+        ferrari: '#DC0000',
+        mclaren: '#FF8700',
+        astonmartin: '#006F62',
+        alpine: '#0090FF',
+        williams: '#005AFF',
+        alphatauri: '#2B4562',
+        alfaromeo: '#900000',
+        haas: '#FFFFFF'
+      },
+      fontFamily: {
+        display: ['"Clash Display"', 'sans-serif'],
+        body: ['"Space Grotesk"', 'sans-serif']
+      },
+      spacing: {
+        // custom spacing if needed
       },
       animation: {
-        'pulse-glow': 'pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-      },
-      keyframes: {
-        'pulse-glow': {
-          '0%, 100%': { opacity: 1 },
-          '50%': { opacity: 0.5 },
-        },
-      },
+        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      }
     },
   },
   plugins: [],
